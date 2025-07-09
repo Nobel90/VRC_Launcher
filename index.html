@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR Centre apps Launcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        .btn-glow { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 5px rgba(59, 130, 246, 0.4); }
+        .game-logo-active { outline: 2px solid #3b82f6; transform: scale(1.1); }
+    </style>
+</head>
+<body class="bg-gray-900 text-white overflow-hidden h-screen">
+
+    <div id="launcher" class="flex h-screen w-screen">
+        <aside class="w-24 bg-gray-900/80 backdrop-blur-sm p-4 flex flex-col items-center space-y-6 border-r border-gray-700/50">
+            <div class="text-blue-500 font-black text-2xl">VRC</div>
+            <nav id="game-list" class="flex flex-col items-center space-y-4"></nav>
+        </aside>
+
+        <main class="flex-1 relative">
+            <div class="absolute inset-0 w-full h-full z-0">
+                <img id="game-background" src="" class="w-full h-full object-cover transition-opacity duration-1000" alt="Game Background">
+                <div class="absolute inset-0 bg-black/60"></div>
+                <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-gray-900 to-transparent"></div>
+            </div>
+            <div class="relative z-10 flex flex-col h-full p-8 md:p-12">
+                <header class="flex justify-between items-center">
+                     <div class="flex items-center space-x-6 text-gray-300">
+                        <a href="#" class="hover:text-white transition-colors duration-200 font-semibold">NEWS</a>
+                        <a href="#" class="hover:text-white transition-colors duration-200">COMMUNITY</a>
+                        <a href="#" class="hover:text-white transition-colors duration-200">STORE</a>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm font-medium">PlayerOne</span>
+                        <img src="https://placehold.co/40x40/1f2937/ffffff?text=P" class="rounded-full w-10 h-10 border-2 border-gray-600">
+                    </div>
+                </header>
+                <div class="flex-grow flex items-end">
+                    <div class="w-full">
+                        <h1 id="game-title" class="text-5xl md:text-7xl font-black uppercase tracking-wider transition-opacity duration-500"></h1>
+                        <p id="game-tagline" class="text-gray-400 mt-2 text-lg"></p>
+                        <div class="mt-8 flex items-center space-x-6">
+                            <button id="action-button" class="px-12 py-4 text-xl font-bold rounded-lg transition-all duration-300 flex items-center justify-center min-w-[200px]"></button>
+                            <div id="download-controls" class="hidden items-center space-x-4">
+                                <button id="pause-resume-button" class="px-6 py-4 text-lg font-bold rounded-lg bg-gray-600 hover:bg-gray-700 transition-all duration-300">Pause</button>
+                                <button id="cancel-button" class="px-6 py-4 text-lg font-bold rounded-lg bg-red-600 hover:bg-red-700 transition-all duration-300">Cancel</button>
+                            </div>
+                            <button id="open-folder-button" class="hidden p-4 rounded-lg bg-gray-600 hover:bg-gray-700 transition-colors duration-300" title="Open Installation Folder">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
+                            </button>
+                            <button id="uninstall-button" class="hidden p-4 rounded-lg bg-red-800/50 hover:bg-red-700/50 transition-colors duration-300" title="Uninstall Game">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg>
+                            </button>
+                             <button id="check-update-button" class="hidden p-4 rounded-lg bg-blue-800/50 hover:bg-blue-700/50 transition-colors duration-300" title="Check for Updates">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M15.549 10.214a.75.75 0 01.902 1.06l-4.5 4.25a.75.75 0 01-1.012-.064l-4.25-4.5a.75.75 0 111.124-.99l3.438 3.654 3.998-3.754a.75.75 0 011.06-.06z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M4.451 9.786a.75.75 0 01-.902-1.06l4.5-4.25a.75.75 0 011.012.064l4.25 4.5a.75.75 0 11-1.124.99L8.75 6.346l-3.998 3.754a.75.75 0 01-1.06.06z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <div class="text-sm text-gray-500">
+                                <div>Version <span id="game-version"></span></div>
+                                <div id="game-status-text"></div>
+                            </div>
+                        </div>
+                        <div id="progress-container" class="mt-4 w-full max-w-lg hidden">
+                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-100" style="width: 0%"></div>
+                            </div>
+                            <div id="progress-text" class="mt-2 text-sm text-gray-400"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            let gameLibrary = {
+                'VRClassroom': {
+                    name: 'VR Classroom',
+                    tagline: 'The future of immersive learning.',
+                    version: '0.0.0',
+                    status: 'uninstalled',
+                    logoUrl: 'https://vrcentre.com.au/wp-content/uploads/2021/06/cropped-favicon-Master.png',
+                    backgroundUrl: 'https://vrcentre.com.au/wp-content/uploads/2021/06/cropped-Primary_Logo_Horizontal_Web-01-1.png',
+                    installPath: null,
+                    executable: 'VRClassroom.exe',
+                    manifestUrl: 'https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/vrclassroom_manifest.json',
+                    versionUrl: 'https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/version.json',
+                    filesToUpdate: [],
+                    isPaused: false,
+                },
+            };
+
+            let currentGameId = 'VRClassroom';
+
+            // --- DOM Elements ---
+            const gameListEl = document.getElementById('game-list'),
+                  gameBgEl = document.getElementById('game-background'),
+                  gameTitleEl = document.getElementById('game-title'),
+                  gameTaglineEl = document.getElementById('game-tagline'),
+                  gameVersionEl = document.getElementById('game-version'),
+                  gameStatusTextEl = document.getElementById('game-status-text'),
+                  actionButtonEl = document.getElementById('action-button'),
+                  downloadControlsEl = document.getElementById('download-controls'),
+                  pauseResumeButtonEl = document.getElementById('pause-resume-button'),
+                  cancelButtonEl = document.getElementById('cancel-button'),
+                  openFolderButtonEl = document.getElementById('open-folder-button'),
+                  uninstallButtonEl = document.getElementById('uninstall-button'),
+                  checkUpdateButtonEl = document.getElementById('check-update-button'),
+                  progressContainerEl = document.getElementById('progress-container'),
+                  progressBarEl = document.getElementById('progress-bar'),
+                  progressTextEl = document.getElementById('progress-text');
+
+            function formatBytes(bytes, decimals = 2) {
+                if (!bytes || bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const dm = decimals < 0 ? 0 : decimals;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            }
+
+            function renderGame(gameId) {
+                const game = gameLibrary[gameId];
+                if (!game) return;
+                gameBgEl.style.opacity = '0';
+                setTimeout(() => {
+                    gameBgEl.src = game.backgroundUrl;
+                    gameBgEl.onload = () => { gameBgEl.style.opacity = '1'; };
+                }, 500);
+                gameTitleEl.innerText = game.name;
+                gameTaglineEl.innerText = game.tagline;
+                gameVersionEl.innerText = game.version;
+                updateButtonAndStatus(game);
+                document.querySelectorAll('.game-logo').forEach(logo => {
+                    logo.classList.toggle('game-logo-active', logo.dataset.gameId === gameId);
+                });
+            }
+            
+            function updateButtonAndStatus(game) {
+                actionButtonEl.className = 'px-12 py-4 text-xl font-bold rounded-lg transition-all duration-300 flex items-center justify-center min-w-[200px]';
+                actionButtonEl.disabled = false;
+                actionButtonEl.classList.remove('hidden');
+                downloadControlsEl.classList.add('hidden');
+                openFolderButtonEl.classList.add('hidden');
+                uninstallButtonEl.classList.add('hidden');
+                checkUpdateButtonEl.classList.add('hidden');
+                progressContainerEl.style.display = 'none';
+                
+                switch (game.status) {
+                    case 'installed':
+                        actionButtonEl.innerText = 'LAUNCH';
+                        actionButtonEl.classList.add('bg-green-500', 'hover:bg-green-600', 'btn-glow');
+                        gameStatusTextEl.innerText = 'Ready to Play';
+                        openFolderButtonEl.classList.remove('hidden');
+                        uninstallButtonEl.classList.remove('hidden');
+                        checkUpdateButtonEl.classList.remove('hidden');
+                        break;
+                    case 'needs_update':
+                        actionButtonEl.innerText = 'UPDATE';
+                        actionButtonEl.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+                        gameStatusTextEl.innerText = `Update available!`;
+                        openFolderButtonEl.classList.remove('hidden');
+                        uninstallButtonEl.classList.remove('hidden');
+                        break;
+                    case 'uninstalled':
+                        actionButtonEl.innerText = 'INSTALL';
+                        actionButtonEl.classList.add('bg-blue-500', 'hover:bg-blue-600', 'btn-glow');
+                        gameStatusTextEl.innerText = 'Not Installed';
+                        break;
+                    case 'checking_update':
+                        actionButtonEl.disabled = true;
+                        actionButtonEl.innerText = 'Please wait...';
+                        actionButtonEl.classList.add('bg-gray-500', 'cursor-not-allowed');
+                        gameStatusTextEl.innerText = 'Checking for updates...';
+                        openFolderButtonEl.classList.remove('hidden');
+                        uninstallButtonEl.classList.remove('hidden');
+                        break;
+                    case 'updating':
+                        actionButtonEl.classList.add('hidden');
+                        downloadControlsEl.classList.remove('hidden');
+                        gameStatusTextEl.innerText = 'Downloading files...';
+                        progressContainerEl.style.display = 'block';
+                        break;
+                }
+            }
+
+            async function handleActionButtonClick() {
+                const game = gameLibrary[currentGameId];
+                
+                switch (game.status) {
+                    case 'uninstalled':
+                        const selectedPath = await window.electronAPI.selectInstallDir();
+                        if (selectedPath) {
+                            game.installPath = selectedPath; // Set path immediately
+                            await checkForUpdates(currentGameId);
+                            if(game.status === 'needs_update') {
+                                handleActionButtonClick();
+                            }
+                        }
+                        break;
+                    case 'needs_update':
+                         game.status = 'updating';
+                         updateButtonAndStatus(game);
+                         window.electronAPI.downloadFiles({
+                             gameId: currentGameId,
+                             installPath: game.installPath,
+                             files: game.filesToUpdate,
+                             latestVersion: game.version,
+                         });
+                        break;
+                    case 'installed':
+                        window.electronAPI.launchGame({ installPath: game.installPath, executable: game.executable });
+                        actionButtonEl.innerText = 'LAUNCHING...';
+                        setTimeout(() => renderGame(currentGameId), 1000);
+                        break;
+                }
+            }
+
+            function handlePauseResumeClick() {
+                const game = gameLibrary[currentGameId];
+                game.isPaused = !game.isPaused;
+                if (game.isPaused) {
+                    window.electronAPI.pauseDownload();
+                    pauseResumeButtonEl.innerText = 'Resume';
+                    gameStatusTextEl.innerText = 'Download paused.';
+                } else {
+                    window.electronAPI.resumeDownload();
+                    pauseResumeButtonEl.innerText = 'Pause';
+                    gameStatusTextEl.innerText = 'Downloading files...';
+                }
+            }
+
+            async function checkForUpdates(gameId) {
+                const game = gameLibrary[gameId];
+                if (!game.installPath && game.status !== 'uninstalled') {
+                    game.status = 'uninstalled';
+                    renderGame(gameId);
+                    return;
+                }
+                
+                game.status = 'checking_update';
+                renderGame(gameId);
+
+                const result = await window.electronAPI.checkForUpdates({ gameId, installPath: game.installPath, manifestUrl: game.manifestUrl });
+                if (result.error) {
+                    game.status = 'installed';
+                    gameStatusTextEl.innerText = result.error;
+                } else if (result.isUpdateAvailable) {
+                    game.status = 'needs_update';
+                    game.filesToUpdate = result.filesToUpdate;
+                    game.version = result.latestVersion;
+                } else {
+                    game.status = 'installed';
+                    game.version = result.latestVersion;
+                }
+                window.electronAPI.saveGameData(gameLibrary);
+                renderGame(gameId);
+            }
+
+            async function init() {
+                if (!window.electronAPI) { console.error("Fatal Error: window.electronAPI is not defined."); return; }
+                const loadedLibrary = await window.electronAPI.loadGameData();
+                if (loadedLibrary) {
+                    for (const gameId in gameLibrary) {
+                        if (loadedLibrary[gameId]) {
+                            gameLibrary[gameId] = { ...gameLibrary[gameId], ...loadedLibrary[gameId] };
+                        }
+                    }
+                }
+
+                for (const gameId in gameLibrary) {
+                    const game = gameLibrary[gameId];
+                    if (game.installPath && (game.status === 'installed' || game.status === 'needs_update')) {
+                        const localVersion = await window.electronAPI.getLocalVersion(game.installPath);
+                        game.version = localVersion;
+                    }
+                }
+
+                gameListEl.innerHTML = '';
+                for (const gameId in gameLibrary) {
+                    const game = gameLibrary[gameId];
+                    const logoEl = document.createElement('img');
+                    logoEl.src = game.logoUrl;
+                    logoEl.alt = `${game.name} Logo`;
+                    logoEl.className = 'w-16 h-16 rounded-lg cursor-pointer transition-all duration-200 hover:scale-110 game-logo';
+                    logoEl.dataset.gameId = gameId;
+                    logoEl.addEventListener('click', () => {
+                       if (gameLibrary[currentGameId].status !== 'updating') {
+                           currentGameId = gameId;
+                           renderGame(gameId);
+                       }
+                    });
+                    gameListEl.appendChild(logoEl);
+                }
+                actionButtonEl.addEventListener('click', handleActionButtonClick);
+                pauseResumeButtonEl.addEventListener('click', handlePauseResumeClick);
+                cancelButtonEl.addEventListener('click', () => window.electronAPI.cancelDownload());
+                openFolderButtonEl.addEventListener('click', () => {
+                    const game = gameLibrary[currentGameId];
+                    if (game.installPath) window.electronAPI.openInstallFolder(game.installPath);
+                });
+
+                uninstallButtonEl.addEventListener('click', () => {
+                    const game = gameLibrary[currentGameId];
+                    if (game.installPath) {
+                        window.electronAPI.uninstallGame(game.installPath);
+                    }
+                });
+
+                checkUpdateButtonEl.addEventListener('click', () => {
+                    checkForUpdates(currentGameId);
+                });
+
+                window.electronAPI.onDownloadProgress((data) => {
+                    if (data.status) {
+                        progressTextEl.innerText = data.status;
+                    } else if (data.overallProgress >= 0) {
+                        progressBarEl.style.width = `${data.overallProgress.toFixed(2)}%`;
+                        progressTextEl.innerText = `Downloading: ${data.fileName} (${formatBytes(data.downloadedBytes)} / ${formatBytes(data.totalBytes)})`;
+                    }
+                });
+
+                window.electronAPI.onInstallComplete(async ({ gameId, version }) => {
+                    const game = gameLibrary[gameId];
+                    game.isPaused = false;
+                    pauseResumeButtonEl.innerText = 'Pause';
+                    game.status = 'installed';
+                    game.version = version;
+                    game.filesToUpdate = [];
+                    await window.electronAPI.saveGameData(gameLibrary);
+                    renderGame(gameId); 
+                });
+
+                window.electronAPI.onDownloadCancelled(() => {
+                    const game = gameLibrary[currentGameId];
+                    game.isPaused = false;
+                    game.status = 'uninstalled'; // Revert to a safe state
+                    renderGame(gameId);
+                    gameStatusTextEl.innerText = 'Installation cancelled.';
+                });
+
+                window.electronAPI.onInstallError(({ gameId, message }) => {
+                    const game = gameLibrary[gameId];
+                    game.isPaused = false;
+                    game.status = 'uninstalled';
+                    renderGame(gameId);
+                    gameStatusTextEl.innerText = message || 'An error occurred.';
+                });
+
+                window.electronAPI.onUninstallComplete(() => {
+                    const game = gameLibrary[currentGameId];
+                    game.status = 'uninstalled';
+                    game.installPath = null;
+                    game.version = '0.0.0';
+                    window.electronAPI.saveGameData(gameLibrary);
+                    renderGame(currentGameId);
+                });
+
+                renderGame(currentGameId);
+                for (const gameId in gameLibrary) {
+                    const game = gameLibrary[gameId];
+                    if (game.installPath && game.status !== 'uninstalled') {
+                        const versionResult = await window.electronAPI.checkForVersion({
+                            installPath: game.installPath,
+                            versionUrl: game.versionUrl
+                        });
+                        if (versionResult.isUpdateAvailable) {
+                            game.status = 'needs_update';
+                            game.version = versionResult.latestVersion;
+                        }
+                        renderGame(gameId);
+                    }
+                }
+            }
+
+            init();
+        });
+    </script>
+</body>
+</html>

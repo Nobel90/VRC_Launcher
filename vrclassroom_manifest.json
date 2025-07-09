@@ -1,0 +1,30 @@
+{
+  "version": "1.1.0.8",
+  "files": [
+    {
+      "path": "VRClassroom.exe",
+      "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/1.1.0.8/VRClassroom.exe"
+    },
+    {
+      "path": "Manifest_NonUFSFiles_Win64.txt",
+      "checksum": "a1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2",
+      "url": "https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/1.1.0.8/Manifest_NonUFSFiles_Win64.txt"
+    },
+    {
+      "path": "AFEOS/Content/Paks/AFEOS-WindowsNoEditor.pak",
+      "checksum": "f9e8d7c6b5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8",
+      "url": "https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/1.1.0.8/AFEOS/Content/Paks/AFEOS-WindowsNoEditor.pak"
+    },
+    {
+      "path": "Engine/Binaries/Win64/UnrealCEFSubProcess.exe",
+      "checksum": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+      "url": "https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/1.1.0.8/Engine/Binaries/Win64/UnrealCEFSubProcess.exe"
+    },
+    {
+      "path": "Engine/Binaries/ThirdParty/Oculus/OVRPlugin/OVRPlugin/Win64/OVRPlugin.dll",
+      "checksum": "c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9",
+      "url": "https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/1.1.0.8/Engine/Binaries/ThirdParty/Oculus/OVRPlugin/OVRPlugin/Win64/OVRPlugin.dll"
+    }
+  ]
+}

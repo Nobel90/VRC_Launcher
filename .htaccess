@@ -1,0 +1,8 @@
+Options +Indexes
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# Tell the server to treat these files as generic binary data
+AddType application/octet-stream .exe .dll .pak .dat .bin
