@@ -2,10 +2,13 @@
 
 const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs').promises; // Use promises-based fs
+const fsSync = require('fs'); // Use sync for specific cases if needed
 const crypto = require('crypto');
 const axios = require('axios');
 const { session } = require('electron');
+
+let downloadManager = null;
 
 const dataPath = path.join(app.getPath('userData'), 'launcher-data.json');
 
@@ -35,47 +38,256 @@ function createWindow() {
         }
     });
     win.loadFile('index.html');
+    downloadManager = new DownloadManager(win);
 }
 
 app.whenReady().then(createWindow);
 
-function getFileChecksum(filePath) {
-    return new Promise((resolve, reject) => {
+async function getFileChecksum(filePath) {
+    try {
         const extension = path.extname(filePath).toLowerCase();
         if (textFileExtensions.includes(extension)) {
-            fs.readFile(filePath, 'utf-8', (err, textData) => {
-                if (err) return reject(err);
-                const normalizedText = textData.trim().replace(/\r\n/g, '\n');
-                const hash = crypto.createHash('sha256').update(normalizedText).digest('hex');
-                resolve(hash);
-            });
+            const textData = await fs.readFile(filePath, 'utf-8');
+            const normalizedText = textData.trim().replace(/\r\n/g, '\n');
+            return crypto.createHash('sha256').update(normalizedText).digest('hex');
         } else {
             const hash = crypto.createHash('sha256');
-            const stream = fs.createReadStream(filePath);
-            stream.on('data', (data) => hash.update(data));
-            stream.on('end', () => resolve(hash.digest('hex')));
-            stream.on('error', reject);
+            const stream = fsSync.createReadStream(filePath); // fs.promises doesn't have createReadStream
+            for await (const chunk of stream) {
+                hash.update(chunk);
+            }
+            return hash.digest('hex');
         }
-    });
+    } catch (error) {
+        console.error(`Checksum error for ${filePath}:`, error);
+        return null; // Return null on error
+    }
+}
+
+async function getLocalVersion(installPath) {
+    const versionFilePath = path.join(installPath, 'version.json');
+    try {
+        await fs.access(versionFilePath); // Check if file exists
+        const data = await fs.readFile(versionFilePath, 'utf-8');
+        return JSON.parse(data).version || '0.0.0';
+    } catch (error) {
+        // This is not a critical error, just means no version file found
+        return '0.0.0';
+    }
+}
+
+class DownloadManager {
+    constructor(win) {
+        this.win = win;
+        this.state = this.getInitialState();
+        this.request = null;
+        this.writer = null;
+    }
+
+    getInitialState() {
+        return {
+            status: 'idle', // idle, downloading, paused, success, error, cancelling
+            progress: 0,
+            totalFiles: 0,
+            filesDownloaded: 0,
+            totalBytes: 0,
+            downloadedBytes: 0,
+            currentFileName: '',
+            error: null,
+        };
+    }
+
+    setState(newState) {
+        this.state = { ...this.state, ...newState };
+        console.log('Download state updated:', this.state.status);
+        this.win.webContents.send('download-state-update', this.state);
+    }
+
+    async start(gameId, installPath, files, latestVersion) {
+        if (this.state.status === 'downloading') return;
+
+        this.setState({
+            ...this.getInitialState(),
+            status: 'downloading',
+            totalFiles: files.length,
+        });
+        
+        let i = 0;
+        while (i < files.length) {
+            if (this.state.status === 'cancelling') {
+                break;
+            }
+
+            // This is the core loop for a single file, allowing retries and resume.
+            const file = files[i];
+            this.setState({ 
+                currentFileName: path.basename(file.path), 
+                downloadedBytes: 0, 
+                totalBytes: file.size || 0,
+                progress: ((i) / this.state.totalFiles) * 100 // Progress before this file starts
+            });
+
+            let success = false;
+            let attempts = 0;
+            while (!success && attempts < 3 && this.state.status !== 'cancelling') {
+                if (this.state.status === 'paused') {
+                    await new Promise(resolve => setTimeout(resolve, 500)); // wait while paused
+                    continue; // Re-check pause/cancel status
+                }
+
+                try {
+                    const destinationPath = path.join(installPath, file.path);
+                    await this.downloadFile(file.url, destinationPath);
+                    
+                    const localChecksum = await getFileChecksum(destinationPath);
+                    if (localChecksum === file.checksum) {
+                        success = true;
+                    } else {
+                        attempts++;
+                        console.warn(`Checksum mismatch for ${file.path}. Attempt ${attempts + 1}/3.`);
+                        try { await fs.unlink(destinationPath); } catch (e) { console.error('Failed to delete corrupt file:', e); }
+                    }
+                } catch (error) {
+                    if (this.state.status === 'cancelling' || this.state.status === 'paused') {
+                        break; 
+                    }
+                    attempts++;
+                    console.error(`Error downloading ${file.path}, attempt ${attempts + 1}/3:`, error);
+                }
+            }
+
+            if (success) {
+                i++; // Only move to the next file on success
+                this.setState({ filesDownloaded: i });
+            } else {
+                // If the loop broke due to pause or cancel, we don't set an error.
+                if (this.state.status !== 'paused' && this.state.status !== 'cancelling') {
+                    this.setState({ status: 'error', error: `Failed to download ${file.path} after 3 attempts.` });
+                }
+                break; // Exit the main `while` loop on failure, pause, or cancel.
+            }
+        }
+
+        if (this.state.status === 'downloading') {
+            const versionFilePath = path.join(installPath, 'version.json');
+            await fs.writeFile(versionFilePath, JSON.stringify({ version: latestVersion }, null, 2));
+            this.setState({ status: 'success', progress: 100 });
+        } else if (this.state.status === 'cancelling') {
+            this.setState(this.getInitialState());
+        }
+    }
+
+    async downloadFile(url, destinationPath) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const destinationDir = path.dirname(destinationPath);
+                await fs.mkdir(destinationDir, { recursive: true });
+
+                const response = await axios.get(url, { responseType: 'stream', headers: browserHeaders });
+                this.request = response.data;
+                this.writer = fsSync.createWriteStream(destinationPath);
+                this.writer.on('error', (err) => { /* Handle appropriately */ });
+                this.request.pipe(this.writer);
+
+                this.request.on('data', (chunk) => {
+                    this.setState({ downloadedBytes: (this.state.downloadedBytes || 0) + chunk.length });
+                });
+
+                this.writer.on('finish', () => resolve());
+                this.writer.on('error', (err) => {
+                    this.cleanUpRequestAndWriter();
+                    if (this.state.status !== 'cancelling' && this.state.status !== 'paused') {
+                        reject(err);
+                    } else {
+                        resolve(); // Resolve without error on pause/cancel
+                    }
+                });
+                this.request.on('error', (err) => {
+                    this.cleanUpRequestAndWriter();
+                    if (this.state.status !== 'cancelling' && this.state.status !== 'paused') {
+                        reject(err);
+                    } else {
+                        resolve(); // Resolve without error on pause/cancel
+                    }
+                });
+
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+    
+    cleanUpRequestAndWriter() {
+        this.request = null;
+        this.writer = null;
+    }
+
+    pause() {
+        if (this.state.status !== 'downloading') return;
+        this.setState({ status: 'paused' });
+        if (this.request) {
+            this.request.destroy();
+        }
+        if (this.writer) {
+            // Closing the writer might be asynchronous
+            const writerPath = this.writer.path;
+            this.writer.close(() => {
+                // Once closed, delete the partial file
+                fs.unlink(writerPath).catch(err => console.error(`Failed to delete partial file on pause: ${writerPath}`, err));
+            });
+        }
+        this.cleanUpRequestAndWriter();
+    }
+
+    resume() {
+        if (this.state.status !== 'paused') return;
+        this.setState({ status: 'downloading' });
+    }
+
+    cancel() {
+        if (this.state.status !== 'downloading' && this.state.status !== 'paused') return;
+        this.setState({ status: 'cancelling' });
+        if (this.request) {
+            this.request.destroy();
+        }
+        if (this.writer) {
+            const writerPath = this.writer.path;
+            this.writer.close(() => {
+                fs.unlink(writerPath).catch(err => console.error(`Failed to delete partial file on cancel: ${writerPath}`, err));
+            });
+        }
+        this.cleanUpRequestAndWriter();
+    }
 }
 
 // --- IPC Handlers ---
 
+ipcMain.on('handle-download-action', (event, action) => {
+    if (!downloadManager) return;
+    switch(action.type) {
+        case 'START':
+            downloadManager.start(action.payload.gameId, action.payload.installPath, action.payload.files, action.payload.latestVersion);
+            break;
+        case 'PAUSE':
+            downloadManager.pause();
+            break;
+        case 'RESUME':
+            downloadManager.resume();
+            break;
+        case 'CANCEL':
+            downloadManager.cancel();
+            break;
+    }
+});
+
 ipcMain.on('open-install-folder', (event, installPath) => {
-    if (installPath && fs.existsSync(installPath)) {
+    if (installPath && fsSync.existsSync(installPath)) {
         shell.openPath(installPath);
     }
 });
 
 ipcMain.handle('get-local-version', async (event, installPath) => {
-    const versionFilePath = path.join(installPath, 'version.json');
-    try {
-        if (fs.existsSync(versionFilePath)) {
-            const data = fs.readFileSync(versionFilePath, 'utf-8');
-            return JSON.parse(data).version || '0.0.0';
-        }
-    } catch (error) { console.error('Error reading local version file:', error); }
-    return '0.0.0';
+    return await getLocalVersion(installPath);
 });
 
 ipcMain.handle('get-app-path', () => {
@@ -84,17 +296,21 @@ ipcMain.handle('get-app-path', () => {
 
 ipcMain.handle('load-game-data', async () => {
     try {
-        if (fs.existsSync(dataPath)) {
-            return JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-        }
-    } catch (error) { console.error('Error loading game data:', error); }
-    return {};
+        await fs.access(dataPath);
+        const data = await fs.readFile(dataPath, 'utf-8');
+        return JSON.parse(data);
+    } catch (error) {
+        // If file doesn't exist or is invalid, return empty object
+        return {};
+    }
 });
 
-ipcMain.on('save-game-data', (event, data) => {
+ipcMain.on('save-game-data', async (event, data) => {
     try {
-        fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-    } catch (error) { console.error('Error saving game data:', error); }
+        await fs.writeFile(dataPath, JSON.stringify(data, null, 2));
+    } catch (error) {
+        console.error('Error saving game data:', error);
+    }
 });
 
 ipcMain.handle('select-install-dir', async (event) => {
@@ -105,10 +321,86 @@ ipcMain.handle('select-install-dir', async (event) => {
     return canceled ? null : filePaths[0];
 });
 
+ipcMain.handle('verify-install-path', async (event, { gameId, manifestUrl }) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    const { canceled, filePaths } = await dialog.showOpenDialog(win, {
+        properties: ['openDirectory'],
+        title: 'Select Game Folder'
+    });
+    if (canceled) return { isValid: false, error: "Selection cancelled." };
+
+    const selectedPath = filePaths[0];
+
+    try {
+        const response = await axios.get(manifestUrl, { headers: browserHeaders });
+        const serverManifest = response.data;
+        
+        // A simple verification: check for the presence of a few key files.
+        // A full checksum can be done during the update check later.
+        // Here, we'll just check if all files listed in the manifest exist.
+        for (const fileInfo of serverManifest.files) {
+            const filePath = path.join(selectedPath, fileInfo.path);
+            await fs.access(filePath); // Throws if file does not exist
+        }
+        
+        const localVersion = await getLocalVersion(selectedPath);
+
+        return { isValid: true, path: selectedPath, localVersion };
+    } catch (error) {
+        console.error(`Verification failed for ${selectedPath}:`, error);
+        return { isValid: false, path: selectedPath, error: 'The selected folder does not contain a valid installation.' };
+    }
+});
+
+ipcMain.handle('move-install-path', async (event, currentPath) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    const { canceled, filePaths } = await dialog.showOpenDialog(win, {
+        properties: ['openDirectory', 'createDirectory'],
+        title: 'Select New Installation Directory'
+    });
+    if (canceled || !filePaths || filePaths.length === 0) return null;
+
+    const newParentDir = filePaths[0];
+    const newPath = path.join(newParentDir, path.basename(currentPath));
+
+    if (newPath.toLowerCase() === currentPath.toLowerCase()) {
+        dialog.showErrorBox('Invalid Path', 'The new installation path cannot be the same as the current one.');
+        return null;
+    }
+
+    try {
+        await fs.access(newPath);
+        dialog.showErrorBox('Move Error', `The destination folder "${newPath}" already exists. Please choose a different location or remove the existing folder.`);
+        return null;
+    } catch (e) {
+        // Folder doesn't exist, which is what we want. Continue.
+    }
+
+    try {
+        // Using fs.cp for robust copy
+        await fs.cp(currentPath, newPath, {
+            recursive: true,
+            force: false, // Don't overwrite
+            errorOnExist: true,
+        });
+
+        // After successful copy, remove the old directory
+        await shell.trashItem(currentPath);
+
+        return newPath;
+    } catch (error) {
+        console.error(`Failed to move installation from ${currentPath} to ${newPath}:`, error);
+        dialog.showErrorBox('Move Failed', `Could not move the game files. Please ensure you have the correct permissions and the destination drive has enough space. The original files have not been changed.`);
+        // Attempt to clean up partially copied new directory if move fails
+        try { await fs.rm(newPath, { recursive: true, force: true }); } catch (cleanupError) { console.error('Failed to cleanup failed move directory:', cleanupError); }
+        return null;
+    }
+});
+
 ipcMain.on('launch-game', (event, { installPath, executable }) => {
     if (!installPath || !executable) return;
     const executablePath = path.join(installPath, executable);
-    if (fs.existsSync(executablePath)) {
+    if (fsSync.existsSync(executablePath)) {
         const { spawn } = require('child_process');
         spawn(executablePath, [], { detached: true, cwd: installPath });
     } else {
@@ -163,7 +455,7 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
         
         console.log(`--- Starting Update Check for ${gameId} v${serverManifest.version} ---`);
 
-        if (!installPath || !fs.existsSync(installPath)) {
+        if (!installPath || !fsSync.existsSync(installPath)) {
             console.log('No install path provided or path does not exist. Flagging all files for fresh installation.');
             return {
                 isUpdateAvailable: true,
@@ -176,17 +468,16 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
             if (path.basename(fileInfo.path) === 'version.json') continue;
 
             const localFilePath = path.join(installPath, fileInfo.path);
-            if (fs.existsSync(localFilePath)) {
+            try {
+                await fs.access(localFilePath);
                 const localChecksum = await getFileChecksum(localFilePath);
                 const isMatch = localChecksum === fileInfo.checksum;
                 console.log(`Checking: ${fileInfo.path} -> Match: ${isMatch}`);
                 if (!isMatch) {
-                    console.log(`   - Mismatch! Local: ${localChecksum}`);
-                    console.log(`   - Mismatch! Server: ${fileInfo.checksum}`);
-                    filesToUpdate.push({ ...fileInfo, localChecksum }); // Add local checksum for debugging
+                    filesToUpdate.push(fileInfo);
                 }
-            } else {
-                console.log(`Checking: ${fileInfo.path} -> File not found locally. Adding to update list.`);
+            } catch (e) {
+                 console.log(`Checking: ${fileInfo.path} -> File not found locally. Adding to update list.`);
                 filesToUpdate.push(fileInfo);
             }
         }
@@ -208,100 +499,5 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
             errorMessage = `Update check failed: ${error.message}`;
         }
         return { error: errorMessage };
-    }
-});
-
-// --- Download Control Handlers ---
-ipcMain.on('pause-download', () => {
-    if (activeDownload.request) {
-        activeDownload.isPaused = true;
-        activeDownload.request.pause();
-    }
-});
-
-ipcMain.on('resume-download', () => {
-    if (activeDownload.request) {
-        activeDownload.isPaused = false;
-        activeDownload.request.resume();
-    }
-});
-
-ipcMain.on('cancel-download', (event) => {
-    if (activeDownload.request) {
-        activeDownload.request.destroy(); // Forcefully stop the stream
-        if (activeDownload.writer) {
-            activeDownload.writer.close(() => {
-                if (activeDownload.filePath && fs.existsSync(activeDownload.filePath)) {
-                    fs.unlinkSync(activeDownload.filePath); // Delete partial file
-                }
-                activeDownload = { request: null, writer: null, isPaused: false, filePath: null };
-            });
-        }
-        event.sender.send('download-cancelled');
-    }
-});
-
-
-ipcMain.on('download-files', async (event, { gameId, installPath, files, latestVersion }) => {
-    const win = BrowserWindow.fromWebContents(event.sender);
-    activeDownload.isPaused = false;
-
-    try {
-        const totalFiles = files.length;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const destinationPath = path.join(installPath, file.path);
-            activeDownload.filePath = destinationPath;
-            const destinationDir = path.dirname(destinationPath);
-
-            if (!fs.existsSync(destinationDir)) {
-                fs.mkdirSync(destinationDir, { recursive: true });
-            }
-
-            const response = await axios.get(file.url, {
-                responseType: 'stream',
-                headers: browserHeaders
-            });
-            activeDownload.request = response.data;
-
-            const totalLength = parseInt(response.headers['content-length'], 10);
-            let downloadedLength = 0;
-            const writer = fs.createWriteStream(destinationPath);
-            activeDownload.writer = writer;
-
-            activeDownload.request.on('data', (chunk) => {
-                downloadedLength += chunk.length;
-                const fileProgress = (downloadedLength / totalLength) * 100;
-                const overallProgress = ((i / totalFiles) * 100) + (fileProgress / totalFiles);
-
-                win.webContents.send('download-progress', {
-                    overallProgress: overallProgress,
-                    fileName: path.basename(file.path),
-                    downloadedBytes: downloadedLength,
-                    totalBytes: totalLength,
-                });
-            });
-            
-            activeDownload.request.pipe(writer);
-
-            await new Promise((resolve, reject) => {
-                writer.on('finish', resolve);
-                writer.on('error', reject);
-                activeDownload.request.on('end', resolve);
-            });
-        }
-
-        const versionFilePath = path.join(installPath, 'version.json');
-        fs.writeFileSync(versionFilePath, JSON.stringify({ version: latestVersion }, null, 2));
-
-        win.webContents.send('install-complete', { gameId, version: latestVersion });
-
-    } catch (error) {
-        if (error.code !== 'ERR_STREAM_DESTROYED') { // Ignore error from cancellation
-            console.error(`Download/Update failed for ${gameId}:`, error);
-            win.webContents.send('install-error', { gameId, message: 'Download failed.' });
-        }
-    } finally {
-        activeDownload = { request: null, writer: null, isPaused: false, filePath: null };
     }
 });

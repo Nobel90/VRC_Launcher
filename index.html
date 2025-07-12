@@ -54,8 +54,8 @@
                                 <button id="pause-resume-button" class="px-6 py-4 text-lg font-bold rounded-lg bg-gray-600 hover:bg-gray-700 transition-all duration-300">Pause</button>
                                 <button id="cancel-button" class="px-6 py-4 text-lg font-bold rounded-lg bg-red-600 hover:bg-red-700 transition-all duration-300">Cancel</button>
                             </div>
-                            <button id="open-folder-button" class="hidden p-4 rounded-lg bg-gray-600 hover:bg-gray-700 transition-colors duration-300" title="Open Installation Folder">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
+                            <button id="settings-button" class="hidden p-4 rounded-lg bg-gray-600/50 hover:bg-gray-700/50 transition-colors duration-300" title="Settings">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                             </button>
                             <button id="uninstall-button" class="hidden p-4 rounded-lg bg-red-800/50 hover:bg-red-700/50 transition-colors duration-300" title="Uninstall Game">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" /></svg>
@@ -74,11 +74,33 @@
                             </div>
                             <div id="progress-text" class="mt-2 text-sm text-gray-400"></div>
                         </div>
+                        <div id="locate-game-container" class="mt-4 hidden">
+                            <a href="#" id="locate-game-link" class="text-sm text-blue-400 hover:underline">Already Installed? Locate the game folder.</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-lg">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Settings</h2>
+                <button id="close-settings-button" class="text-gray-400 hover:text-white">&times;</button>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-2">Installation Path</h3>
+                <div class="flex items-center space-x-4">
+                    <input type="text" id="install-path-display" class="bg-gray-700 border border-gray-600 rounded-md px-4 py-2 w-full" readonly>
+                    <button id="change-path-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Change</button>
+                </div>
+                <p class="text-sm text-gray-400 mt-2">This is where the game files are currently located.</p>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -112,12 +134,18 @@
                   downloadControlsEl = document.getElementById('download-controls'),
                   pauseResumeButtonEl = document.getElementById('pause-resume-button'),
                   cancelButtonEl = document.getElementById('cancel-button'),
-                  openFolderButtonEl = document.getElementById('open-folder-button'),
+                  settingsButtonEl = document.getElementById('settings-button'),
                   uninstallButtonEl = document.getElementById('uninstall-button'),
                   checkUpdateButtonEl = document.getElementById('check-update-button'),
                   progressContainerEl = document.getElementById('progress-container'),
                   progressBarEl = document.getElementById('progress-bar'),
-                  progressTextEl = document.getElementById('progress-text');
+                  progressTextEl = document.getElementById('progress-text'),
+                  locateGameContainerEl = document.getElementById('locate-game-container'),
+                  settingsModalEl = document.getElementById('settings-modal'),
+                  closeSettingsButtonEl = document.getElementById('close-settings-button'),
+                  installPathDisplayEl = document.getElementById('install-path-display'),
+                  changePathButtonEl = document.getElementById('change-path-button'),
+                  locateGameLinkEl = document.getElementById('locate-game-link');
 
             function formatBytes(bytes, decimals = 2) {
                 if (!bytes || bytes === 0) return '0 Bytes';
@@ -150,17 +178,18 @@
                 actionButtonEl.disabled = false;
                 actionButtonEl.classList.remove('hidden');
                 downloadControlsEl.classList.add('hidden');
-                openFolderButtonEl.classList.add('hidden');
+                settingsButtonEl.classList.add('hidden');
                 uninstallButtonEl.classList.add('hidden');
                 checkUpdateButtonEl.classList.add('hidden');
                 progressContainerEl.style.display = 'none';
+                locateGameContainerEl.classList.add('hidden');
                 
                 switch (game.status) {
                     case 'installed':
                         actionButtonEl.innerText = 'LAUNCH';
                         actionButtonEl.classList.add('bg-green-500', 'hover:bg-green-600', 'btn-glow');
                         gameStatusTextEl.innerText = 'Ready to Play';
-                        openFolderButtonEl.classList.remove('hidden');
+                        settingsButtonEl.classList.remove('hidden');
                         uninstallButtonEl.classList.remove('hidden');
                         checkUpdateButtonEl.classList.remove('hidden');
                         break;
@@ -168,31 +197,57 @@
                         actionButtonEl.innerText = 'UPDATE';
                         actionButtonEl.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
                         gameStatusTextEl.innerText = `Update available!`;
-                        openFolderButtonEl.classList.remove('hidden');
+                        settingsButtonEl.classList.remove('hidden');
                         uninstallButtonEl.classList.remove('hidden');
                         break;
                     case 'uninstalled':
                         actionButtonEl.innerText = 'INSTALL';
                         actionButtonEl.classList.add('bg-blue-500', 'hover:bg-blue-600', 'btn-glow');
                         gameStatusTextEl.innerText = 'Not Installed';
+                        locateGameContainerEl.classList.remove('hidden');
+                        break;
+                    case 'verifying':
+                        actionButtonEl.disabled = true;
+                        actionButtonEl.innerText = 'VERIFYING...';
+                        actionButtonEl.classList.add('bg-gray-500', 'cursor-not-allowed');
+                        gameStatusTextEl.innerText = 'Verifying game files...';
+                        break;
+                    case 'moving':
+                        actionButtonEl.disabled = true;
+                        actionButtonEl.innerText = 'MOVING...';
+                        actionButtonEl.classList.add('bg-gray-500', 'cursor-not-allowed');
+                        gameStatusTextEl.innerText = 'Moving game files to a new location...';
+                        settingsButtonEl.classList.add('hidden');
+                        uninstallButtonEl.classList.add('hidden');
+                        checkUpdateButtonEl.classList.add('hidden');
                         break;
                     case 'checking_update':
                         actionButtonEl.disabled = true;
                         actionButtonEl.innerText = 'Please wait...';
                         actionButtonEl.classList.add('bg-gray-500', 'cursor-not-allowed');
                         gameStatusTextEl.innerText = 'Checking for updates...';
-                        openFolderButtonEl.classList.remove('hidden');
+                        settingsButtonEl.classList.remove('hidden');
                         uninstallButtonEl.classList.remove('hidden');
                         break;
-                    case 'updating':
+                    case 'downloading':
+                    case 'paused':
                         actionButtonEl.classList.add('hidden');
                         downloadControlsEl.classList.remove('hidden');
-                        gameStatusTextEl.innerText = 'Downloading files...';
                         progressContainerEl.style.display = 'block';
                         break;
                 }
             }
 
+            function openSettingsModal() {
+                const game = gameLibrary[currentGameId];
+                installPathDisplayEl.value = game.installPath || 'Not Set';
+                settingsModalEl.classList.remove('hidden');
+            }
+
+            function closeSettingsModal() {
+                settingsModalEl.classList.add('hidden');
+            }
+            
             async function handleActionButtonClick() {
                 const game = gameLibrary[currentGameId];
                 
@@ -200,21 +255,20 @@
                     case 'uninstalled':
                         const selectedPath = await window.electronAPI.selectInstallDir();
                         if (selectedPath) {
-                            game.installPath = selectedPath; // Set path immediately
+                            game.installPath = selectedPath;
+                            await window.electronAPI.saveGameData(gameLibrary);
                             await checkForUpdates(currentGameId);
-                            if(game.status === 'needs_update') {
-                                handleActionButtonClick();
-                            }
                         }
                         break;
                     case 'needs_update':
-                         game.status = 'updating';
-                         updateButtonAndStatus(game);
-                         window.electronAPI.downloadFiles({
-                             gameId: currentGameId,
-                             installPath: game.installPath,
-                             files: game.filesToUpdate,
-                             latestVersion: game.version,
+                         window.electronAPI.handleDownloadAction({
+                             type: 'START',
+                             payload: {
+                                gameId: currentGameId,
+                                installPath: game.installPath,
+                                files: game.filesToUpdate,
+                                latestVersion: game.version,
+                             }
                          });
                         break;
                     case 'installed':
@@ -227,15 +281,10 @@
 
             function handlePauseResumeClick() {
                 const game = gameLibrary[currentGameId];
-                game.isPaused = !game.isPaused;
-                if (game.isPaused) {
-                    window.electronAPI.pauseDownload();
-                    pauseResumeButtonEl.innerText = 'Resume';
-                    gameStatusTextEl.innerText = 'Download paused.';
-                } else {
-                    window.electronAPI.resumeDownload();
-                    pauseResumeButtonEl.innerText = 'Pause';
-                    gameStatusTextEl.innerText = 'Downloading files...';
+                if (game.status === 'downloading') {
+                    window.electronAPI.handleDownloadAction({ type: 'PAUSE' });
+                } else if (game.status === 'paused') {
+                    window.electronAPI.handleDownloadAction({ type: 'RESUME' });
                 }
             }
 
@@ -294,7 +343,7 @@
                     logoEl.className = 'w-16 h-16 rounded-lg cursor-pointer transition-all duration-200 hover:scale-110 game-logo';
                     logoEl.dataset.gameId = gameId;
                     logoEl.addEventListener('click', () => {
-                       if (gameLibrary[currentGameId].status !== 'updating') {
+                       if (gameLibrary[currentGameId].status !== 'downloading' && gameLibrary[currentGameId].status !== 'paused') {
                            currentGameId = gameId;
                            renderGame(gameId);
                        }
@@ -303,11 +352,10 @@
                 }
                 actionButtonEl.addEventListener('click', handleActionButtonClick);
                 pauseResumeButtonEl.addEventListener('click', handlePauseResumeClick);
-                cancelButtonEl.addEventListener('click', () => window.electronAPI.cancelDownload());
-                openFolderButtonEl.addEventListener('click', () => {
-                    const game = gameLibrary[currentGameId];
-                    if (game.installPath) window.electronAPI.openInstallFolder(game.installPath);
-                });
+                cancelButtonEl.addEventListener('click', () => window.electronAPI.handleDownloadAction({ type: 'CANCEL' }));
+                
+                settingsButtonEl.addEventListener('click', openSettingsModal);
+                closeSettingsButtonEl.addEventListener('click', closeSettingsModal);
 
                 uninstallButtonEl.addEventListener('click', () => {
                     const game = gameLibrary[currentGameId];
@@ -316,44 +364,84 @@
                     }
                 });
 
-                checkUpdateButtonEl.addEventListener('click', () => {
-                    checkForUpdates(currentGameId);
-                });
+                checkUpdateButtonEl.addEventListener('click', () => checkForUpdates(currentGameId));
 
-                window.electronAPI.onDownloadProgress((data) => {
-                    if (data.status) {
-                        progressTextEl.innerText = data.status;
-                    } else if (data.overallProgress >= 0) {
-                        progressBarEl.style.width = `${data.overallProgress.toFixed(2)}%`;
-                        progressTextEl.innerText = `Downloading: ${data.fileName} (${formatBytes(data.downloadedBytes)} / ${formatBytes(data.totalBytes)})`;
+                changePathButtonEl.addEventListener('click', async () => {
+                    const game = gameLibrary[currentGameId];
+                    if (!game.installPath) return;
+
+                    game.status = 'moving';
+                    renderGame(currentGameId);
+                    closeSettingsModal();
+
+                    const newPath = await window.electronAPI.moveInstallPath(game.installPath);
+                    if (newPath) {
+                        game.installPath = newPath;
+                        await window.electronAPI.saveGameData(gameLibrary);
+                        game.status = 'installed';
+                        renderGame(currentGameId);
+                    } else {
+                        game.status = 'installed';
+                        renderGame(currentGameId);
+                        alert('Move Failed: The folder could not be moved. Please check permissions and try again.');
                     }
                 });
 
-                window.electronAPI.onInstallComplete(async ({ gameId, version }) => {
-                    const game = gameLibrary[gameId];
-                    game.isPaused = false;
-                    pauseResumeButtonEl.innerText = 'Pause';
-                    game.status = 'installed';
-                    game.version = version;
-                    game.filesToUpdate = [];
-                    await window.electronAPI.saveGameData(gameLibrary);
-                    renderGame(gameId); 
-                });
-
-                window.electronAPI.onDownloadCancelled(() => {
+                locateGameLinkEl.addEventListener('click', async (e) => {
+                    e.preventDefault();
                     const game = gameLibrary[currentGameId];
-                    game.isPaused = false;
-                    game.status = 'uninstalled'; // Revert to a safe state
-                    renderGame(gameId);
-                    gameStatusTextEl.innerText = 'Installation cancelled.';
+                    
+                    game.status = 'verifying';
+                    renderGame(currentGameId);
+
+                    const result = await window.electronAPI.verifyInstallPath({ gameId: currentGameId, manifestUrl: game.manifestUrl });
+                    
+                    if (result.isValid) {
+                        game.installPath = result.path;
+                        game.version = result.localVersion;
+                        game.status = 'installed';
+                        await window.electronAPI.saveGameData(gameLibrary);
+                        renderGame(currentGameId);
+                        await checkForUpdates(currentGameId);
+                    } else {
+                        game.status = 'uninstalled';
+                        renderGame(currentGameId);
+                        gameStatusTextEl.innerText = result.error || "Could not validate the selected folder.";
+                    }
                 });
 
-                window.electronAPI.onInstallError(({ gameId, message }) => {
-                    const game = gameLibrary[gameId];
-                    game.isPaused = false;
-                    game.status = 'uninstalled';
-                    renderGame(gameId);
-                    gameStatusTextEl.innerText = message || 'An error occurred.';
+                window.electronAPI.onDownloadStateUpdate((state) => {
+                    const game = gameLibrary[currentGameId];
+                    game.status = state.status;
+                    renderGame(currentGameId);
+
+                    switch (state.status) {
+                        case 'downloading':
+                            progressBarEl.style.width = `${state.progress.toFixed(2)}%`;
+                            progressTextEl.innerText = `Downloading: ${state.currentFileName} (${formatBytes(state.downloadedBytes)} / ${formatBytes(state.totalBytes)})`;
+                            gameStatusTextEl.innerText = `Downloading update... (${state.filesDownloaded}/${state.totalFiles})`;
+                            pauseResumeButtonEl.innerText = 'Pause';
+                            break;
+                        case 'paused':
+                            gameStatusTextEl.innerText = 'Download paused.';
+                            pauseResumeButtonEl.innerText = 'Resume';
+                            break;
+                        case 'success':
+                            game.status = 'installed';
+                            game.filesToUpdate = [];
+                            window.electronAPI.saveGameData(gameLibrary);
+                            renderGame(currentGameId);
+                            break;
+                        case 'error':
+                            game.status = 'needs_update'; // Or 'uninstalled' depending on previous state
+                            renderGame(currentGameId);
+                            gameStatusTextEl.innerText = `Error: ${state.error}`;
+                            break;
+                        case 'idle':
+                            game.status = 'uninstalled'; // Or needs_update
+                            renderGame(currentGameId);
+                            break;
+                    }
                 });
 
                 window.electronAPI.onUninstallComplete(() => {
@@ -365,16 +453,25 @@
                     renderGame(currentGameId);
                 });
 
+                window.electronAPI.onMoveProgress((data) => {
+                    gameStatusTextEl.innerText = `Moving: ${data.file} (${data.progress.toFixed(0)}%)`;
+                });
+
                 renderGame(currentGameId);
                 for (const gameId in gameLibrary) {
                     const game = gameLibrary[gameId];
                     if (game.installPath && game.status !== 'uninstalled') {
-                        const versionResult = await window.electronAPI.checkForVersion({
+                        const versionResult = await window.electronAPI.checkForUpdates({
+                            gameId: gameId,
                             installPath: game.installPath,
-                            versionUrl: game.versionUrl
+                            manifestUrl: game.manifestUrl
                         });
                         if (versionResult.isUpdateAvailable) {
                             game.status = 'needs_update';
+                            game.version = versionResult.latestVersion;
+                            game.filesToUpdate = versionResult.filesToUpdate;
+                        } else {
+                            game.status = 'installed';
                             game.version = versionResult.latestVersion;
                         }
                         renderGame(gameId);

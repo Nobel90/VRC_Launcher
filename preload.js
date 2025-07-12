@@ -10,22 +10,18 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
     // --- File Operations & Updates ---
     selectInstallDir: () => ipcRenderer.invoke('select-install-dir'),
+    verifyInstallPath: (args) => ipcRenderer.invoke('verify-install-path', args),
+    moveInstallPath: (currentPath) => ipcRenderer.invoke('move-install-path', currentPath),
     launchGame: (args) => ipcRenderer.send('launch-game', args),
     checkForUpdates: (args) => ipcRenderer.invoke('check-for-updates', args),
-    checkForVersion: (args) => ipcRenderer.invoke('check-for-version', args),
-    downloadFiles: (args) => ipcRenderer.send('download-files', args),
     openInstallFolder: (path) => ipcRenderer.send('open-install-folder', path),
     uninstallGame: (path) => ipcRenderer.send('uninstall-game', path),
 
-    // --- Download Controls ---
-    pauseDownload: () => ipcRenderer.send('pause-download'),
-    resumeDownload: () => ipcRenderer.send('resume-download'),
-    cancelDownload: () => ipcRenderer.send('cancel-download'),
-
-    // --- Event Listeners from Main to Renderer ---
-    onDownloadProgress: (callback) => ipcRenderer.on('download-progress', (event, value) => callback(value)),
-    onInstallComplete: (callback) => ipcRenderer.on('install-complete', (event, value) => callback(value)),
-    onInstallError: (callback) => ipcRenderer.on('install-error', (event, value) => callback(value)),
-    onDownloadCancelled: (callback) => ipcRenderer.on('download-cancelled', () => callback()),
-    onUninstallComplete: (callback) => ipcRenderer.on('uninstall-complete', () => callback())
+    // --- New Unified Download Controls ---
+    handleDownloadAction: (action) => ipcRenderer.send('handle-download-action', action),
+    onDownloadStateUpdate: (callback) => ipcRenderer.on('download-state-update', (event, state) => callback(state)),
+    
+    // --- Other Event Listeners ---
+    onUninstallComplete: (callback) => ipcRenderer.on('uninstall-complete', () => callback()),
+    onMoveProgress: (callback) => ipcRenderer.on('move-progress', (event, value) => callback(value))
 });
