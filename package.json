@@ -1,17 +1,37 @@
 {
   "name": "launcher",
   "version": "1.0.0",
+  "description": "VRC Launcher",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "keywords": [],
-  "author": "",
+  "author": "VRC",
   "license": "ISC",
-  "description": "",
+  "build": {
+    "appId": "com.vrc.launcher",
+    "productName": "VRC Launcher",
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon-white_s.ico"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  },
   "devDependencies": {
     "electron": "^37.2.0",
+    "electron-builder": "^25.2.0",
     "electron-packager": "^17.1.2"
   },
   "dependencies": {
