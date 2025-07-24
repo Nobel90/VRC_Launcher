@@ -173,6 +173,7 @@ function initLauncher() {
           progressContainerEl = document.getElementById('progress-container'),
           progressBarEl = document.getElementById('progress-bar'),
           progressTextEl = document.getElementById('progress-text'),
+          downloadSpeedEl = document.getElementById('download-speed'),
           locateGameContainerEl = document.getElementById('locate-game-container'),
           settingsModalEl = document.getElementById('settings-modal'),
           closeSettingsButtonEl = document.getElementById('close-settings-button'),
@@ -297,6 +298,22 @@ function initLauncher() {
                 }
                 break;
             case 'needs_update':
+                 // Fetch file sizes before starting the download
+                 gameStatusTextEl.innerText = 'Preparing to download...';
+                 actionButtonEl.disabled = true;
+
+                 const promises = game.filesToUpdate.map((file, index) => {
+                     return window.electronAPI.getFileSize(file.url).then(size => {
+                         file.size = size;
+                         // Update progress text on the fly
+                         gameStatusTextEl.innerText = `Preparing to download... (Checked ${index + 1}/${game.filesToUpdate.length} files)`;
+                     });
+                 });
+                 
+                 await Promise.all(promises);
+                 await window.electronAPI.saveGameData(gameLibrary);
+
+
                  window.electronAPI.handleDownloadAction({
                      type: 'START',
                      payload: {
@@ -453,28 +470,37 @@ function initLauncher() {
             switch (state.status) {
                 case 'downloading':
                     progressBarEl.style.width = `${state.progress.toFixed(2)}%`;
-                    progressTextEl.innerText = `Downloading: ${state.currentFileName} (${formatBytes(state.downloadedBytes)} / ${formatBytes(state.totalBytes)})`;
+                    if (state.totalBytes > 0) {
+                        progressTextEl.innerText = `Downloading: ${state.currentFileName} (${formatBytes(state.downloadedBytes)} / ${formatBytes(state.totalBytes)})`;
+                    } else {
+                        progressTextEl.innerText = `Downloading: ${state.currentFileName}`;
+                    }
                     gameStatusTextEl.innerText = `Downloading update... (${state.filesDownloaded}/${state.totalFiles})`;
+                    downloadSpeedEl.innerText = `Speed: ${formatBytes(state.downloadSpeed)}/s`;
                     pauseResumeButtonEl.innerText = 'Pause';
                     break;
                 case 'paused':
                     gameStatusTextEl.innerText = 'Download paused.';
                     pauseResumeButtonEl.innerText = 'Resume';
+                    downloadSpeedEl.innerText = '';
                     break;
                 case 'success':
                     game.status = 'installed';
                     game.filesToUpdate = [];
                     window.electronAPI.saveGameData(gameLibrary);
                     renderGame(currentGameId);
+                    downloadSpeedEl.innerText = '';
                     break;
                 case 'error':
                     game.status = 'needs_update';
                     renderGame(currentGameId);
                     gameStatusTextEl.innerText = `Error: ${state.error}`;
+                    downloadSpeedEl.innerText = '';
                     break;
                 case 'idle':
                     game.status = 'uninstalled';
                     renderGame(currentGameId);
+                    downloadSpeedEl.innerText = '';
                     break;
             }
         });
