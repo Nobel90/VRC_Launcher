@@ -16,10 +16,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
     checkForUpdates: (args) => ipcRenderer.invoke('check-for-updates', args),
     openInstallFolder: (path) => ipcRenderer.send('open-install-folder', path),
     uninstallGame: (path) => ipcRenderer.send('uninstall-game', path),
+    getFileSize: (url) => ipcRenderer.invoke('get-file-size', url),
 
     // --- New Unified Download Controls ---
     handleDownloadAction: (action) => ipcRenderer.send('handle-download-action', action),
     onDownloadStateUpdate: (callback) => ipcRenderer.on('download-state-update', (event, state) => callback(state)),
+    
+    // --- Browser/OS Interaction ---
+    openExternal: (url) => ipcRenderer.send('open-external', url),
     
     // --- Other Event Listeners ---
     onUninstallComplete: (callback) => ipcRenderer.on('uninstall-complete', () => callback()),

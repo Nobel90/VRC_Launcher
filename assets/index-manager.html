@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management Dashboard</title>
+    <!-- Tailwind CSS for styling -->
+    <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=14_7yJjBKa-2sh3xvd-Y_MKka9jsUwvco08-K3sJVgW82hoMs2qqJfvevVKJMkYAwkLgf-mTe6ZNHkVjBEvNEhz8DPLQDDUTc3_b_P2I4PozRc11QRNLyFGYq48PiveKKlJcXB0W9hYddqMCWVfFwdxC2bMPhunt5u-4Ho64RphSZ1YUXIyT6xHn3KoVregajCkotXw0yTMBGqW6GCHoT8BNzgXZvoOlFsM2_aIYiBs-FxJQMhKMoOMZfeYwA846hxuBvbXTq84Ji1vEZY9VL7x1Kxpk7glLLuD2qJagxQcMq9N9J1zwUJA1US71RzcoCQic4pxRHkStjp-zh5qR1GTkb7DRSJVIkmD14ttYf1vdRobnShW7hHLB8-inSaY0_LSqJVzKiajI9Ns9RIg3BnJ644SpDd-jiIPZJA7xlNSUyC6aCk4LtTHOlom_fIuUhmu75Ngz4qzRDDsFS31V2tHjz2qZZrfH0jj4zVjPuXY64pgtgFMoA8tvDkH3ajNEND5RRYzgv0d45tN65b5k_0GeUGi7VIceKOZMUEzppFD0uYyYHDJrccF5uTaZW64kWfMZz165zrFaW9NZ3PU-2oYFBsGWMKZcUw8kvgA-QMViIvqKxPOs_lMYZiOWqhfq-SozlZB-gt-Z9ea82V2BgqNwuU_f5SslTa5RVPZ1-RnbNENjk0YXifGZMqm7B8gS2TEp6jECbw1vfiR137RiNi8ExfYXPiP3A_3BdavengvVewnVuGwK4dNKsvrVlVKjxMxa7TXzGgQLBNOmrNjR627dGdurywMFqB1l_VHNYdKIaqH5pRx1uZQV0mumdjPI" charset="UTF-8"></script><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Simple transition for view switching */
+        .view {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Custom styles for the loader */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Main Application Container -->
+    <div id="app" class="min-h-screen flex flex-col items-center justify-center p-4">
+
+        <!-- Loading Spinner View -->
+        <div id="loading-view" class="view flex flex-col items-center justify-center space-y-4">
+            <div class="loader"></div>
+            <p class="text-gray-600">Initializing...</p>
+        </div>
+
+        <!-- Login View -->
+        <div id="login-view" class="view w-full max-w-md">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-center text-gray-900 mb-6">Welcome Back</h2>
+                <p class="text-center text-gray-500 mb-6">Log in to access your dashboard.</p>
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="login-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="login-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300">Log In</button>
+                </form>
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    Don't have an account? <a href="#" id="show-register" class="font-medium text-blue-600 hover:underline">Sign up</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Register View -->
+        <div id="register-view" class="view w-full max-w-md">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-center text-gray-900 mb-6">Create Account</h2>
+                <p class="text-center text-gray-500 mb-6">Get started with your own account.</p>
+                <form id="register-form">
+                    <div class="mb-4">
+                        <label for="register-username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <input type="text" id="register-username" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    <div class="mb-4">
+                        <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="register-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    <div class="mb-6">
+                        <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">Password (min. 6 characters)</label>
+                        <input type="password" id="register-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300">Register</button>
+                </form>
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    Already have an account? <a href="#" id="show-login" class="font-medium text-blue-600 hover:underline">Log in</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard View -->
+        <div id="admin-dashboard-view" class="view w-full max-w-5xl">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Admin Dashboard</h2>
+                        <p class="text-gray-500">Manage all registered users.</p>
+                    </div>
+                    <button id="logout-btn" class="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors duration-300">Logout</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="text-left py-3 px-4 font-semibold text-sm">Email</th>
+                                <th class="text-left py-3 px-4 font-semibold text-sm">Username</th>
+                                <th class="text-left py-3 px-4 font-semibold text-sm">User ID</th>
+                                <th class="text-left py-3 px-4 font-semibold text-sm">Status</th>
+                                <th class="text-left py-3 px-4 font-semibold text-sm">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list" class="text-gray-700">
+                            <!-- User rows will be injected here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Generic Message Modal -->
+        <div id="message-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" style="display: none;">
+            <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+                <p id="modal-message" class="mb-4 text-lg"></p>
+                <button id="modal-close-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">OK</button>
+            </div>
+        </div>
+
+        <!-- Edit Username Modal -->
+        <div id="edit-user-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" style="display: none;">
+            <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+                <h3 class="text-lg font-bold mb-4">Edit Username</h3>
+                <form id="edit-user-form">
+                    <input type="hidden" id="edit-user-uid">
+                    <div class="mb-4">
+                        <label for="edit-username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <input type="text" id="edit-username" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" id="edit-modal-cancel-btn" class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">Cancel</button>
+                        <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // IMPORTANT: Replace with your actual Firebase project configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDigbqsTEMSRXz_JgqBAIJ1BKmr6Zb7DzQ",
+            authDomain: "vr-centre-7bdac.firebaseapp.com",
+            projectId: "vr-centre-7bdac",
+            storageBucket: "vr-centre-7bdac.firebasestorage.app",
+            messagingSenderId: "236273910700",
+            appId: "1:236273910700:web:10d6825337bfd26fb43009",
+            measurementId: "G-7P6X25QK1R"
+            };
+        
+        // This is the email for the user who will have admin privileges.
+        // For a real application, you would manage roles in the database.
+        const ADMIN_EMAIL = "mostafa_nabil_90@hotmail.com";
+
+        // Import Firebase services
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            signOut, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            doc, 
+            setDoc,
+            getDocs,
+            updateDoc,
+            deleteDoc,
+            onSnapshot
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const views = {
+            loading: document.getElementById('loading-view'),
+            login: document.getElementById('login-view'),
+            register: document.getElementById('register-view'),
+            adminDashboard: document.getElementById('admin-dashboard-view')
+        };
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const logoutBtn = document.getElementById('logout-btn');
+        const userList = document.getElementById('user-list');
+        const messageModal = document.getElementById('message-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const editUserModal = document.getElementById('edit-user-modal');
+        const editUserForm = document.getElementById('edit-user-form');
+        const editUsernameInput = document.getElementById('edit-username');
+        const editUserUidInput = document.getElementById('edit-user-uid');
+        const editModalCancelBtn = document.getElementById('edit-modal-cancel-btn');
+
+        // --- UTILITY FUNCTIONS ---
+        
+        /**
+         * Shows a specific view and hides others.
+         * @param {string} viewName - The key of the view to show (e.g., 'login').
+         */
+        function showView(viewName) {
+            Object.values(views).forEach(view => view.style.display = 'none');
+            if (views[viewName]) {
+                views[viewName].style.display = 'block';
+            }
+        }
+        
+        /**
+         * Displays a message in a modal dialog.
+         * @param {string} message - The message to display.
+         */
+        function showMessage(message) {
+            modalMessage.textContent = message;
+            messageModal.style.display = 'flex';
+        }
+        
+        // --- AUTHENTICATION LOGIC ---
+
+        // Listen for authentication state changes
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                const isNewUser = (Date.now() - new Date(user.metadata.creationTime).getTime()) < 5000;
+
+                if (user.email === ADMIN_EMAIL) {
+                    showView('adminDashboard');
+                    loadUsers();
+                } else if (isNewUser) {
+                    // This is a new user being registered. Let the registration function handle the sign out.
+                    return; 
+                } else {
+                    showMessage("You do not have permission to access the admin dashboard.");
+                    signOut(auth);
+                }
+            } else {
+                showView('login');
+            }
+        });
+
+        // Handle registration
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const username = document.getElementById('register-username').value;
+            
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Create a corresponding user document in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    uid: user.uid,
+                    username: username,
+                    isVerified: false,
+                    createdAt: new Date()
+                });
+
+                // After successful registration, sign the new user out so the admin can log back in.
+                await signOut(auth);
+                showMessage("Registration successful! Please log in with your admin account to continue.");
+                showView('login');
+                registerForm.reset();
+            } catch (error) {
+                console.error("Registration Error:", error);
+                let friendlyMessage = "An unexpected error occurred during registration.";
+                if (error.code) {
+                    switch (error.code) {
+                        case 'auth/email-already-in-use':
+                            friendlyMessage = "This email address is already in use by another account.";
+                            break;
+                        case 'auth/weak-password':
+                            friendlyMessage = "The password is too weak. Please use at least 6 characters.";
+                            break;
+                        case 'permission-denied':
+                             friendlyMessage = "Permission denied. Check your Firestore Security Rules to allow user creation.";
+                             break;
+                        default:
+                            friendlyMessage = `Registration failed: ${error.message}`;
+                    }
+                }
+                showMessage(friendlyMessage);
+            }
+        });
+
+        // Handle login
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                loginForm.reset();
+            } catch (error) {
+                console.error("Login Error:", error);
+                let friendlyMessage = "An unexpected error occurred during login.";
+                if (error.code) {
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                        case 'auth/wrong-password':
+                        case 'auth/invalid-credential':
+                            friendlyMessage = "Invalid email or password. Please try again.";
+                            break;
+                        default:
+                            friendlyMessage = `Login failed: ${error.message}`;
+                    }
+                }
+                showMessage(friendlyMessage);
+            }
+        });
+
+        // Handle logout
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // --- ADMIN DASHBOARD LOGIC ---
+
+        /**
+         * Fetches all users from Firestore and displays them in the admin table.
+         */
+        async function loadUsers() {
+            try {
+                const usersCollection = collection(db, "users");
+                // Use onSnapshot for real-time updates
+                onSnapshot(usersCollection, (querySnapshot) => {
+                    userList.innerHTML = ''; // Clear existing list
+                    if (querySnapshot.empty) {
+                        userList.innerHTML = '<tr><td colspan="5" class="text-center py-4">No users found.</td></tr>';
+                        return;
+                    }
+                    querySnapshot.forEach(doc => {
+                        const user = doc.data();
+                        // Don't display the admin user in the list
+                        if (user.email === ADMIN_EMAIL) return;
+
+                        const row = document.createElement('tr');
+                        row.className = 'border-b';
+                        row.innerHTML = `
+                            <td class="py-3 px-4">${user.email}</td>
+                            <td class="py-3 px-4">${user.username || 'N/A'}</td>
+                            <td class="py-3 px-4 text-xs text-gray-500">${user.uid}</td>
+                            <td class="py-3 px-4">
+                                <span class="px-2 py-1 text-xs font-semibold rounded-full ${user.isVerified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                                    ${user.isVerified ? 'Verified' : 'Not Verified'}
+                                </span>
+                            </td>
+                            <td class="py-3 px-4 flex items-center space-x-2">
+                                <button data-uid="${user.uid}" data-username="${user.username || ''}" class="edit-btn p-2 rounded-md hover:bg-gray-100 transition" title="Edit Username">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                </button>
+                                <button data-uid="${user.uid}" data-verified="${user.isVerified}" class="verify-btn p-2 rounded-md hover:bg-gray-100 transition" title="Toggle Verification">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${user.isVerified ? 'text-green-600' : 'text-yellow-600'}"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                                </button>
+                                <button data-uid="${user.uid}" class="delete-btn p-2 rounded-md hover:bg-gray-100 transition" title="Delete User">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                </button>
+                            </td>
+                        `;
+                        userList.appendChild(row);
+                    });
+                });
+            } catch (error) {
+                console.error("Error loading users:", error);
+                showMessage("Failed to load user data.");
+            }
+        }
+
+        // Event delegation for verify and delete buttons
+        userList.addEventListener('click', async (e) => {
+            const target = e.target.closest('button');
+            if (!target) return;
+
+            const uid = target.dataset.uid;
+            if (!uid) return;
+
+            // Handle user verification toggle
+            if (target.classList.contains('verify-btn')) {
+                const isVerified = target.dataset.verified === 'true';
+                const userDocRef = doc(db, "users", uid);
+                try {
+                    await updateDoc(userDocRef, { isVerified: !isVerified });
+                    // The onSnapshot listener will automatically update the UI
+                } catch (error) {
+                    console.error("Error updating user verification:", error);
+                    showMessage("Failed to update user status.");
+                }
+            }
+
+            // Handle user deletion
+            if (target.classList.contains('delete-btn')) {
+                // NOTE: This is a simple confirmation. A real app should use a custom modal.
+                if (confirm('Are you sure you want to delete this user? This will only remove their data from the database, not their authentication record.')) {
+                    try {
+                        // IMPORTANT: Deleting the user document does NOT delete their auth record.
+                        // This requires a backend function for security reasons.
+                        // For this client-side example, we'll just delete the Firestore document.
+                        await deleteDoc(doc(db, "users", uid));
+                        showMessage('User data deleted from Firestore.');
+                        // The onSnapshot listener will update the UI.
+                    } catch (error) {
+                        console.error("Error deleting user:", error);
+                        showMessage("Failed to delete user data.");
+                    }
+                }
+            }
+
+            // Handle username editing
+            if (target.classList.contains('edit-btn')) {
+                const currentUsername = target.dataset.username;
+                editUserUidInput.value = uid;
+                editUsernameInput.value = currentUsername;
+                editUserModal.style.display = 'flex';
+            }
+        });
+
+        // Event listener for the edit user form
+        editUserForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const uid = editUserUidInput.value;
+            const newUsername = editUsernameInput.value;
+            if (!uid || !newUsername) return;
+
+            const userDocRef = doc(db, "users", uid);
+            try {
+                await updateDoc(userDocRef, { username: newUsername });
+                editUserModal.style.display = 'none';
+            } catch (error) {
+                console.error("Error updating username:", error);
+                showMessage("Failed to update username.");
+            }
+        });
+        
+        // Close edit user modal
+        editModalCancelBtn.addEventListener('click', () => {
+            editUserModal.style.display = 'none';
+        });
+
+        // --- EVENT LISTENERS FOR NAVIGATION & MODAL ---
+        document.getElementById('show-register').addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('register');
+        });
+
+        document.getElementById('show-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('login');
+        });
+        
+        modalCloseBtn.addEventListener('click', () => {
+            messageModal.style.display = 'none';
+        });
+
+        // --- INITIALIZATION ---
+        showView('loading'); // Show loading spinner initially
+        // onAuthStateChanged will determine the first "real" view
+    </script>
+</body>
+</html>

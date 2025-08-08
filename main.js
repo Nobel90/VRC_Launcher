@@ -43,6 +43,10 @@ function createWindow() {
 
 app.whenReady().then(createWindow);
 
+ipcMain.on('open-external', (event, url) => {
+    shell.openExternal(url);
+});
+
 async function getFileChecksum(filePath) {
     try {
         const extension = path.extname(filePath).toLowerCase();
@@ -82,6 +86,8 @@ class DownloadManager {
         this.state = this.getInitialState();
         this.request = null;
         this.writer = null;
+        this.speedInterval = null;
+        this.bytesSinceLastInterval = 0;
     }
 
     getInitialState() {
@@ -93,6 +99,7 @@ class DownloadManager {
             totalBytes: 0,
             downloadedBytes: 0,
             currentFileName: '',
+            downloadSpeed: 0, // Bytes per second
             error: null,
         };
     }
@@ -112,6 +119,19 @@ class DownloadManager {
             totalFiles: files.length,
         });
         
+        this.bytesSinceLastInterval = 0;
+        if (this.speedInterval) clearInterval(this.speedInterval);
+
+        this.speedInterval = setInterval(() => {
+            if (this.state.status === 'downloading') {
+                // Speed is in bytes per second, so we multiply by 4 as interval is 250ms
+                this.setState({ downloadSpeed: this.bytesSinceLastInterval * 4 });
+                this.bytesSinceLastInterval = 0;
+            } else {
+                this.setState({ downloadSpeed: 0 });
+            }
+        }, 250);
+
         let i = 0;
         while (i < files.length) {
             if (this.state.status === 'cancelling') {
@@ -168,10 +188,15 @@ class DownloadManager {
             }
         }
 
+        if (this.speedInterval) {
+            clearInterval(this.speedInterval);
+            this.speedInterval = null;
+        }
+
         if (this.state.status === 'downloading') {
             const versionFilePath = path.join(installPath, 'version.json');
             await fs.writeFile(versionFilePath, JSON.stringify({ version: latestVersion }, null, 2));
-            this.setState({ status: 'success', progress: 100 });
+            this.setState({ status: 'success', progress: 100, downloadSpeed: 0 });
         } else if (this.state.status === 'cancelling') {
             this.setState(this.getInitialState());
         }
@@ -190,6 +215,7 @@ class DownloadManager {
                 this.request.pipe(this.writer);
 
                 this.request.on('data', (chunk) => {
+                    this.bytesSinceLastInterval += chunk.length;
                     this.setState({ downloadedBytes: (this.state.downloadedBytes || 0) + chunk.length });
                 });
 
@@ -449,6 +475,30 @@ ipcMain.on('uninstall-game', async (event, installPath) => {
             console.error(`Failed to uninstall game at ${installPath}:`, error);
             dialog.showErrorBox('Uninstall Failed', `Could not move "${installPath}" to trash. You may need to remove it manually.`);
         }
+    }
+});
+
+ipcMain.handle('get-file-size', async (event, url) => {
+    try {
+        const response = await axios({
+            method: 'get',
+            url: url,
+            responseType: 'stream',
+            headers: browserHeaders
+        });
+
+        const size = response.headers['content-length'];
+
+        // IMPORTANT: Destroy the stream to prevent downloading the file body
+        response.data.destroy();
+
+        if (size) {
+            return parseInt(size, 10);
+        }
+        return 0;
+    } catch (error) {
+        console.error(`Could not get file size for ${url}:`, error.message);
+        return 0;
     }
 });
 

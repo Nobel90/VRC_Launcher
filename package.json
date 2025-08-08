@@ -31,11 +31,13 @@
   },
   "devDependencies": {
     "electron": "^37.2.0",
-    "electron-builder": "^25.2.0",
+    "electron-builder": "^26.0.0",
     "electron-packager": "^17.1.2"
   },
   "dependencies": {
     "adm-zip": "^0.5.16",
-    "axios": "^1.10.0"
+    "axios": "^1.10.0",
+    "firebase": "^11.10.0",
+    "npm": "^11.4.2"
   }
 }
