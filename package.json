@@ -15,20 +15,18 @@
     "publish": {
       "provider": "github",
       "owner": "Nobel90",
-      "repo": "VRC_Launcher"
+      "repo": "VRC_Launcher",
+      "private": true
     },
     "appId": "com.vrc.launcher",
     "productName": "VRC Launcher",
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
+      "target": "nsis",
       "icon": "assets/icon-white_s.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     },
     "directories": {
       "output": "dist"
@@ -40,9 +38,10 @@
     "electron-packager": "^17.1.2"
   },
   "dependencies": {
-    "electron-updater": "^6.6.2",
     "adm-zip": "^0.5.16",
     "axios": "^1.10.0",
+    "electron-log": "^5.4.3",
+    "electron-updater": "^6.6.2",
     "firebase": "^11.10.0",
     "npm": "^11.4.2"
   }
