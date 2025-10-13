@@ -68,6 +68,10 @@ autoUpdater.on('update-downloaded', (info) => {
     console.log('Update downloaded');
 });
 
+ipcMain.handle('get-app-version', () => {
+    return app.getVersion();
+});
+
 ipcMain.on('open-external', (event, url) => {
     shell.openExternal(url);
 });

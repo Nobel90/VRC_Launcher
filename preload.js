@@ -4,6 +4,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
     // --- Persistence & Versioning ---
+    getAppVersion: () => ipcRenderer.invoke('get-app-version'),
     loadGameData: () => ipcRenderer.invoke('load-game-data'),
     saveGameData: (data) => ipcRenderer.send('save-game-data', data),
     getLocalVersion: (installPath) => ipcRenderer.invoke('get-local-version', installPath),

@@ -382,6 +382,11 @@ function initLauncher() {
 
     async function init() {
         if (!window.electronAPI) { console.error("Fatal Error: window.electronAPI is not defined."); return; }
+        
+        const launcherVersionEl = document.getElementById('launcher-version');
+        const appVersion = await window.electronAPI.getAppVersion();
+        launcherVersionEl.innerText = `Launcher Version: v${appVersion}`;
+
         const loadedLibrary = await window.electronAPI.loadGameData();
         if (loadedLibrary) {
             for (const gameId in gameLibrary) {
