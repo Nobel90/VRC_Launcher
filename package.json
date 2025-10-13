@@ -19,7 +19,7 @@
       "private": true
     },
     "appId": "com.vrc.launcher",
-    "productName": "VRC Launcher",
+    "productName": "VRC-Launcher",
     "win": {
       "target": "nsis",
       "icon": "assets/icon-white_s.ico"
