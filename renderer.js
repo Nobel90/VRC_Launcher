@@ -159,8 +159,8 @@ function initLauncher() {
             backgroundUrl: 'https://vrcentre.com.au/wp-content/uploads/2021/06/cropped-Primary_Logo_Horizontal_Web-01-1.png',
             installPath: null,
             executable: 'VRClassroom.exe',
-            manifestUrl: 'https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/vrclassroom_manifest.json',
-            versionUrl: 'https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/version.json',
+            manifestUrl: 'https://vrcentre.com.au/launcher_files/vrclassroom/vrclassroom_manifest.json',
+            versionUrl: 'https://vrcentre.com.au/launcher_files/vrclassroom/version.json',
             filesToUpdate: [],
             isPaused: false,
         },
@@ -212,7 +212,7 @@ function initLauncher() {
         }, 500);
         gameTitleEl.innerText = game.name;
         gameTaglineEl.innerText = game.tagline;
-        gameVersionEl.innerText = game.version;
+        gameVersionEl.innerText = `Version ${game.version || 'N/A'}`;
         updateButtonAndStatus(game);
         document.querySelectorAll('.game-logo').forEach(logo => {
             logo.classList.toggle('game-logo-active', logo.dataset.gameId === gameId);
@@ -564,7 +564,11 @@ function initLauncher() {
                     installPath: game.installPath,
                     manifestUrl: game.manifestUrl
                 });
-                if (versionResult.isUpdateAvailable) {
+
+                if (versionResult.pathInvalid) {
+                    game.status = 'uninstalled';
+                    game.installPath = null;
+                } else if (versionResult.isUpdateAvailable) {
                     game.status = 'needs_update';
                     game.version = versionResult.latestVersion;
                     game.filesToUpdate = versionResult.filesToUpdate;

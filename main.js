@@ -578,16 +578,30 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
     try {
         const response = await axios.get(manifestUrl, { headers: browserHeaders });
         const serverManifest = response.data;
+        const serverVersion = serverManifest.version || 'N/A'; // Fallback for version
         const filesToUpdate = [];
         
-        console.log(`--- Starting Update Check for ${gameId} v${serverManifest.version} ---`);
+        console.log(`--- Starting Update Check for ${gameId} v${serverVersion} ---`);
 
         if (!installPath || !fsSync.existsSync(installPath)) {
             console.log('No install path provided or path does not exist. Flagging all files for fresh installation.');
             return {
                 isUpdateAvailable: true,
                 filesToUpdate: serverManifest.files,
-                latestVersion: serverManifest.version,
+                latestVersion: serverVersion,
+                pathInvalid: true, // Signal that the path is bad
+            };
+        }
+
+        // Also treat an empty directory as an invalid path to force a reinstall/locate state
+        const dirContents = await fs.readdir(installPath);
+        if (dirContents.length === 0) {
+            console.log('Installation directory is empty. Resetting state.');
+            return {
+                isUpdateAvailable: true, // Technically true, all files are missing
+                filesToUpdate: serverManifest.files,
+                latestVersion: serverVersion,
+                pathInvalid: true, // Treat as invalid to reset UI
             };
         }
 
@@ -631,7 +645,8 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
         return {
             isUpdateAvailable: filesToUpdate.length > 0,
             filesToUpdate: filesToUpdate,
-            latestVersion: serverManifest.version,
+            latestVersion: serverVersion,
+            pathInvalid: false, // Explicitly state path is valid
         };
     } catch (error) {
         let errorMessage = 'Update check failed.';

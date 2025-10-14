@@ -152,6 +152,161 @@
       "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Content/Paks/AFEOS-WindowsNoEditor.pak"
     },
     {
+      "path": "AFEOS/Saved/Config/CrashReportClient/UE4CC-Windows-03D0A9DA4ABD38098789E7B11E53DE28/CrashReportClient.ini",
+      "checksum": "bef31ccf1777031eb19e7b55b387ac3a66b591c5a3fd43902deb6c01d8e63943",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/CrashReportClient/UE4CC-Windows-03D0A9DA4ABD38098789E7B11E53DE28/CrashReportClient.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/CrashReportClient/UE4CC-Windows-1039963949AFDBBA4A89AB9B6D534217/CrashReportClient.ini",
+      "checksum": "bef31ccf1777031eb19e7b55b387ac3a66b591c5a3fd43902deb6c01d8e63943",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/CrashReportClient/UE4CC-Windows-1039963949AFDBBA4A89AB9B6D534217/CrashReportClient.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/CrashReportClient/UE4CC-Windows-454A1546434489AC4D76318897F01450/CrashReportClient.ini",
+      "checksum": "bef31ccf1777031eb19e7b55b387ac3a66b591c5a3fd43902deb6c01d8e63943",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/CrashReportClient/UE4CC-Windows-454A1546434489AC4D76318897F01450/CrashReportClient.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Compat.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Compat.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/DataprepEditor.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/DataprepEditor.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/DeviceProfiles.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/DeviceProfiles.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/EditorScriptingUtilities.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/EditorScriptingUtilities.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Engine.ini",
+      "checksum": "719f456c36a4eea408f6aa8aad646b6d99054868625aecb2b04cbcd0662f1918",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Engine.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Game.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Game.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/GameplayTags.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/GameplayTags.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/GameUserSettings.ini",
+      "checksum": "0b01b7a8ab1f0496bff64ab71d2546ed974f6cb31906e91fcd6c420870ce9411",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/GameUserSettings.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Hardware.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Hardware.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Input.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Input.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/LiveLink.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/LiveLink.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/MagicLeap.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/MagicLeap.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/MagicLeapLightEstimation.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/MagicLeapLightEstimation.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/MotoSynth.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/MotoSynth.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Niagara.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Niagara.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/OculusVR.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/OculusVR.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Paper2D.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Paper2D.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/PhysXVehicles.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/PhysXVehicles.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/RemoteControl.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/RemoteControl.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/RuntimeOptions.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/RuntimeOptions.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Scalability.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Scalability.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/Synthesis.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/Synthesis.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Config/WindowsNoEditor/VariantManagerContent.ini",
+      "checksum": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Config/WindowsNoEditor/VariantManagerContent.ini"
+    },
+    {
+      "path": "AFEOS/Saved/Logs/AFEOS-backup-2025.07.08-07.12.30.log",
+      "checksum": "a7706ca0df3bdcf6b49e151079179d8f929b27bc39012c7d9a4c187f2c548385",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Logs/AFEOS-backup-2025.07.08-07.12.30.log"
+    },
+    {
+      "path": "AFEOS/Saved/Logs/AFEOS.log",
+      "checksum": "d4c201606cd3097d5eab020f35e784bcc786ef6d356f387e236f3736b6ea6dbc",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Logs/AFEOS.log"
+    },
+    {
+      "path": "AFEOS/Saved/Logs/cef3.log",
+      "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/Logs/cef3.log"
+    },
+    {
+      "path": "AFEOS/Saved/SaveGames/PlayerInfo.sav",
+      "checksum": "bffdabe02e8681aa541370d2e540e618ab163f8542bb799165180a7b667a75da",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/SaveGames/PlayerInfo.sav"
+    },
+    {
+      "path": "AFEOS/Saved/webcache/Visited Links",
+      "checksum": "d94f181ed95c63a4367e41447e7b970552c4b1a7db423758c4787f0bc1fedbb9",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/AFEOS/Saved/webcache/Visited Links"
+    },
+    {
       "path": "Engine/Binaries/ThirdParty/CEF3/Win64/chrome_elf.dll",
       "checksum": "8a06b6f35fde228a7aa55ce6d6a4cc84a0c3443468d618850a868ce4e56909bb",
       "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/Engine/Binaries/ThirdParty/CEF3/Win64/chrome_elf.dll"
@@ -622,14 +777,29 @@
       "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/Engine/Plugins/Experimental/BlastPlugin/Binaries/Win64/NvBlastPROFILE_x64.dll"
     },
     {
+      "path": "Engine/Saved/Config/WindowsNoEditor/Manifest.ini",
+      "checksum": "e706d6c7c899d8d28e83512d7f29946334086c4a6eaf56f790bf0010e7df1e9c",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/Engine/Saved/Config/WindowsNoEditor/Manifest.ini"
+    },
+    {
       "path": "Manifest_NonUFSFiles_Win64.txt",
       "checksum": "8fbe3b98e6c74c162734394c575a3f0dde8f1e1c081ad2db361e5cf10aca2be8",
       "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/Manifest_NonUFSFiles_Win64.txt"
     },
     {
+      "path": "VRClassroom Launcher.exe",
+      "checksum": "739946c22dcd6c3676feed004ee07d4ae61236e9726e2945bb7d0bc21fa32e24",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/VRClassroom Launcher.exe"
+    },
+    {
       "path": "VRClassroom.exe",
       "checksum": "96c7a47638ad4b46bc2f6b3842e4ff105afbb1946e12c3b3b22ff48cfff5875a",
       "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/VRClassroom.exe"
+    },
+    {
+      "path": "VRClassroom.txt",
+      "checksum": "f3b72049ef64e6b320df419047d11a78ece3bbf14b78ed385bc540c8378e6c86",
+      "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/VRClassroom.txt"
     }
   ]
 }

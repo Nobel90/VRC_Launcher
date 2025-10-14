@@ -5,7 +5,7 @@ const crypto = require('crypto');
 
 const gameRoot = './'; // Run this script from your game's root directory
 const manifestVersion = '1.1.0.8'; // Change this for each new version
-const baseUrl = `https://mediumblue-swallow-996105.hostingersite.com/launcher_files/vrclassroom/${manifestVersion}`;
+const baseUrl = `https://vrcentre.com.au/launcher_files/vrclassroom/${manifestVersion}`;
 
 // --- Create a version file ---
 const versionData = { version: manifestVersion };
