@@ -446,38 +446,7 @@ ipcMain.handle('select-install-dir', async (event) => {
     return selectedPath;
 });
 
-ipcMain.handle('verify-install-path', async (event, { gameId, manifestUrl }) => {
-    const win = BrowserWindow.fromWebContents(event.sender);
-    const { canceled, filePaths } = await dialog.showOpenDialog(win, {
-        properties: ['openDirectory'],
-        title: 'Select Game Folder'
-    });
-    if (canceled) return { isValid: false, error: "Selection cancelled." };
-
-    const selectedPath = filePaths[0];
-
-    try {
-        const response = await axios.get(manifestUrl, { headers: browserHeaders });
-        const serverManifest = response.data;
-        
-        // A simple verification: check for the presence of a few key files.
-        // A full checksum can be done during the update check later.
-        // Here, we'll just check if all files listed in the manifest exist.
-        for (const fileInfo of serverManifest.files) {
-            const filePath = path.join(selectedPath, fileInfo.path);
-            await fs.access(filePath); // Throws if file does not exist
-        }
-        
-        const localVersion = await getLocalVersion(selectedPath);
-
-        return { isValid: true, path: selectedPath, localVersion };
-    } catch (error) {
-        console.error(`Verification failed for ${selectedPath}:`, error);
-        return { isValid: false, path: selectedPath, error: 'The selected folder does not contain a valid installation.' };
-    }
-});
-
-ipcMain.handle('move-install-path', async (event, currentPath) => {
+ipcMain.handle('move-install-path', async (event, { currentPath, manifestUrl }) => {
     const win = BrowserWindow.fromWebContents(event.sender);
     const { canceled, filePaths } = await dialog.showOpenDialog(win, {
         properties: ['openDirectory', 'createDirectory'],
@@ -623,6 +592,23 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
         }
 
         for (const fileInfo of serverManifest.files) {
+            // --- Start of filtering logic ---
+            const fileName = path.basename(fileInfo.path);
+            const pathString = fileInfo.path.toLowerCase();
+
+            // Filter out 'Saved' folders, which often contain user-specific, non-essential data.
+            const isSavedFolder = pathString.startsWith('saved/') || pathString.startsWith('saved\\') || pathString.includes('/saved/') || pathString.includes('\\saved\\');
+            
+            const isManifest = fileName.toLowerCase() === 'manifest_nonufsfiles_win64.txt';
+            const isLauncher = fileName.toLowerCase() === 'vrclassroom launcher.exe';
+            const isVrClassroomTxt = fileName.toLowerCase() === 'vrclassroom.txt';
+
+            if (isSavedFolder || isManifest || isLauncher || isVrClassroomTxt) {
+                console.log(`Skipping non-essential file during check: ${fileInfo.path}`);
+                continue;
+            }
+            // --- End of filtering logic ---
+
             if (path.basename(fileInfo.path) === 'version.json') continue;
 
             const localFilePath = path.join(installPath, fileInfo.path);

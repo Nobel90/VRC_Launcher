@@ -28,8 +28,8 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "build/icon.ico",
-      "uninstallerIcon": "build/icon.ico",
+      "installerIcon": "assets/icon-white_s.ico",
+      "uninstallerIcon": "assets/icon-white_s.ico",
       "installerSidebar": "build/installerSidebar.bmp",
       "installerHeader": "build/installerHeader.bmp"
     },

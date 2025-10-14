@@ -459,23 +459,43 @@ function initLauncher() {
         locateGameLinkEl.addEventListener('click', async (e) => {
             e.preventDefault();
             const game = gameLibrary[currentGameId];
-            
-            game.status = 'verifying';
+
+            // This just opens a dialog and returns a path, no verification happens here.
+            const selectedPath = await window.electronAPI.selectInstallDir();
+            if (!selectedPath) {
+                // User cancelled the dialog, so we revert to the last known state.
+                renderGame(currentGameId);
+                return;
+            }
+
+            game.status = 'checking_update'; // Use a more descriptive status
             renderGame(currentGameId);
 
-            const result = await window.electronAPI.verifyInstallPath({ gameId: currentGameId, manifestUrl: game.manifestUrl });
-            
-            if (result.isValid) {
-                game.installPath = result.path;
-                game.version = result.localVersion;
-                game.status = 'installed';
-                await window.electronAPI.saveGameData(gameLibrary);
-                renderGame(currentGameId);
-                await checkForUpdates(currentGameId);
-            } else {
+            // Use checkForUpdates for a full integrity check on the selected path
+            const result = await window.electronAPI.checkForUpdates({
+                gameId: currentGameId,
+                installPath: selectedPath, // Use the new path
+                manifestUrl: game.manifestUrl
+            });
+
+            if (result.error) {
                 game.status = 'uninstalled';
                 renderGame(currentGameId);
                 gameStatusTextEl.innerText = result.error || "Could not validate the selected folder.";
+            } else {
+                // Path is valid, now update the state
+                game.installPath = selectedPath;
+                game.version = result.latestVersion;
+                game.filesToUpdate = result.filesToUpdate;
+
+                if (result.isUpdateAvailable) {
+                    game.status = 'needs_update';
+                } else {
+                    game.status = 'installed';
+                }
+
+                await window.electronAPI.saveGameData(gameLibrary);
+                renderGame(currentGameId);
             }
         });
 
