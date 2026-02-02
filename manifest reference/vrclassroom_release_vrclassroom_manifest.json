@@ -1,0 +1,2091 @@
+{
+  "version": "1.1.0.8",
+  "gameName": "vrclassroom",
+  "buildType": "release",
+  "manifestType": "chunk-based",
+  "generatedAt": "2026-01-31T22:21:53.043Z",
+  "files": [
+    {
+      "filename": "AFEOS/Binaries/Win64/AFEOS.exe",
+      "totalSize": 172106752,
+      "chunks": [
+        {
+          "hash": "d3facfc59ba8b0c8ddc24ad4071721e1c80ebf4b538a0ad1033f94f6094cdbaa",
+          "size": 21143420,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/d3/d3facfc59ba8b0c8ddc24ad4071721e1c80ebf4b538a0ad1033f94f6094cdbaa"
+        },
+        {
+          "hash": "ab1571eebc400fe11e5a039fb945d1bfd848eb1fbbde27f9f80934aa793ca41c",
+          "size": 15510415,
+          "offset": 21143420,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ab/ab1571eebc400fe11e5a039fb945d1bfd848eb1fbbde27f9f80934aa793ca41c"
+        },
+        {
+          "hash": "8abc22a5666989fc84edb46a6461ec14eda6cecb7e9594ef17e4a1c6beb9a829",
+          "size": 12600763,
+          "offset": 36653835,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8a/8abc22a5666989fc84edb46a6461ec14eda6cecb7e9594ef17e4a1c6beb9a829"
+        },
+        {
+          "hash": "393ad1e3572fd9ca98112cf6449c1c5253d021d53b4b883457bb3ce08280fc13",
+          "size": 23486634,
+          "offset": 49254598,
+          "url": "vrclassroom/release/1.1.0.8/chunks/39/393ad1e3572fd9ca98112cf6449c1c5253d021d53b4b883457bb3ce08280fc13"
+        },
+        {
+          "hash": "499da6b7d412f5d1c62fcf15a2a6bb7bc95d9eedceb4581a98d7d672036947bf",
+          "size": 28071305,
+          "offset": 72741232,
+          "url": "vrclassroom/release/1.1.0.8/chunks/49/499da6b7d412f5d1c62fcf15a2a6bb7bc95d9eedceb4581a98d7d672036947bf"
+        },
+        {
+          "hash": "300978ff901f5007b9ab6c32a9776d2609491d2f9f0e2fd7f7cc5485c0095d76",
+          "size": 21505467,
+          "offset": 100812537,
+          "url": "vrclassroom/release/1.1.0.8/chunks/30/300978ff901f5007b9ab6c32a9776d2609491d2f9f0e2fd7f7cc5485c0095d76"
+        },
+        {
+          "hash": "8a2f44769976eba1592bac2ec475b72273955c55b1c98ea4f4d2bfa70aa94cd4",
+          "size": 10673049,
+          "offset": 122318004,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8a/8a2f44769976eba1592bac2ec475b72273955c55b1c98ea4f4d2bfa70aa94cd4"
+        },
+        {
+          "hash": "c06eb5434cbaf0cde0ce253250cdfef05d7e5cec0a918eaef5c60c984d1b3e37",
+          "size": 10519886,
+          "offset": 132991053,
+          "url": "vrclassroom/release/1.1.0.8/chunks/c0/c06eb5434cbaf0cde0ce253250cdfef05d7e5cec0a918eaef5c60c984d1b3e37"
+        },
+        {
+          "hash": "e13e0959d9c375254bc87f94f9445f58ae28b7f60a0f32a1af46e94c722fc890",
+          "size": 15398581,
+          "offset": 143510939,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e1/e13e0959d9c375254bc87f94f9445f58ae28b7f60a0f32a1af46e94c722fc890"
+        },
+        {
+          "hash": "964a0f3e2e2b4d20cd4a4f510ec6d29397e277053e36617a0c081b0c31010179",
+          "size": 11295556,
+          "offset": 158909520,
+          "url": "vrclassroom/release/1.1.0.8/chunks/96/964a0f3e2e2b4d20cd4a4f510ec6d29397e277053e36617a0c081b0c31010179"
+        },
+        {
+          "hash": "8d8f1a82558f5ed833aa51566676265d403925a6f573af061a34a8f1135b8ef0",
+          "size": 1901676,
+          "offset": 170205076,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8d/8d8f1a82558f5ed833aa51566676265d403925a6f573af061a34a8f1135b8ef0"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Binaries/Win64/OpenImageDenoise.dll",
+      "totalSize": 49771408,
+      "chunks": [
+        {
+          "hash": "1b1c7e7241fe25371861341ff2bef5b61a885d5c7265ad31f8c0a76edc9b2ad4",
+          "size": 12286851,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/1b/1b1c7e7241fe25371861341ff2bef5b61a885d5c7265ad31f8c0a76edc9b2ad4"
+        },
+        {
+          "hash": "5ac46f0341392dcb2a46d4a2346293e4c3d03a4196b2162536aa77e4bdac58fb",
+          "size": 11031648,
+          "offset": 12286851,
+          "url": "vrclassroom/release/1.1.0.8/chunks/5a/5ac46f0341392dcb2a46d4a2346293e4c3d03a4196b2162536aa77e4bdac58fb"
+        },
+        {
+          "hash": "1bdd857dea1b3a144e6cd1e4fc0feb3a4a1238e85291b64ca02dd1f690beadb2",
+          "size": 11010911,
+          "offset": 23318499,
+          "url": "vrclassroom/release/1.1.0.8/chunks/1b/1bdd857dea1b3a144e6cd1e4fc0feb3a4a1238e85291b64ca02dd1f690beadb2"
+        },
+        {
+          "hash": "e12c18c6dc67ee8f9186928e2cf4fbdf1fbae9ab722239db5b102d8e93a4d4bc",
+          "size": 11000545,
+          "offset": 34329410,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e1/e12c18c6dc67ee8f9186928e2cf4fbdf1fbae9ab722239db5b102d8e93a4d4bc"
+        },
+        {
+          "hash": "2b7d019412b22084fbc467d8ccecb51f1160bde795070cc632aee9d2d6b88b67",
+          "size": 4441453,
+          "offset": 45329955,
+          "url": "vrclassroom/release/1.1.0.8/chunks/2b/2b7d019412b22084fbc467d8ccecb51f1160bde795070cc632aee9d2d6b88b67"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Binaries/Win64/tbb12.dll",
+      "totalSize": 383856,
+      "chunks": [
+        {
+          "hash": "061f3b283b3e5b24c5ac45772ee19e2f4b24cdacb3ff8ae4f815fe62836e5a45",
+          "size": 383856,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/06/061f3b283b3e5b24c5ac45772ee19e2f4b24cdacb3ff8ae4f815fe62836e5a45"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/gamepad.json",
+      "totalSize": 217,
+      "chunks": [
+        {
+          "hash": "8dd74ad80cd3852f8b369edc27931013d434719bf04ef8b4a66044eb7582999a",
+          "size": 217,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8d/8dd74ad80cd3852f8b369edc27931013d434719bf04ef8b4a66044eb7582999a"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/holographic_controller.json",
+      "totalSize": 4058,
+      "chunks": [
+        {
+          "hash": "78e55c385bab288b7ae6454499925fa31638f9ab974e5bdee5af93486129ad80",
+          "size": 4058,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/78/78e55c385bab288b7ae6454499925fa31638f9ab974e5bdee5af93486129ad80"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/hpmotioncontroller.json",
+      "totalSize": 4066,
+      "chunks": [
+        {
+          "hash": "956414458be568a68389bf341c4a1cc89f92d3d5c412834cd23b1b4c90d73ff2",
+          "size": 4066,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/95/956414458be568a68389bf341c4a1cc89f92d3d5c412834cd23b1b4c90d73ff2"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/indexhmd.json",
+      "totalSize": 423,
+      "chunks": [
+        {
+          "hash": "710a9267760e04248352d9acfb9c8c20f214f326626ed11eb44f23f838049bd7",
+          "size": 423,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/71/710a9267760e04248352d9acfb9c8c20f214f326626ed11eb44f23f838049bd7"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/knuckles.json",
+      "totalSize": 5282,
+      "chunks": [
+        {
+          "hash": "64ccff430c30deb99d112f793fee9eee30c70cd91605b9aa615347a651a24408",
+          "size": 5282,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/64/64ccff430c30deb99d112f793fee9eee30c70cd91605b9aa615347a651a24408"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/oculus_touch.json",
+      "totalSize": 5039,
+      "chunks": [
+        {
+          "hash": "8f09ef42311e6d13002c3213a171ff416697be6e31d018064d4cc83e7a7b076c",
+          "size": 5039,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8f/8f09ef42311e6d13002c3213a171ff416697be6e31d018064d4cc83e7a7b076c"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/rift.json",
+      "totalSize": 412,
+      "chunks": [
+        {
+          "hash": "741d38e785044268531b3ea4bf9231cccc7c4272dceeaf567c24c483ea08541c",
+          "size": 412,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/74/741d38e785044268531b3ea4bf9231cccc7c4272dceeaf567c24c483ea08541c"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/steamvr_manifest.json",
+      "totalSize": 16660,
+      "chunks": [
+        {
+          "hash": "1c1be93fb29879a1e995a1cd1f39036654dff8fc54dc637f9ddf7255affdd40f",
+          "size": 16660,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/1c/1c1be93fb29879a1e995a1cd1f39036654dff8fc54dc637f9ddf7255affdd40f"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive.json",
+      "totalSize": 412,
+      "chunks": [
+        {
+          "hash": "73ceb9c1ad47a75fb026fc124802ab53841e3e991324481f9887e60abb582208",
+          "size": 412,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/73/73ceb9c1ad47a75fb026fc124802ab53841e3e991324481f9887e60abb582208"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_controller.json",
+      "totalSize": 6197,
+      "chunks": [
+        {
+          "hash": "675b1e45ad8677319769bacdfffc0bb08ba061336a1e21c9d84f1ab1846a3b20",
+          "size": 6197,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/67/675b1e45ad8677319769bacdfffc0bb08ba061336a1e21c9d84f1ab1846a3b20"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_cosmos_controller.json",
+      "totalSize": 3178,
+      "chunks": [
+        {
+          "hash": "963380fbbb5a4db666ab7cdae15da66e1cf21ab8a82d2697f29794f1fc4a9f5c",
+          "size": 3178,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/96/963380fbbb5a4db666ab7cdae15da66e1cf21ab8a82d2697f29794f1fc4a9f5c"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_pro.json",
+      "totalSize": 420,
+      "chunks": [
+        {
+          "hash": "c8e33cbf876e2d239297b01382a7d8edd297996c3a838d9fc7d3d688617ac68c",
+          "size": 420,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/c8/c8e33cbf876e2d239297b01382a7d8edd297996c3a838d9fc7d3d688617ac68c"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker.json",
+      "totalSize": 1790,
+      "chunks": [
+        {
+          "hash": "e0e7effa7b5112e4f69bcc787143913cd3248c4b85641d2893d6f060c63a0130",
+          "size": 1790,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e0/e0e7effa7b5112e4f69bcc787143913cd3248c4b85641d2893d6f060c63a0130"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_camera.json",
+      "totalSize": 381,
+      "chunks": [
+        {
+          "hash": "06e50d990c27b9dd63830a9d7611f6a86a1261ce592869030a04d4773dfd281a",
+          "size": 381,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/06/06e50d990c27b9dd63830a9d7611f6a86a1261ce592869030a04d4773dfd281a"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_chest.json",
+      "totalSize": 377,
+      "chunks": [
+        {
+          "hash": "ba67de956b25ef966623b8cf5cf1ae3c17af131f9226fb3bbac1631d2c4a375c",
+          "size": 377,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ba/ba67de956b25ef966623b8cf5cf1ae3c17af131f9226fb3bbac1631d2c4a375c"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_handed.json",
+      "totalSize": 1806,
+      "chunks": [
+        {
+          "hash": "0e7bc9e65441cecbac30a9e31e43177ad2c8c09770b23e31b440d5635a75d990",
+          "size": 1806,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0e/0e7bc9e65441cecbac30a9e31e43177ad2c8c09770b23e31b440d5635a75d990"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_keyboard.json",
+      "totalSize": 389,
+      "chunks": [
+        {
+          "hash": "d1706eae88541933601dc181a5372e6499287f5131136f1c6786dde5daef05f0",
+          "size": 389,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/d1/d1706eae88541933601dc181a5372e6499287f5131136f1c6786dde5daef05f0"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_left_elbow.json",
+      "totalSize": 397,
+      "chunks": [
+        {
+          "hash": "a90464aefd64d9d0e00e7ffa4456a6bb679e93c25af95a16cc79788f16dc152e",
+          "size": 397,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/a9/a90464aefd64d9d0e00e7ffa4456a6bb679e93c25af95a16cc79788f16dc152e"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_left_foot.json",
+      "totalSize": 393,
+      "chunks": [
+        {
+          "hash": "82a0d3cb34a50052b7ffeebd5c44a5da1669458b7b773624bc9f98d40768acae",
+          "size": 393,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/82/82a0d3cb34a50052b7ffeebd5c44a5da1669458b7b773624bc9f98d40768acae"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_left_knee.json",
+      "totalSize": 393,
+      "chunks": [
+        {
+          "hash": "21e6975d248fb5a3b7a8d1d47bb82474bce4261853c2381bde8f966694be90cd",
+          "size": 393,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/21/21e6975d248fb5a3b7a8d1d47bb82474bce4261853c2381bde8f966694be90cd"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_left_shoulder.json",
+      "totalSize": 409,
+      "chunks": [
+        {
+          "hash": "6edd6167731afc4332fb8ad0a01ebff7b24f6e65892ee2f59b5e893adf95240f",
+          "size": 409,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/6e/6edd6167731afc4332fb8ad0a01ebff7b24f6e65892ee2f59b5e893adf95240f"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_right_elbow.json",
+      "totalSize": 401,
+      "chunks": [
+        {
+          "hash": "32280ec6ba81f9f7dc867b640cdb2dcb99f3cd1e84ec34090238ef9d47d6a34f",
+          "size": 401,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/32/32280ec6ba81f9f7dc867b640cdb2dcb99f3cd1e84ec34090238ef9d47d6a34f"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_right_foot.json",
+      "totalSize": 397,
+      "chunks": [
+        {
+          "hash": "c5ef88fc980a140c176816e0e07f438324be43eeb09bf0955860c9ca6c16e881",
+          "size": 397,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/c5/c5ef88fc980a140c176816e0e07f438324be43eeb09bf0955860c9ca6c16e881"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_right_knee.json",
+      "totalSize": 397,
+      "chunks": [
+        {
+          "hash": "f58b1da9f394189e377abfda034266ca2ab11a4108fc679c3ee261152bbfaf20",
+          "size": 397,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/f5/f58b1da9f394189e377abfda034266ca2ab11a4108fc679c3ee261152bbfaf20"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_right_shoulder.json",
+      "totalSize": 413,
+      "chunks": [
+        {
+          "hash": "e4b944f40b3812961edeca3944badec9132d439db28d2c8716b88cb19998d680",
+          "size": 413,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e4/e4b944f40b3812961edeca3944badec9132d439db28d2c8716b88cb19998d680"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Config/SteamVRBindings/vive_tracker_waist.json",
+      "totalSize": 377,
+      "chunks": [
+        {
+          "hash": "27f1d85555509597deca9bffb3c642031407732c3aa6d2f95cef3de589618e71",
+          "size": 377,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/27/27f1d85555509597deca9bffb3c642031407732c3aa6d2f95cef3de589618e71"
+        }
+      ]
+    },
+    {
+      "filename": "AFEOS/Content/Paks/AFEOS-WindowsNoEditor.pak",
+      "totalSize": 1199775076,
+      "chunks": [
+        {
+          "hash": "d15aaea3b84dbeda92dd258c54bdd7ad30e7b82afea270657cee683f4eabfa5f",
+          "size": 12650991,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/d1/d15aaea3b84dbeda92dd258c54bdd7ad30e7b82afea270657cee683f4eabfa5f"
+        },
+        {
+          "hash": "abdfc924fd1844e838c617647bf5c801a14bc5906ab6ad097c4e353abf5f7d7a",
+          "size": 16207943,
+          "offset": 12650991,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ab/abdfc924fd1844e838c617647bf5c801a14bc5906ab6ad097c4e353abf5f7d7a"
+        },
+        {
+          "hash": "f5bfc621bd8d11ac8db942401ac0b2f6fc72d0fd68426cb20f76369e265ca7ac",
+          "size": 24165261,
+          "offset": 28858934,
+          "url": "vrclassroom/release/1.1.0.8/chunks/f5/f5bfc621bd8d11ac8db942401ac0b2f6fc72d0fd68426cb20f76369e265ca7ac"
+        },
+        {
+          "hash": "189ec16c62edb6100fa2cb0c2ce3796dc4d7387fe996764e368791bae7c7c967",
+          "size": 26306361,
+          "offset": 53024195,
+          "url": "vrclassroom/release/1.1.0.8/chunks/18/189ec16c62edb6100fa2cb0c2ce3796dc4d7387fe996764e368791bae7c7c967"
+        },
+        {
+          "hash": "441f1cb50081fb598bc993f1395e1e74157eab2ff3d7ba4e606bbf3ccbe38a18",
+          "size": 27937604,
+          "offset": 79330556,
+          "url": "vrclassroom/release/1.1.0.8/chunks/44/441f1cb50081fb598bc993f1395e1e74157eab2ff3d7ba4e606bbf3ccbe38a18"
+        },
+        {
+          "hash": "8ee95ad2a3aeea46e744d6219bd12766e51353a188f515f794099631f5a5dbe4",
+          "size": 21094859,
+          "offset": 107268160,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8e/8ee95ad2a3aeea46e744d6219bd12766e51353a188f515f794099631f5a5dbe4"
+        },
+        {
+          "hash": "f85016b695474d2724320e302834bbf3b3527bdc64135ee43ab8b251aa66187f",
+          "size": 17750323,
+          "offset": 128363019,
+          "url": "vrclassroom/release/1.1.0.8/chunks/f8/f85016b695474d2724320e302834bbf3b3527bdc64135ee43ab8b251aa66187f"
+        },
+        {
+          "hash": "5eae27a4b41a072ced7681bbf5c56859f061a5e432a3446997a7bc1a7c30e195",
+          "size": 11318573,
+          "offset": 146113342,
+          "url": "vrclassroom/release/1.1.0.8/chunks/5e/5eae27a4b41a072ced7681bbf5c56859f061a5e432a3446997a7bc1a7c30e195"
+        },
+        {
+          "hash": "294951d426f5de767a01339dbba8b9910063dd30b77eda0ba8c330824837aa7b",
+          "size": 10826700,
+          "offset": 157431915,
+          "url": "vrclassroom/release/1.1.0.8/chunks/29/294951d426f5de767a01339dbba8b9910063dd30b77eda0ba8c330824837aa7b"
+        },
+        {
+          "hash": "6321794b6ac5841209624dabdb4af165611e3afeebbc5dbf8d344045bd56ad2c",
+          "size": 10654257,
+          "offset": 168258615,
+          "url": "vrclassroom/release/1.1.0.8/chunks/63/6321794b6ac5841209624dabdb4af165611e3afeebbc5dbf8d344045bd56ad2c"
+        },
+        {
+          "hash": "9526c9505c63e513ed61960b1ed67abe79ed348397f090d3fabfd4bce8be50eb",
+          "size": 13216657,
+          "offset": 178912872,
+          "url": "vrclassroom/release/1.1.0.8/chunks/95/9526c9505c63e513ed61960b1ed67abe79ed348397f090d3fabfd4bce8be50eb"
+        },
+        {
+          "hash": "505b351b964e29fd009649767bb7d8cecb02944e71dd5a144722f0633324a469",
+          "size": 19532138,
+          "offset": 192129529,
+          "url": "vrclassroom/release/1.1.0.8/chunks/50/505b351b964e29fd009649767bb7d8cecb02944e71dd5a144722f0633324a469"
+        },
+        {
+          "hash": "b47016a5c240d27730baa826f79a46ed8e722f251445ad5a7f5fb8f5a371e09c",
+          "size": 11399129,
+          "offset": 211661667,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b4/b47016a5c240d27730baa826f79a46ed8e722f251445ad5a7f5fb8f5a371e09c"
+        },
+        {
+          "hash": "729b1123576828cf88a357a55bbc8e15ffed3dbdeb1760071c9f55c607a7792a",
+          "size": 10971819,
+          "offset": 223060796,
+          "url": "vrclassroom/release/1.1.0.8/chunks/72/729b1123576828cf88a357a55bbc8e15ffed3dbdeb1760071c9f55c607a7792a"
+        },
+        {
+          "hash": "4b8b403f977301d4126ab74c5da6a8b4c26d8383ecedeb332364d648c0342db5",
+          "size": 20407195,
+          "offset": 234032615,
+          "url": "vrclassroom/release/1.1.0.8/chunks/4b/4b8b403f977301d4126ab74c5da6a8b4c26d8383ecedeb332364d648c0342db5"
+        },
+        {
+          "hash": "88ff3ee11baccba180586b169f3f4ba6dfb0f20589dd482f94ec4a82d174d9ec",
+          "size": 19058184,
+          "offset": 254439810,
+          "url": "vrclassroom/release/1.1.0.8/chunks/88/88ff3ee11baccba180586b169f3f4ba6dfb0f20589dd482f94ec4a82d174d9ec"
+        },
+        {
+          "hash": "f0c7a9839b8c0ec9cd9bd641b834ffccebf516b1b9d638c4d5ae6357960804db",
+          "size": 31457280,
+          "offset": 273497994,
+          "url": "vrclassroom/release/1.1.0.8/chunks/f0/f0c7a9839b8c0ec9cd9bd641b834ffccebf516b1b9d638c4d5ae6357960804db"
+        },
+        {
+          "hash": "b400604108aaca28a09b27c9f75dec86389a4d0afd2d8e3e535ec901ee81f630",
+          "size": 14550074,
+          "offset": 304955274,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b4/b400604108aaca28a09b27c9f75dec86389a4d0afd2d8e3e535ec901ee81f630"
+        },
+        {
+          "hash": "afe6fb0ff3ff6cf59263ea9325e34bfefbff815d01ae981303f4b9d90746f46c",
+          "size": 16145177,
+          "offset": 319505348,
+          "url": "vrclassroom/release/1.1.0.8/chunks/af/afe6fb0ff3ff6cf59263ea9325e34bfefbff815d01ae981303f4b9d90746f46c"
+        },
+        {
+          "hash": "20cd38c0b2f27833097b38e68724570cf5f83b152492796d7db485aa3289a47a",
+          "size": 17269247,
+          "offset": 335650525,
+          "url": "vrclassroom/release/1.1.0.8/chunks/20/20cd38c0b2f27833097b38e68724570cf5f83b152492796d7db485aa3289a47a"
+        },
+        {
+          "hash": "4db75187207451cb6d4eaf1d406f9cab586833d28440ac9bcd0166e21e55b9a7",
+          "size": 10910508,
+          "offset": 352919772,
+          "url": "vrclassroom/release/1.1.0.8/chunks/4d/4db75187207451cb6d4eaf1d406f9cab586833d28440ac9bcd0166e21e55b9a7"
+        },
+        {
+          "hash": "03bdb2f822adf5844ad56a78f18dd594b7592bc2566f10433710478a2c895b0d",
+          "size": 17814236,
+          "offset": 363830280,
+          "url": "vrclassroom/release/1.1.0.8/chunks/03/03bdb2f822adf5844ad56a78f18dd594b7592bc2566f10433710478a2c895b0d"
+        },
+        {
+          "hash": "002bdc80692fb451ae81239f93301729fc7c76c66d7d98a3af2a37c29f1d85ab",
+          "size": 17977791,
+          "offset": 381644516,
+          "url": "vrclassroom/release/1.1.0.8/chunks/00/002bdc80692fb451ae81239f93301729fc7c76c66d7d98a3af2a37c29f1d85ab"
+        },
+        {
+          "hash": "00892a3c8d8d6765c58be901a98bde037ec3468ff086ac26239309bfc0d01ec9",
+          "size": 14503569,
+          "offset": 399622307,
+          "url": "vrclassroom/release/1.1.0.8/chunks/00/00892a3c8d8d6765c58be901a98bde037ec3468ff086ac26239309bfc0d01ec9"
+        },
+        {
+          "hash": "04bec13764ac29ddde4db1592f843c6f860d29f85556fffb057b90ae8dca7d45",
+          "size": 14695535,
+          "offset": 414125876,
+          "url": "vrclassroom/release/1.1.0.8/chunks/04/04bec13764ac29ddde4db1592f843c6f860d29f85556fffb057b90ae8dca7d45"
+        },
+        {
+          "hash": "81ca328e6457106f7f747d8d3175a234cf126ae8a0046fe0d5e6b89fa0059497",
+          "size": 20098196,
+          "offset": 428821411,
+          "url": "vrclassroom/release/1.1.0.8/chunks/81/81ca328e6457106f7f747d8d3175a234cf126ae8a0046fe0d5e6b89fa0059497"
+        },
+        {
+          "hash": "ad689b123e773dbd7013ce8819329cf80ebb20233a4788d70553ef8095347bcf",
+          "size": 11115543,
+          "offset": 448919607,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ad/ad689b123e773dbd7013ce8819329cf80ebb20233a4788d70553ef8095347bcf"
+        },
+        {
+          "hash": "e4e663f3e3d0448d3a87af26f8a0b73f31c0ebd70418bcdb85eb0e5348cf5754",
+          "size": 13647196,
+          "offset": 460035150,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e4/e4e663f3e3d0448d3a87af26f8a0b73f31c0ebd70418bcdb85eb0e5348cf5754"
+        },
+        {
+          "hash": "89b6af6641f0a4e8bf727cdf37aa5e345d6429c9590bb4a689c388df23cf9d84",
+          "size": 11101589,
+          "offset": 473682346,
+          "url": "vrclassroom/release/1.1.0.8/chunks/89/89b6af6641f0a4e8bf727cdf37aa5e345d6429c9590bb4a689c388df23cf9d84"
+        },
+        {
+          "hash": "b2d554bc5184f5a62d55e526241b1e519755680a605c9a7f437a5fc34219332d",
+          "size": 12090764,
+          "offset": 484783935,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b2/b2d554bc5184f5a62d55e526241b1e519755680a605c9a7f437a5fc34219332d"
+        },
+        {
+          "hash": "39c3b1d81dafcd6c8ebef3ba534e7b0cc7500e0d31c1f2adb3d57fa7c11f36bd",
+          "size": 17096095,
+          "offset": 496874699,
+          "url": "vrclassroom/release/1.1.0.8/chunks/39/39c3b1d81dafcd6c8ebef3ba534e7b0cc7500e0d31c1f2adb3d57fa7c11f36bd"
+        },
+        {
+          "hash": "c6fbb8bb9a3c5d90e1bd173621b2927e3fef0c28ed775e5e7d0d665aff16d955",
+          "size": 13668061,
+          "offset": 513970794,
+          "url": "vrclassroom/release/1.1.0.8/chunks/c6/c6fbb8bb9a3c5d90e1bd173621b2927e3fef0c28ed775e5e7d0d665aff16d955"
+        },
+        {
+          "hash": "28915169553c24671dd4ef28d677fb5c47511310b4cf56c82e2766ec6a99f830",
+          "size": 12747182,
+          "offset": 527638855,
+          "url": "vrclassroom/release/1.1.0.8/chunks/28/28915169553c24671dd4ef28d677fb5c47511310b4cf56c82e2766ec6a99f830"
+        },
+        {
+          "hash": "b318999216e862ff7bf2d0826937c1ef96c9071e3da1ed9833bba5e2b03abc63",
+          "size": 10811674,
+          "offset": 540386037,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b3/b318999216e862ff7bf2d0826937c1ef96c9071e3da1ed9833bba5e2b03abc63"
+        },
+        {
+          "hash": "87d7665740321b0fbbe6893de3d669f524f0ea669aebd7fec28c18aef6cf7d4b",
+          "size": 20334990,
+          "offset": 551197711,
+          "url": "vrclassroom/release/1.1.0.8/chunks/87/87d7665740321b0fbbe6893de3d669f524f0ea669aebd7fec28c18aef6cf7d4b"
+        },
+        {
+          "hash": "dc416bd05b16c8839d6e56c268d445ca3eb7e1d150eae7c1b9d25438a58d570a",
+          "size": 31457280,
+          "offset": 571532701,
+          "url": "vrclassroom/release/1.1.0.8/chunks/dc/dc416bd05b16c8839d6e56c268d445ca3eb7e1d150eae7c1b9d25438a58d570a"
+        },
+        {
+          "hash": "daaf87d13c3c0456710534b1fee034d9f7665ef5fb83f4eed8ab1303867d6447",
+          "size": 20502760,
+          "offset": 602989981,
+          "url": "vrclassroom/release/1.1.0.8/chunks/da/daaf87d13c3c0456710534b1fee034d9f7665ef5fb83f4eed8ab1303867d6447"
+        },
+        {
+          "hash": "9c7fa423663a352755c81115d37a0049dac44a2462dfe4a4aaf93c6571cda6c0",
+          "size": 14648350,
+          "offset": 623492741,
+          "url": "vrclassroom/release/1.1.0.8/chunks/9c/9c7fa423663a352755c81115d37a0049dac44a2462dfe4a4aaf93c6571cda6c0"
+        },
+        {
+          "hash": "6880602f48bca5725cc7d6f017ca28a549265848f44ca4643e62ccb3ba49ecc3",
+          "size": 29075082,
+          "offset": 638141091,
+          "url": "vrclassroom/release/1.1.0.8/chunks/68/6880602f48bca5725cc7d6f017ca28a549265848f44ca4643e62ccb3ba49ecc3"
+        },
+        {
+          "hash": "082f74f313c0b5b03c41e753d6a4223a93191776de280b739db6d5d833cb47fc",
+          "size": 20335948,
+          "offset": 667216173,
+          "url": "vrclassroom/release/1.1.0.8/chunks/08/082f74f313c0b5b03c41e753d6a4223a93191776de280b739db6d5d833cb47fc"
+        },
+        {
+          "hash": "0bdece4c81fcb64b670eb9339c21874e104e72627efb5cc64b9663a18703ee61",
+          "size": 12373635,
+          "offset": 687552121,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0b/0bdece4c81fcb64b670eb9339c21874e104e72627efb5cc64b9663a18703ee61"
+        },
+        {
+          "hash": "54c5d4eee69a4ec557c97076461edcbbcb1d23f661aad2a0a21b33cd385d88fc",
+          "size": 10992557,
+          "offset": 699925756,
+          "url": "vrclassroom/release/1.1.0.8/chunks/54/54c5d4eee69a4ec557c97076461edcbbcb1d23f661aad2a0a21b33cd385d88fc"
+        },
+        {
+          "hash": "0e1f19570a96972d79cfc38b32503bc7e7a5c9b59b27f48a4e10b4e22f232ca7",
+          "size": 15292430,
+          "offset": 710918313,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0e/0e1f19570a96972d79cfc38b32503bc7e7a5c9b59b27f48a4e10b4e22f232ca7"
+        },
+        {
+          "hash": "baa4ea350fc081ba7592a63e8b212649c769fe25cf644fe9588e8232b2930af9",
+          "size": 31457280,
+          "offset": 726210743,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ba/baa4ea350fc081ba7592a63e8b212649c769fe25cf644fe9588e8232b2930af9"
+        },
+        {
+          "hash": "8926f8a72b1950742bbfc3ad535ef4144aef317f2188e00fd2ac23ddaeccb2d2",
+          "size": 15233106,
+          "offset": 757668023,
+          "url": "vrclassroom/release/1.1.0.8/chunks/89/8926f8a72b1950742bbfc3ad535ef4144aef317f2188e00fd2ac23ddaeccb2d2"
+        },
+        {
+          "hash": "56b07872024e7ac66db1e90a5d03e159bc6294207a87a89b9630a9d70b30cb36",
+          "size": 10800940,
+          "offset": 772901129,
+          "url": "vrclassroom/release/1.1.0.8/chunks/56/56b07872024e7ac66db1e90a5d03e159bc6294207a87a89b9630a9d70b30cb36"
+        },
+        {
+          "hash": "b95a4da8fb8fb9e04678bfc2406041ba3add6feb17c396bf04067c5a6a181692",
+          "size": 13818193,
+          "offset": 783702069,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b9/b95a4da8fb8fb9e04678bfc2406041ba3add6feb17c396bf04067c5a6a181692"
+        },
+        {
+          "hash": "8e8729eb0fec25f068ff95e83ba5c8d7da80234a07c2a8375284eb94cd46ef42",
+          "size": 16231792,
+          "offset": 797520262,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8e/8e8729eb0fec25f068ff95e83ba5c8d7da80234a07c2a8375284eb94cd46ef42"
+        },
+        {
+          "hash": "e7d8f0d3549ec7b585ce1c407fd785fad8cf7e271078d40538591825c33db524",
+          "size": 12988870,
+          "offset": 813752054,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e7/e7d8f0d3549ec7b585ce1c407fd785fad8cf7e271078d40538591825c33db524"
+        },
+        {
+          "hash": "bf8e2ac1560b8e193f181d9e6e58e4856f69d1150648ee12388fa74ab932c681",
+          "size": 23526894,
+          "offset": 826740924,
+          "url": "vrclassroom/release/1.1.0.8/chunks/bf/bf8e2ac1560b8e193f181d9e6e58e4856f69d1150648ee12388fa74ab932c681"
+        },
+        {
+          "hash": "373a5a2e9d14e6615972c4bb01481be2f6553bf4be71b635b2fa5aae64531ba8",
+          "size": 22127367,
+          "offset": 850267818,
+          "url": "vrclassroom/release/1.1.0.8/chunks/37/373a5a2e9d14e6615972c4bb01481be2f6553bf4be71b635b2fa5aae64531ba8"
+        },
+        {
+          "hash": "7d0c0a7ad5793f36cbe5e86cbbe26402341d091fcd0c1d7eda98e46da702266f",
+          "size": 11490184,
+          "offset": 872395185,
+          "url": "vrclassroom/release/1.1.0.8/chunks/7d/7d0c0a7ad5793f36cbe5e86cbbe26402341d091fcd0c1d7eda98e46da702266f"
+        },
+        {
+          "hash": "440bf5a964e1d9417aed4f48fc2be895520baca584813077fe20495f4cb9c6e2",
+          "size": 11904199,
+          "offset": 883885369,
+          "url": "vrclassroom/release/1.1.0.8/chunks/44/440bf5a964e1d9417aed4f48fc2be895520baca584813077fe20495f4cb9c6e2"
+        },
+        {
+          "hash": "530bd2fb34235149e25a1e3b68abe365dcf8ff5bd96ee7d4a51d5cb87b9987fe",
+          "size": 15299235,
+          "offset": 895789568,
+          "url": "vrclassroom/release/1.1.0.8/chunks/53/530bd2fb34235149e25a1e3b68abe365dcf8ff5bd96ee7d4a51d5cb87b9987fe"
+        },
+        {
+          "hash": "a7390920ea70fe995ce8fadb636b6bc38b38933d2c3b00125b5e8e05476ab1ac",
+          "size": 11743804,
+          "offset": 911088803,
+          "url": "vrclassroom/release/1.1.0.8/chunks/a7/a7390920ea70fe995ce8fadb636b6bc38b38933d2c3b00125b5e8e05476ab1ac"
+        },
+        {
+          "hash": "687097e55528c4a61f96ecaf720f9768496cf4bd416c24779805fb3cc75e88c4",
+          "size": 10938427,
+          "offset": 922832607,
+          "url": "vrclassroom/release/1.1.0.8/chunks/68/687097e55528c4a61f96ecaf720f9768496cf4bd416c24779805fb3cc75e88c4"
+        },
+        {
+          "hash": "3c2f04ecb5017ea5895f70dae439e3fbc0763ffc46aa840fb913bbd7866689d5",
+          "size": 10770097,
+          "offset": 933771034,
+          "url": "vrclassroom/release/1.1.0.8/chunks/3c/3c2f04ecb5017ea5895f70dae439e3fbc0763ffc46aa840fb913bbd7866689d5"
+        },
+        {
+          "hash": "5e059af6d6cd49e8c7dd70129b6c0baffbdc4cdc6ce8e95d9afed60423112591",
+          "size": 10600584,
+          "offset": 944541131,
+          "url": "vrclassroom/release/1.1.0.8/chunks/5e/5e059af6d6cd49e8c7dd70129b6c0baffbdc4cdc6ce8e95d9afed60423112591"
+        },
+        {
+          "hash": "350525b75b6b0ee61bb205ea94283bdc11f9e9e252ac4ebd5a97aa1f8c1e84e1",
+          "size": 11771836,
+          "offset": 955141715,
+          "url": "vrclassroom/release/1.1.0.8/chunks/35/350525b75b6b0ee61bb205ea94283bdc11f9e9e252ac4ebd5a97aa1f8c1e84e1"
+        },
+        {
+          "hash": "acc722059341b8b992d48b02594bd39d4e2e4db2e2c012128a50d8579cb4e7df",
+          "size": 11506386,
+          "offset": 966913551,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ac/acc722059341b8b992d48b02594bd39d4e2e4db2e2c012128a50d8579cb4e7df"
+        },
+        {
+          "hash": "5ba3c0e6041e91718bcc138563dbf07b5eab3768c982dbda6a70765ed7eb27d7",
+          "size": 10706900,
+          "offset": 978419937,
+          "url": "vrclassroom/release/1.1.0.8/chunks/5b/5ba3c0e6041e91718bcc138563dbf07b5eab3768c982dbda6a70765ed7eb27d7"
+        },
+        {
+          "hash": "c4eba102c8a57a7deb03cfa183c8a73490123d16104ebd93a9a390b60c37aef6",
+          "size": 11365436,
+          "offset": 989126837,
+          "url": "vrclassroom/release/1.1.0.8/chunks/c4/c4eba102c8a57a7deb03cfa183c8a73490123d16104ebd93a9a390b60c37aef6"
+        },
+        {
+          "hash": "7d2d14f8396db42914a8fe74f17ed3afe4b8aa5623a946b843ac1a16f6b67954",
+          "size": 11487350,
+          "offset": 1000492273,
+          "url": "vrclassroom/release/1.1.0.8/chunks/7d/7d2d14f8396db42914a8fe74f17ed3afe4b8aa5623a946b843ac1a16f6b67954"
+        },
+        {
+          "hash": "1edf287ce328bcaedadc0096d1e2191df3f0cb8412469d0fee9dfc61ca3a60fa",
+          "size": 28088597,
+          "offset": 1011979623,
+          "url": "vrclassroom/release/1.1.0.8/chunks/1e/1edf287ce328bcaedadc0096d1e2191df3f0cb8412469d0fee9dfc61ca3a60fa"
+        },
+        {
+          "hash": "35bbc236056d6f988c45cb15e43457d6d7ade0c796eb3ef7a6e6beefa1523ad2",
+          "size": 19323214,
+          "offset": 1040068220,
+          "url": "vrclassroom/release/1.1.0.8/chunks/35/35bbc236056d6f988c45cb15e43457d6d7ade0c796eb3ef7a6e6beefa1523ad2"
+        },
+        {
+          "hash": "f147b6c2d935031e572f8731e1a0af3a59ece49fb531bc3cbca16602b482b97a",
+          "size": 10497621,
+          "offset": 1059391434,
+          "url": "vrclassroom/release/1.1.0.8/chunks/f1/f147b6c2d935031e572f8731e1a0af3a59ece49fb531bc3cbca16602b482b97a"
+        },
+        {
+          "hash": "9fb52e15a50589835984d765cfd80ee7ef4c734eadd859d347a66d8fcd88d680",
+          "size": 17426120,
+          "offset": 1069889055,
+          "url": "vrclassroom/release/1.1.0.8/chunks/9f/9fb52e15a50589835984d765cfd80ee7ef4c734eadd859d347a66d8fcd88d680"
+        },
+        {
+          "hash": "4ecfd587f6b61dbaae5fed003446b1ef8e77196ed19721364ccf7ec5449c15ff",
+          "size": 10591191,
+          "offset": 1087315175,
+          "url": "vrclassroom/release/1.1.0.8/chunks/4e/4ecfd587f6b61dbaae5fed003446b1ef8e77196ed19721364ccf7ec5449c15ff"
+        },
+        {
+          "hash": "0ab29a3b91297412f9c0e82350c9ed8f634a2c6c3583900b74d18fe8c6a94f3f",
+          "size": 11350123,
+          "offset": 1097906366,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0a/0ab29a3b91297412f9c0e82350c9ed8f634a2c6c3583900b74d18fe8c6a94f3f"
+        },
+        {
+          "hash": "ed5202b751657750a3c4794fc1a451be3e4252f6afd50938188d46d391ad04bb",
+          "size": 10783296,
+          "offset": 1109256489,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ed/ed5202b751657750a3c4794fc1a451be3e4252f6afd50938188d46d391ad04bb"
+        },
+        {
+          "hash": "6290b22fe7408630706e604cfdeb4074cb4746cb99abc2f4bf538fe0b1913da8",
+          "size": 11023865,
+          "offset": 1120039785,
+          "url": "vrclassroom/release/1.1.0.8/chunks/62/6290b22fe7408630706e604cfdeb4074cb4746cb99abc2f4bf538fe0b1913da8"
+        },
+        {
+          "hash": "edd0561d4d666aaa026f41ba850bbc2a983af1c49ad59b0231a90adbb027169d",
+          "size": 10609032,
+          "offset": 1131063650,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ed/edd0561d4d666aaa026f41ba850bbc2a983af1c49ad59b0231a90adbb027169d"
+        },
+        {
+          "hash": "3e683498fec9c248221cde49f53e61426c495661590f11f6b73368096b411b02",
+          "size": 10530143,
+          "offset": 1141672682,
+          "url": "vrclassroom/release/1.1.0.8/chunks/3e/3e683498fec9c248221cde49f53e61426c495661590f11f6b73368096b411b02"
+        },
+        {
+          "hash": "59324ade77bd0322d6bef4a3c4142be72e27283a5e62d23e9ce9882577a5f285",
+          "size": 11876360,
+          "offset": 1152202825,
+          "url": "vrclassroom/release/1.1.0.8/chunks/59/59324ade77bd0322d6bef4a3c4142be72e27283a5e62d23e9ce9882577a5f285"
+        },
+        {
+          "hash": "27f2b48778074e152ef30729b390292a012999f113d903ecefa137fec635ad77",
+          "size": 11009247,
+          "offset": 1164079185,
+          "url": "vrclassroom/release/1.1.0.8/chunks/27/27f2b48778074e152ef30729b390292a012999f113d903ecefa137fec635ad77"
+        },
+        {
+          "hash": "cf012b4f2b715d929fe5c9c0f6cb64f451989acd09f4349b2516b46374347b38",
+          "size": 12163826,
+          "offset": 1175088432,
+          "url": "vrclassroom/release/1.1.0.8/chunks/cf/cf012b4f2b715d929fe5c9c0f6cb64f451989acd09f4349b2516b46374347b38"
+        },
+        {
+          "hash": "6398b03a222987300d848cdcd490bcabefcc2c8d38a405712b6aae6e82bcc0b8",
+          "size": 10522102,
+          "offset": 1187252258,
+          "url": "vrclassroom/release/1.1.0.8/chunks/63/6398b03a222987300d848cdcd490bcabefcc2c8d38a405712b6aae6e82bcc0b8"
+        },
+        {
+          "hash": "746918e5cb2e3f3cdbb75d663045300d700e304f18c283c9e328ecc47bb6a71d",
+          "size": 2000716,
+          "offset": 1197774360,
+          "url": "vrclassroom/release/1.1.0.8/chunks/74/746918e5cb2e3f3cdbb75d663045300d700e304f18c283c9e328ecc47bb6a71d"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/chrome_elf.dll",
+      "totalSize": 547840,
+      "chunks": [
+        {
+          "hash": "8a06b6f35fde228a7aa55ce6d6a4cc84a0c3443468d618850a868ce4e56909bb",
+          "size": 547840,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8a/8a06b6f35fde228a7aa55ce6d6a4cc84a0c3443468d618850a868ce4e56909bb"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/d3dcompiler_43.dll",
+      "totalSize": 2106216,
+      "chunks": [
+        {
+          "hash": "2f23182ec6f4889397ac4bf03d62536136c5bdba825c7d2c4ef08c827f3a8a1c",
+          "size": 2106216,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/2f/2f23182ec6f4889397ac4bf03d62536136c5bdba825c7d2c4ef08c827f3a8a1c"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/d3dcompiler_47.dll",
+      "totalSize": 4488904,
+      "chunks": [
+        {
+          "hash": "d82f77d802ff05d4da0c82335a05613604da243513faa7fb145aaad0119bddb5",
+          "size": 4488904,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/d8/d82f77d802ff05d4da0c82335a05613604da243513faa7fb145aaad0119bddb5"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/icudtl.dat",
+      "totalSize": 10130560,
+      "chunks": [
+        {
+          "hash": "51b93e0bc7e6d697ccc29703e2ebc9210c231c931fe764c372e5ba0d26098d3b",
+          "size": 10130560,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/51/51b93e0bc7e6d697ccc29703e2ebc9210c231c931fe764c372e5ba0d26098d3b"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/libcef.dll",
+      "totalSize": 98275328,
+      "chunks": [
+        {
+          "hash": "2b24a317b8e59861af5b5513d7cd1e2c1a34da925cbc42cff7c4056da72592db",
+          "size": 17000680,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/2b/2b24a317b8e59861af5b5513d7cd1e2c1a34da925cbc42cff7c4056da72592db"
+        },
+        {
+          "hash": "e0c1da0a5327a9736265f759f0449880c8921412665eba9036cb2123b83d4e61",
+          "size": 31457280,
+          "offset": 17000680,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e0/e0c1da0a5327a9736265f759f0449880c8921412665eba9036cb2123b83d4e61"
+        },
+        {
+          "hash": "e64f05756ce810054c55b5aef100215373fd190892e989d4fef4651ef6561994",
+          "size": 18043029,
+          "offset": 48457960,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e6/e64f05756ce810054c55b5aef100215373fd190892e989d4fef4651ef6561994"
+        },
+        {
+          "hash": "f8c8f3ca63560bd5686f29562bd92900bb081424d8de46f44abce8771bdff89b",
+          "size": 11016943,
+          "offset": 66500989,
+          "url": "vrclassroom/release/1.1.0.8/chunks/f8/f8c8f3ca63560bd5686f29562bd92900bb081424d8de46f44abce8771bdff89b"
+        },
+        {
+          "hash": "0ce7b342fadf6db621feb48921ec27c10a57188e8942c16171918f8efd66bb8d",
+          "size": 10491561,
+          "offset": 77517932,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0c/0ce7b342fadf6db621feb48921ec27c10a57188e8942c16171918f8efd66bb8d"
+        },
+        {
+          "hash": "16197eb6d88e394c49d76a5d4c9f56f859aa0bf621360223559a5591187512cd",
+          "size": 10265835,
+          "offset": 88009493,
+          "url": "vrclassroom/release/1.1.0.8/chunks/16/16197eb6d88e394c49d76a5d4c9f56f859aa0bf621360223559a5591187512cd"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/libEGL.dll",
+      "totalSize": 92672,
+      "chunks": [
+        {
+          "hash": "63580999b8210315b664e7742b6d4f59e587d20b4d0826072a5ef311c6f25b74",
+          "size": 92672,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/63/63580999b8210315b664e7742b6d4f59e587d20b4d0826072a5ef311c6f25b74"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/libGLESv2.dll",
+      "totalSize": 3922432,
+      "chunks": [
+        {
+          "hash": "99f261fa5a69dd2b3bd6192aaf72a0d9f88d769a311fac87963658a7573ec669",
+          "size": 3922432,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/99/99f261fa5a69dd2b3bd6192aaf72a0d9f88d769a311fac87963658a7573ec669"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/natives_blob.bin",
+      "totalSize": 246209,
+      "chunks": [
+        {
+          "hash": "20210a0e530832a0267d584015eecb331c2ac0d841faf7b36feb9d326c32c113",
+          "size": 246209,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/20/20210a0e530832a0267d584015eecb331c2ac0d841faf7b36feb9d326c32c113"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/cef.pak",
+      "totalSize": 6003861,
+      "chunks": [
+        {
+          "hash": "c26ff7260312b10cf2659e048a0c7d8989f8e63a1069802265e47d2f67e65d85",
+          "size": 6003861,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/c2/c26ff7260312b10cf2659e048a0c7d8989f8e63a1069802265e47d2f67e65d85"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/cef_100_percent.pak",
+      "totalSize": 279905,
+      "chunks": [
+        {
+          "hash": "5db46cebb4085976d52d9d27280fad10b64bdf50b768d3a61b23fc1cda01ed14",
+          "size": 279905,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/5d/5db46cebb4085976d52d9d27280fad10b64bdf50b768d3a61b23fc1cda01ed14"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/cef_200_percent.pak",
+      "totalSize": 386884,
+      "chunks": [
+        {
+          "hash": "5de8af5fec935ffd1227b4d2c2be1afaba3aeaa334e842ab3f86a63bcf999e26",
+          "size": 386884,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/5d/5de8af5fec935ffd1227b4d2c2be1afaba3aeaa334e842ab3f86a63bcf999e26"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/cef_extensions.pak",
+      "totalSize": 3565138,
+      "chunks": [
+        {
+          "hash": "0268ed1497f3951662efffb7f14a388c65fd14a1b4e477e8380a31dd9cc6872f",
+          "size": 3565138,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/02/0268ed1497f3951662efffb7f14a388c65fd14a1b4e477e8380a31dd9cc6872f"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/devtools_resources.pak",
+      "totalSize": 5183550,
+      "chunks": [
+        {
+          "hash": "86ca2607ee8256a55a7aa0b30b7ff3a3bef5c1c095d2e4310e7efda257bfd1c1",
+          "size": 5183550,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/86/86ca2607ee8256a55a7aa0b30b7ff3a3bef5c1c095d2e4310e7efda257bfd1c1"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/am.pak",
+      "totalSize": 317735,
+      "chunks": [
+        {
+          "hash": "644d8494114542e0cc62f09c325b1504bfa8e63fbfa7e32f8d9e70375d21e5b6",
+          "size": 317735,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/64/644d8494114542e0cc62f09c325b1504bfa8e63fbfa7e32f8d9e70375d21e5b6"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ar.pak",
+      "totalSize": 314031,
+      "chunks": [
+        {
+          "hash": "78a728f45c5f0e245153656c277f452d7fa9670bf7d947f41d2a5b4434d21b91",
+          "size": 314031,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/78/78a728f45c5f0e245153656c277f452d7fa9670bf7d947f41d2a5b4434d21b91"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/bg.pak",
+      "totalSize": 366595,
+      "chunks": [
+        {
+          "hash": "966f12b6bdfbccec17b3aaf41cd267b3b50adc08ebb9d4052bc056cf4a9a3c92",
+          "size": 366595,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/96/966f12b6bdfbccec17b3aaf41cd267b3b50adc08ebb9d4052bc056cf4a9a3c92"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/bn.pak",
+      "totalSize": 478939,
+      "chunks": [
+        {
+          "hash": "baab6045ab40c9d0b9f684a70296d759033501981bc9dcd7d6f320e7ecefa4c0",
+          "size": 478939,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ba/baab6045ab40c9d0b9f684a70296d759033501981bc9dcd7d6f320e7ecefa4c0"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ca.pak",
+      "totalSize": 228122,
+      "chunks": [
+        {
+          "hash": "fcf071199dff9eadf87088c8604a4e7feeb746b52f7a2250a4b4708c7c3253e1",
+          "size": 228122,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/fc/fcf071199dff9eadf87088c8604a4e7feeb746b52f7a2250a4b4708c7c3253e1"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/cs.pak",
+      "totalSize": 231572,
+      "chunks": [
+        {
+          "hash": "f6cbb6464f7a89c133d66c919c48227a6fa10285b3ccb5d87581f168584f6574",
+          "size": 231572,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/f6/f6cbb6464f7a89c133d66c919c48227a6fa10285b3ccb5d87581f168584f6574"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/da.pak",
+      "totalSize": 207739,
+      "chunks": [
+        {
+          "hash": "4834233e031169260acb8864a4fd6a35bd9f295f74ba39c88e56b8850d145c20",
+          "size": 207739,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/48/4834233e031169260acb8864a4fd6a35bd9f295f74ba39c88e56b8850d145c20"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/de.pak",
+      "totalSize": 226211,
+      "chunks": [
+        {
+          "hash": "b2b3f9a080951e1b42447f6fab93ba70f3f18dfb2618b3bb7a9bcd03ac21f1d5",
+          "size": 226211,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b2/b2b3f9a080951e1b42447f6fab93ba70f3f18dfb2618b3bb7a9bcd03ac21f1d5"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/el.pak",
+      "totalSize": 402687,
+      "chunks": [
+        {
+          "hash": "73245db3afa2d270533773e35f15cda1d4d09a8fe6f2f8a05bd9b117c760b8d5",
+          "size": 402687,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/73/73245db3afa2d270533773e35f15cda1d4d09a8fe6f2f8a05bd9b117c760b8d5"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/en-GB.pak",
+      "totalSize": 186958,
+      "chunks": [
+        {
+          "hash": "3cb1ae145de1892ce5c1dc4ecc00a247f32de71d04c3720de49c800c48be6073",
+          "size": 186958,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/3c/3cb1ae145de1892ce5c1dc4ecc00a247f32de71d04c3720de49c800c48be6073"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/en-US.pak",
+      "totalSize": 186991,
+      "chunks": [
+        {
+          "hash": "de2958f810539e85e770f4dec86ff880dc0223cd36071d5b1ab4eea2052b6fa0",
+          "size": 186991,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/de/de2958f810539e85e770f4dec86ff880dc0223cd36071d5b1ab4eea2052b6fa0"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/es-419.pak",
+      "totalSize": 224532,
+      "chunks": [
+        {
+          "hash": "0e97ee85938625a9a317cd35b66501b02ce56bba0e36ab79d59e76bad6635aa9",
+          "size": 224532,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0e/0e97ee85938625a9a317cd35b66501b02ce56bba0e36ab79d59e76bad6635aa9"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/es.pak",
+      "totalSize": 228808,
+      "chunks": [
+        {
+          "hash": "4515a47223a992a72d4cf5cb6f1b290eecc499e96b00e01c71942e20ba8e12d4",
+          "size": 228808,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/45/4515a47223a992a72d4cf5cb6f1b290eecc499e96b00e01c71942e20ba8e12d4"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/et.pak",
+      "totalSize": 202214,
+      "chunks": [
+        {
+          "hash": "9b3839f55f186318e257a07149a07caa2a2171b8a740cd251c245323c8a7524f",
+          "size": 202214,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/9b/9b3839f55f186318e257a07149a07caa2a2171b8a740cd251c245323c8a7524f"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/fa.pak",
+      "totalSize": 321134,
+      "chunks": [
+        {
+          "hash": "a0e38afc45902bae2e2ead3e51972495558fd75e420ad8a05752c76c5c3df5a3",
+          "size": 321134,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/a0/a0e38afc45902bae2e2ead3e51972495558fd75e420ad8a05752c76c5c3df5a3"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/fi.pak",
+      "totalSize": 211980,
+      "chunks": [
+        {
+          "hash": "a31ce159b03a3ea1dc144d14e31b5525bddc28e9bce366713c7e90580ef3df8c",
+          "size": 211980,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/a3/a31ce159b03a3ea1dc144d14e31b5525bddc28e9bce366713c7e90580ef3df8c"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/fil.pak",
+      "totalSize": 232070,
+      "chunks": [
+        {
+          "hash": "4128934b8dc6fbc90d7d68bd926bd63006ed9869f77ec9a7b78434903fadd18e",
+          "size": 232070,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/41/4128934b8dc6fbc90d7d68bd926bd63006ed9869f77ec9a7b78434903fadd18e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/fr.pak",
+      "totalSize": 243625,
+      "chunks": [
+        {
+          "hash": "7d2f5a575e6090cc15d28ca2c20723310528278f89bacb31c0cb5d918fec929e",
+          "size": 243625,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/7d/7d2f5a575e6090cc15d28ca2c20723310528278f89bacb31c0cb5d918fec929e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/gu.pak",
+      "totalSize": 451818,
+      "chunks": [
+        {
+          "hash": "b62fe556a941b1ca2cc89bc36508694fb61cf145a2e2bcc505ef1aabb9a60993",
+          "size": 451818,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b6/b62fe556a941b1ca2cc89bc36508694fb61cf145a2e2bcc505ef1aabb9a60993"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/he.pak",
+      "totalSize": 265463,
+      "chunks": [
+        {
+          "hash": "600fc783659a765efb3086a992f1f5c7e780687bd4cab67fca41c8115582e57d",
+          "size": 265463,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/60/600fc783659a765efb3086a992f1f5c7e780687bd4cab67fca41c8115582e57d"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/hi.pak",
+      "totalSize": 460810,
+      "chunks": [
+        {
+          "hash": "8e5021c07399ae0f28a4b3816f6606fe161347e65d1a7d01f5ed57ba4377a535",
+          "size": 460810,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8e/8e5021c07399ae0f28a4b3816f6606fe161347e65d1a7d01f5ed57ba4377a535"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/hr.pak",
+      "totalSize": 217428,
+      "chunks": [
+        {
+          "hash": "ba334953f117ade947420c5f58fd21623a1979b4a7821267bdeff7e1d0ca8c26",
+          "size": 217428,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ba/ba334953f117ade947420c5f58fd21623a1979b4a7821267bdeff7e1d0ca8c26"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/hu.pak",
+      "totalSize": 239083,
+      "chunks": [
+        {
+          "hash": "c449703b65f0796b298cb2f932166cbc0acecb2a061e2d3c823724825877f4aa",
+          "size": 239083,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/c4/c449703b65f0796b298cb2f932166cbc0acecb2a061e2d3c823724825877f4aa"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/id.pak",
+      "totalSize": 201977,
+      "chunks": [
+        {
+          "hash": "788c6504013495df3ade34f2a8fb81c1fea1bb49351879d56f587680f807a78e",
+          "size": 201977,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/78/788c6504013495df3ade34f2a8fb81c1fea1bb49351879d56f587680f807a78e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/it.pak",
+      "totalSize": 220397,
+      "chunks": [
+        {
+          "hash": "39c6b3f68f5bd3dabffc7b907e9cc026ee037d5cb9dc36fb1f3dec38f299af29",
+          "size": 220397,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/39/39c6b3f68f5bd3dabffc7b907e9cc026ee037d5cb9dc36fb1f3dec38f299af29"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ja.pak",
+      "totalSize": 270807,
+      "chunks": [
+        {
+          "hash": "f9fa579100cbe58df0f06f39bf7c4719aea9af8d6b5e01bf7b91a9793b653154",
+          "size": 270807,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/f9/f9fa579100cbe58df0f06f39bf7c4719aea9af8d6b5e01bf7b91a9793b653154"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/kn.pak",
+      "totalSize": 519415,
+      "chunks": [
+        {
+          "hash": "8339140afdec8f08aba5cf4c87474bd4e4e420293c6332833b9821dc713de290",
+          "size": 519415,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/83/8339140afdec8f08aba5cf4c87474bd4e4e420293c6332833b9821dc713de290"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ko.pak",
+      "totalSize": 230850,
+      "chunks": [
+        {
+          "hash": "4eb2136286e136dd0c0490e8163607fa8f5dc3eb804802ca5ca05302d5691745",
+          "size": 230850,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/4e/4eb2136286e136dd0c0490e8163607fa8f5dc3eb804802ca5ca05302d5691745"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/lt.pak",
+      "totalSize": 234416,
+      "chunks": [
+        {
+          "hash": "80fd3e71172cfd78d360eaa9b7a157beaa5c128ac64a1fb784cec49701b88207",
+          "size": 234416,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/80/80fd3e71172cfd78d360eaa9b7a157beaa5c128ac64a1fb784cec49701b88207"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/lv.pak",
+      "totalSize": 234204,
+      "chunks": [
+        {
+          "hash": "73c17bc97d8173949aab0a9748d86b934c14e0418ee8ec314102a5fed40ec5d2",
+          "size": 234204,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/73/73c17bc97d8173949aab0a9748d86b934c14e0418ee8ec314102a5fed40ec5d2"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ml.pak",
+      "totalSize": 567612,
+      "chunks": [
+        {
+          "hash": "db9928f514679e50a41e19bbbc582042ec8ca9fb6cd8088abe594af56b83bb18",
+          "size": 567612,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/db/db9928f514679e50a41e19bbbc582042ec8ca9fb6cd8088abe594af56b83bb18"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/mr.pak",
+      "totalSize": 456368,
+      "chunks": [
+        {
+          "hash": "05d3620c0fcb083647fae506a4e084add864434c5e9d35b23671e6aecf733de1",
+          "size": 456368,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/05/05d3620c0fcb083647fae506a4e084add864434c5e9d35b23671e6aecf733de1"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ms.pak",
+      "totalSize": 208619,
+      "chunks": [
+        {
+          "hash": "29800443a6afc617029c61c5f825814ecc08ee2ae50f4d06cd3d233a1cf78154",
+          "size": 208619,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/29/29800443a6afc617029c61c5f825814ecc08ee2ae50f4d06cd3d233a1cf78154"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/nb.pak",
+      "totalSize": 205047,
+      "chunks": [
+        {
+          "hash": "ece4d7ffe733ee39d1d12f4999fdcd4cc33c96fbf93f86d64c0a93253737f9fc",
+          "size": 205047,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ec/ece4d7ffe733ee39d1d12f4999fdcd4cc33c96fbf93f86d64c0a93253737f9fc"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/nl.pak",
+      "totalSize": 215699,
+      "chunks": [
+        {
+          "hash": "d1803e3c6d64050fc5a16c5168a99e3165b1137a2a676af2709c3ae13083cac5",
+          "size": 215699,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/d1/d1803e3c6d64050fc5a16c5168a99e3165b1137a2a676af2709c3ae13083cac5"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/pl.pak",
+      "totalSize": 225555,
+      "chunks": [
+        {
+          "hash": "ffcad2748416d25b0e23114e620bfec21be3c8c0dbd7fce3495535cb42e30da8",
+          "size": 225555,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ff/ffcad2748416d25b0e23114e620bfec21be3c8c0dbd7fce3495535cb42e30da8"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/pt-BR.pak",
+      "totalSize": 221133,
+      "chunks": [
+        {
+          "hash": "649de1c7b2b78d4a647ee3426e36ab93a379c5e7060933419d5f28493236efa3",
+          "size": 221133,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/64/649de1c7b2b78d4a647ee3426e36ab93a379c5e7060933419d5f28493236efa3"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/pt-PT.pak",
+      "totalSize": 223472,
+      "chunks": [
+        {
+          "hash": "335df6ef67e6f7346426f7f108498cdf0c49b748ceeab4eb4f4a53eed3882ae9",
+          "size": 223472,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/33/335df6ef67e6f7346426f7f108498cdf0c49b748ceeab4eb4f4a53eed3882ae9"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ro.pak",
+      "totalSize": 229091,
+      "chunks": [
+        {
+          "hash": "2807da4230c77df6188ce6607486d499290ecf8daca118b3925fc2a3dd52f902",
+          "size": 229091,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/28/2807da4230c77df6188ce6607486d499290ecf8daca118b3925fc2a3dd52f902"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ru.pak",
+      "totalSize": 351003,
+      "chunks": [
+        {
+          "hash": "2667857778df720e0768c05c55eb46485f5477169dc716e3b1b5bdbf8fea2c86",
+          "size": 351003,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/26/2667857778df720e0768c05c55eb46485f5477169dc716e3b1b5bdbf8fea2c86"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/sk.pak",
+      "totalSize": 237218,
+      "chunks": [
+        {
+          "hash": "fea92269172e1e38ba3d1e3400d1de989364bab5d49334aed5352e24b8cb640b",
+          "size": 237218,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/fe/fea92269172e1e38ba3d1e3400d1de989364bab5d49334aed5352e24b8cb640b"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/sl.pak",
+      "totalSize": 217919,
+      "chunks": [
+        {
+          "hash": "2fc6a7bbac450cb583bef9b12d21ca43a31205865faf2352982a29adeb44fc4e",
+          "size": 217919,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/2f/2fc6a7bbac450cb583bef9b12d21ca43a31205865faf2352982a29adeb44fc4e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/sr.pak",
+      "totalSize": 341731,
+      "chunks": [
+        {
+          "hash": "9a0e5008633ebe6270bd3101f09a764dff12b4f4118c763f9998c3f432b6b829",
+          "size": 341731,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/9a/9a0e5008633ebe6270bd3101f09a764dff12b4f4118c763f9998c3f432b6b829"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/sv.pak",
+      "totalSize": 206145,
+      "chunks": [
+        {
+          "hash": "935d6d3968fa20c7e6e10865e8ecee15a2bb8363a28e4470fbea8e16942b085e",
+          "size": 206145,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/93/935d6d3968fa20c7e6e10865e8ecee15a2bb8363a28e4470fbea8e16942b085e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/sw.pak",
+      "totalSize": 209319,
+      "chunks": [
+        {
+          "hash": "fe2502a37371ea88acc8d6e75c16e764cc1212f9ed4142079a0d5dbe8e7f2669",
+          "size": 209319,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/fe/fe2502a37371ea88acc8d6e75c16e764cc1212f9ed4142079a0d5dbe8e7f2669"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/ta.pak",
+      "totalSize": 527387,
+      "chunks": [
+        {
+          "hash": "70049a6dd560d54b94705e084d638c231f324aad726122d013396f9e976f8f0c",
+          "size": 527387,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/70/70049a6dd560d54b94705e084d638c231f324aad726122d013396f9e976f8f0c"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/te.pak",
+      "totalSize": 503299,
+      "chunks": [
+        {
+          "hash": "b959a78fb5cfc0239eb94f15530402ce9aee0ca61ab7e0d763edb3ead0423fd1",
+          "size": 503299,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b9/b959a78fb5cfc0239eb94f15530402ce9aee0ca61ab7e0d763edb3ead0423fd1"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/th.pak",
+      "totalSize": 438108,
+      "chunks": [
+        {
+          "hash": "25e4775efabcc22b87e02c393cebd85ef39fe24790a9c83b96dcddab80501ba6",
+          "size": 438108,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/25/25e4775efabcc22b87e02c393cebd85ef39fe24790a9c83b96dcddab80501ba6"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/tr.pak",
+      "totalSize": 221774,
+      "chunks": [
+        {
+          "hash": "0fe9c7b8849c9e386c34215e7544afbaac04360896e6dd79d206511ab6a78e37",
+          "size": 221774,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0f/0fe9c7b8849c9e386c34215e7544afbaac04360896e6dd79d206511ab6a78e37"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/uk.pak",
+      "totalSize": 358245,
+      "chunks": [
+        {
+          "hash": "d31fa0678019ffe21d693ab809800a127d9585c9d21eba55094299396c61d448",
+          "size": 358245,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/d3/d31fa0678019ffe21d693ab809800a127d9585c9d21eba55094299396c61d448"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/vi.pak",
+      "totalSize": 254300,
+      "chunks": [
+        {
+          "hash": "6c42b4810b9ff2bc6deece746385d0ab8bba1c4ac213be8bf6007dbe990b8059",
+          "size": 254300,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/6c/6c42b4810b9ff2bc6deece746385d0ab8bba1c4ac213be8bf6007dbe990b8059"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/zh-CN.pak",
+      "totalSize": 190714,
+      "chunks": [
+        {
+          "hash": "24938e63e4d487c96bc74d17a76629c837db11dc3adbf4cba58c90cdd6ae5645",
+          "size": 190714,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/24/24938e63e4d487c96bc74d17a76629c837db11dc3adbf4cba58c90cdd6ae5645"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/Resources/locales/zh-TW.pak",
+      "totalSize": 192079,
+      "chunks": [
+        {
+          "hash": "7bedce5280dd86b5ed52b950a0b39b5349e7e8b3123e23027230469341327e0e",
+          "size": 192079,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/7b/7bedce5280dd86b5ed52b950a0b39b5349e7e8b3123e23027230469341327e0e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/CEF3/Win64/snapshot_blob.bin",
+      "totalSize": 1562112,
+      "chunks": [
+        {
+          "hash": "8d6b166f4fb2a3910f0dd1958850cbf101a8f4b60823e324d57626383561dd19",
+          "size": 1562112,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/8d/8d6b166f4fb2a3910f0dd1958850cbf101a8f4b60823e324d57626383561dd19"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/DbgHelp/dbghelp.dll",
+      "totalSize": 1868736,
+      "chunks": [
+        {
+          "hash": "9a02133854ff9f06c3b23a70f8c2a4814b2ed4eef613244b485e3737259ddf9e",
+          "size": 1868736,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/9a/9a02133854ff9f06c3b23a70f8c2a4814b2ed4eef613244b485e3737259ddf9e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/NVIDIA/GeForceNOW/Win64/GfnRuntimeSdk.dll",
+      "totalSize": 3212640,
+      "chunks": [
+        {
+          "hash": "e741479b13faab35b34a60bd9e8b09791ea57d260a9336b44916e73ba2246d30",
+          "size": 3212640,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e7/e741479b13faab35b34a60bd9e8b09791ea57d260a9336b44916e73ba2246d30"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/NVIDIA/NVaftermath/Win64/GFSDK_Aftermath_Lib.x64.dll",
+      "totalSize": 1425920,
+      "chunks": [
+        {
+          "hash": "516e14af41a91fe960363728965f354aecc06bcdfaef6bcb45dd3537ede09195",
+          "size": 1425920,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/51/516e14af41a91fe960363728965f354aecc06bcdfaef6bcb45dd3537ede09195"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/Oculus/Audio/Win64/ovraudio64.dll",
+      "totalSize": 8883200,
+      "chunks": [
+        {
+          "hash": "40f4cae5a44a8c51a9a586abb6ec3427138e1345fb7a43d7c6eb5b24aa2c2a19",
+          "size": 8883200,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/40/40f4cae5a44a8c51a9a586abb6ec3427138e1345fb7a43d7c6eb5b24aa2c2a19"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/Oculus/OVRPlugin/OVRPlugin/Win64/OVRPlugin.dll",
+      "totalSize": 4140240,
+      "chunks": [
+        {
+          "hash": "d42d9a1b40ae9e4a86a1dc00536cc7139daea5addbddd32ca386c5b24b000cb6",
+          "size": 4140240,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/d4/d42d9a1b40ae9e4a86a1dc00536cc7139daea5addbddd32ca386c5b24b000cb6"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/Ogg/Win64/VS2015/libogg_64.dll",
+      "totalSize": 49152,
+      "chunks": [
+        {
+          "hash": "284a6e70a6dce01f8a02d93e1bb78baf0efb6140459c587d8986d59fb6bd675b",
+          "size": 49152,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/28/284a6e70a6dce01f8a02d93e1bb78baf0efb6140459c587d8986d59fb6bd675b"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/OpenVR/OpenVRv1_5_17/Win64/openvr_api.dll",
+      "totalSize": 597792,
+      "chunks": [
+        {
+          "hash": "6c5e18a3c12ddb9618c1edb36cd4834115735c1f3096bd4cb2022c3593af28b8",
+          "size": 597792,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/6c/6c5e18a3c12ddb9618c1edb36cd4834115735c1f3096bd4cb2022c3593af28b8"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/OpenXR/win64/openxr_loader.dll",
+      "totalSize": 622592,
+      "chunks": [
+        {
+          "hash": "2ae94572256dfd6d7e992a4474797d8cfe14cf3c030b2040a5b91a7d7bdfd8d8",
+          "size": 622592,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/2a/2ae94572256dfd6d7e992a4474797d8cfe14cf3c030b2040a5b91a7d7bdfd8d8"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/ApexFrameworkPROFILE_x64.dll",
+      "totalSize": 1382400,
+      "chunks": [
+        {
+          "hash": "243e4b82d84f6abfc400aaa8c2cc4fc93f36e670c016bc673f18569eb04d47ec",
+          "size": 1382400,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/24/243e4b82d84f6abfc400aaa8c2cc4fc93f36e670c016bc673f18569eb04d47ec"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/APEX_ClothingPROFILE_x64.dll",
+      "totalSize": 1575936,
+      "chunks": [
+        {
+          "hash": "6d0bf48f8e20b2876a0924fe23128fed4bfbe7c6263d0b98ede45bedd7486b41",
+          "size": 1575936,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/6d/6d0bf48f8e20b2876a0924fe23128fed4bfbe7c6263d0b98ede45bedd7486b41"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/APEX_LegacyPROFILE_x64.dll",
+      "totalSize": 4198400,
+      "chunks": [
+        {
+          "hash": "9841fd409a788d0a8cb38c8e5ce06a5b7192d43a465ccbe0a6714fccdde67b79",
+          "size": 4198400,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/98/9841fd409a788d0a8cb38c8e5ce06a5b7192d43a465ccbe0a6714fccdde67b79"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/NvClothPROFILE_x64.dll",
+      "totalSize": 264704,
+      "chunks": [
+        {
+          "hash": "e62523756094e9a7f83e2b752bd4452401978bb85e180e2efd9a7d8e1c93c851",
+          "size": 264704,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/e6/e62523756094e9a7f83e2b752bd4452401978bb85e180e2efd9a7d8e1c93c851"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/PhysX3CommonPROFILE_x64.dll",
+      "totalSize": 2033152,
+      "chunks": [
+        {
+          "hash": "3d0de2d0d5952857acc0234cba8e515cb79ce23569967f0b604ebc2ea70cbd15",
+          "size": 2033152,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/3d/3d0de2d0d5952857acc0234cba8e515cb79ce23569967f0b604ebc2ea70cbd15"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/PhysX3CookingPROFILE_x64.dll",
+      "totalSize": 244736,
+      "chunks": [
+        {
+          "hash": "47e6124c9afa2f16ace856f415ee958fcb53109317e7b0191722bdc9c6626507",
+          "size": 244736,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/47/47e6124c9afa2f16ace856f415ee958fcb53109317e7b0191722bdc9c6626507"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/PhysX3PROFILE_x64.dll",
+      "totalSize": 3141120,
+      "chunks": [
+        {
+          "hash": "b69d19c37c2a08b0aa61cf16595dec31935dafa1023cf27a4457cad2b5bc0a1e",
+          "size": 3141120,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/b6/b69d19c37c2a08b0aa61cf16595dec31935dafa1023cf27a4457cad2b5bc0a1e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/PxFoundationPROFILE_x64.dll",
+      "totalSize": 97280,
+      "chunks": [
+        {
+          "hash": "4c2d25266e8b0b1b6efd2ada08fd9f352140c54a9c3670086905758adc3ec4ce",
+          "size": 97280,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/4c/4c2d25266e8b0b1b6efd2ada08fd9f352140c54a9c3670086905758adc3ec4ce"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/PhysX3/Win64/VS2015/PxPvdSDKPROFILE_x64.dll",
+      "totalSize": 267776,
+      "chunks": [
+        {
+          "hash": "a64d533c7486a346470e119111ef98bbe2a38b0d42d22f9c80ee7aec85cb53e3",
+          "size": 267776,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/a6/a64d533c7486a346470e119111ef98bbe2a38b0d42d22f9c80ee7aec85cb53e3"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/Steamworks/Steamv151/Win64/steam_api64.dll",
+      "totalSize": 265504,
+      "chunks": [
+        {
+          "hash": "ca1fa9a7609ab10b7926400559cf073e5888423cc156af72c6027d72a89eea73",
+          "size": 265504,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/ca/ca1fa9a7609ab10b7926400559cf073e5888423cc156af72c6027d72a89eea73"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/Vorbis/Win64/VS2015/libvorbisfile_64.dll",
+      "totalSize": 37888,
+      "chunks": [
+        {
+          "hash": "a9d6f5538f44011c1f65d7ace64216a237636717cb0c8c59f4f89cc08dd3d24f",
+          "size": 37888,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/a9/a9d6f5538f44011c1f65d7ace64216a237636717cb0c8c59f4f89cc08dd3d24f"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/Vorbis/Win64/VS2015/libvorbis_64.dll",
+      "totalSize": 1714176,
+      "chunks": [
+        {
+          "hash": "0f66dcb5837e9b59c499277fd272b862043356aa9145802cf0a63e00a1bcca59",
+          "size": 1714176,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0f/0f66dcb5837e9b59c499277fd272b862043356aa9145802cf0a63e00a1bcca59"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/Windows/WinPixEventRuntime/x64/WinPixEventRuntime.dll",
+      "totalSize": 44752,
+      "chunks": [
+        {
+          "hash": "0afaa35527ac034861ffa5564e5f6bd9e4d54e79132b3283cdd98e41f5584d19",
+          "size": 44752,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0a/0afaa35527ac034861ffa5564e5f6bd9e4d54e79132b3283cdd98e41f5584d19"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/ThirdParty/Windows/XAudio2_9/x64/xaudio2_9redist.dll",
+      "totalSize": 847440,
+      "chunks": [
+        {
+          "hash": "0e01f400baa09694cacfd2cfbff0d721c17b56785d2d6e29b6fdd117f70ccc1e",
+          "size": 847440,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/0e/0e01f400baa09694cacfd2cfbff0d721c17b56785d2d6e29b6fdd117f70ccc1e"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Binaries/Win64/UnrealCEFSubProcess.exe",
+      "totalSize": 3693568,
+      "chunks": [
+        {
+          "hash": "0499c4073b070710da3cf39ecb7abae803a8dfbe74fb2a5d7b81bbd146c46f49",
+          "size": 3693568,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/04/0499c4073b070710da3cf39ecb7abae803a8dfbe74fb2a5d7b81bbd146c46f49"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Extras/Redist/en-us/UE4PrereqSetup_x64.exe",
+      "totalSize": 41033784,
+      "chunks": [
+        {
+          "hash": "625101d79a6f0ff3aa98f121b74062fcde6599966deed0320fbd6e76a56f72fb",
+          "size": 31457280,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/62/625101d79a6f0ff3aa98f121b74062fcde6599966deed0320fbd6e76a56f72fb"
+        },
+        {
+          "hash": "c0f0298acf3ae0bb1254ba981054a799da890e95c1d86aeedc30920b6c025b0d",
+          "size": 9576504,
+          "offset": 31457280,
+          "url": "vrclassroom/release/1.1.0.8/chunks/c0/c0f0298acf3ae0bb1254ba981054a799da890e95c1d86aeedc30920b6c025b0d"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Plugins/Experimental/BlastPlugin/Binaries/Win64/NvBlastExtAuthoringPROFILE_x64.dll",
+      "totalSize": 1331712,
+      "chunks": [
+        {
+          "hash": "dfdad402a22cdc66692834e3cd86a5d5859ccbea012e6aaa4eb8fcbd018bbcbc",
+          "size": 1331712,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/df/dfdad402a22cdc66692834e3cd86a5d5859ccbea012e6aaa4eb8fcbd018bbcbc"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Plugins/Experimental/BlastPlugin/Binaries/Win64/NvBlastGlobalsPROFILE_x64.dll",
+      "totalSize": 43520,
+      "chunks": [
+        {
+          "hash": "5a8d77292016d081ba5bb68500b14a2365b6d0083587b4fb1dda6e994b2144a2",
+          "size": 43520,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/5a/5a8d77292016d081ba5bb68500b14a2365b6d0083587b4fb1dda6e994b2144a2"
+        }
+      ]
+    },
+    {
+      "filename": "Engine/Plugins/Experimental/BlastPlugin/Binaries/Win64/NvBlastPROFILE_x64.dll",
+      "totalSize": 107520,
+      "chunks": [
+        {
+          "hash": "2c5d0fdef05cf6da16da22f57dc527254c71abcee51e28423c2208ea8dd70094",
+          "size": 107520,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/2c/2c5d0fdef05cf6da16da22f57dc527254c71abcee51e28423c2208ea8dd70094"
+        }
+      ]
+    },
+    {
+      "filename": "VRClassroom.exe",
+      "totalSize": 144896,
+      "chunks": [
+        {
+          "hash": "96c7a47638ad4b46bc2f6b3842e4ff105afbb1946e12c3b3b22ff48cfff5875a",
+          "size": 144896,
+          "offset": 0,
+          "url": "vrclassroom/release/1.1.0.8/chunks/96/96c7a47638ad4b46bc2f6b3842e4ff105afbb1946e12c3b3b22ff48cfff5875a"
+        }
+      ]
+    }
+  ]
+}

@@ -631,5 +631,6 @@
       "checksum": "96c7a47638ad4b46bc2f6b3842e4ff105afbb1946e12c3b3b22ff48cfff5875a",
       "url": "https://vrcentre.com.au/launcher_files/vrclassroom/1.1.0.8/VRClassroom.exe"
     }
-  ]
+  ],
+  "baseUrl": "https://d9f8ae13b4516b91e13fe7a672fe51b9.r2.cloudflarestorage.com/vrcentre/vrclassroom/1.1.0.8"
 }

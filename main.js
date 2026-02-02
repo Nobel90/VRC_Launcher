@@ -94,6 +94,25 @@ ipcMain.on('open-external', (event, url) => {
     shell.openExternal(url);
 });
 
+// Verify if an install path exists and contains game files
+ipcMain.handle('verify-install-path', async (event, { installPath, executable }) => {
+    if (!installPath) return { exists: false, hasExecutable: false };
+
+    const pathExists = fsSync.existsSync(installPath);
+    if (!pathExists) return { exists: false, hasExecutable: false };
+
+    try {
+        const contents = await fs.readdir(installPath);
+        const hasFiles = contents.length > 0;
+        const executablePath = path.join(installPath, executable || '');
+        const hasExecutable = executable ? fsSync.existsSync(executablePath) : false;
+        return { exists: true, hasFiles, hasExecutable };
+    } catch (error) {
+        console.error('Error verifying install path:', error);
+        return { exists: false, hasExecutable: false };
+    }
+});
+
 async function getFileChecksum(filePath) {
     try {
         const extension = path.extname(filePath).toLowerCase();
@@ -157,17 +176,23 @@ class DownloadManager {
         this.win.webContents.send('download-state-update', this.state);
     }
 
-    async start(gameId, installPath, files, latestVersion) {
+    async start(gameId, installPath, files, latestVersion, manifest = null) {
         if (this.state.status === 'downloading') return;
 
-        console.log(`Starting download for ${files.length} files.`);
+        // Extract chunk info from manifest (support both old and new format)
+        const baseUrl = manifest?.baseUrl || '';
+        const chunkIndex = manifest?.chunkIndex || {};
+
+        console.log(`Starting download for ${files.length} files. baseUrl: "${baseUrl}"`);
         const filteredFiles = files.filter(file => {
-            const fileName = path.basename(file.path);
-            const pathString = file.path.toLowerCase();
+            // Support both old (path) and new (filename) manifest format
+            const filePath = file.path || file.filename;
+            const fileName = path.basename(filePath);
+            const pathString = filePath.toLowerCase();
 
             // Filter out 'Saved' folders, which often contain user-specific, non-essential data.
             const isSavedFolder = pathString.startsWith('saved/') || pathString.startsWith('saved\\') || pathString.includes('/saved/') || pathString.includes('\\saved\\');
-            
+
             const isManifest = fileName.toLowerCase() === 'manifest_nonufsfiles_win64.txt';
             const isLauncher = fileName.toLowerCase() === 'vrclassroom launcher.exe';
             const isVrClassroomTxt = fileName.toLowerCase() === 'vrclassroom.txt';
@@ -186,12 +211,17 @@ class DownloadManager {
             return;
         }
 
+        // Calculate total bytes for all files to enable byte-based progress
+        const totalAllBytes = filteredFiles.reduce((sum, file) => sum + (file.size || file.totalSize || 0), 0);
+        let cumulativeDownloadedBytes = 0;
+
         this.setState({
             ...this.getInitialState(),
             status: 'downloading',
             totalFiles: filteredFiles.length,
+            totalAllBytes: totalAllBytes,
         });
-        
+
         this.bytesSinceLastInterval = 0;
         if (this.speedInterval) clearInterval(this.speedInterval);
 
@@ -213,11 +243,14 @@ class DownloadManager {
 
             // This is the core loop for a single file, allowing retries and resume.
             const file = filteredFiles[i];
-            this.setState({ 
-                currentFileName: path.basename(file.path), 
-                downloadedBytes: 0, 
-                totalBytes: file.size || 0,
-                progress: ((i) / this.state.totalFiles) * 100 // Progress before this file starts
+            // Support both old (path) and new (filename) manifest format
+            const filePath = file.path || file.filename;
+            const fileSize = file.size || file.totalSize || 0;
+            this.setState({
+                currentFileName: path.basename(filePath),
+                downloadedBytes: 0,
+                totalBytes: fileSize,
+                progress: totalAllBytes > 0 ? (cumulativeDownloadedBytes / totalAllBytes) * 100 : 0
             });
 
             let success = false;
@@ -229,33 +262,54 @@ class DownloadManager {
                 }
 
                 try {
-                    const destinationPath = path.join(installPath, file.path);
-                    await this.downloadFile(file.url, destinationPath);
-                    
-                    const localChecksum = await getFileChecksum(destinationPath);
-                    if (localChecksum === file.checksum) {
-                        success = true;
+                    const destinationPath = path.join(installPath, filePath);
+
+                    // Check if file is chunked
+                    if (file.chunks && file.chunks.length > 0) {
+                        // Chunked file - download and reconstruct
+                        console.log(`Downloading chunked file: ${filePath} (${file.chunks.length} chunks)`);
+                        await this.downloadChunkedFile(file, baseUrl, chunkIndex, destinationPath);
+                    } else if (file.url) {
+                        // Regular file with URL
+                        await this.downloadFile(file.url, destinationPath);
                     } else {
-                        attempts++;
-                        console.warn(`Checksum mismatch for ${file.path}. Attempt ${attempts + 1}/3.`);
-                        try { await fs.unlink(destinationPath); } catch (e) { console.error('Failed to delete corrupt file:', e); }
+                        // Small file without chunks - construct URL
+                        const fileUrl = `${baseUrl}/${filePath}`;
+                        await this.downloadFile(fileUrl, destinationPath);
+                    }
+
+                    // Checksum validation - only for non-chunked files that have a checksum
+                    // Chunked files use per-chunk hash validation during download
+                    if (file.checksum) {
+                        const localChecksum = await getFileChecksum(destinationPath);
+                        if (localChecksum === file.checksum) {
+                            success = true;
+                        } else {
+                            attempts++;
+                            console.warn(`Checksum mismatch for ${file.path || file.filename}. Attempt ${attempts + 1}/3.`);
+                            try { await fs.unlink(destinationPath); } catch (e) { console.error('Failed to delete corrupt file:', e); }
+                        }
+                    } else {
+                        // No checksum field (chunked files) - trust the download completed successfully
+                        success = true;
                     }
                 } catch (error) {
                     if (this.state.status === 'cancelling' || this.state.status === 'paused') {
-                        break; 
+                        break;
                     }
                     attempts++;
-                    console.error(`Error downloading ${file.path}, attempt ${attempts + 1}/3:`, error);
+                    console.error(`Error downloading ${file.path || file.filename}, attempt ${attempts + 1}/3:`, error);
                 }
             }
 
             if (success) {
                 i++; // Only move to the next file on success
-                this.setState({ filesDownloaded: i });
+                cumulativeDownloadedBytes += fileSize; // Track total bytes for progress
+                this.setState({ filesDownloaded: i, progress: totalAllBytes > 0 ? (cumulativeDownloadedBytes / totalAllBytes) * 100 : 0 });
             } else {
                 // If the loop broke due to pause or cancel, we don't set an error.
                 if (this.state.status !== 'paused' && this.state.status !== 'cancelling') {
-                    this.setState({ status: 'error', error: `Failed to download ${file.path} after 3 attempts.` });
+                    this.setState({ status: 'error', error: `Failed to download ${file.path || file.filename} after 3 attempts.` });
                 }
                 break; // Exit the main `while` loop on failure, pause, or cancel.
             }
@@ -290,16 +344,16 @@ class DownloadManager {
                 this.request.on('data', (chunk) => {
                     this.bytesSinceLastInterval += chunk.length;
                     const newDownloadedBytes = (this.state.downloadedBytes || 0) + chunk.length;
-                    
+
                     const baseProgress = (this.state.filesDownloaded / this.state.totalFiles) * 100;
-                    
+
                     let currentFileProgress = 0;
                     if (this.state.totalBytes > 0) {
                         const currentFileDownloadPercentage = newDownloadedBytes / this.state.totalBytes;
                         currentFileProgress = currentFileDownloadPercentage * (1 / this.state.totalFiles) * 100;
                     }
-                    
-                    this.setState({ 
+
+                    this.setState({
                         downloadedBytes: newDownloadedBytes,
                         progress: baseProgress + currentFileProgress
                     });
@@ -328,7 +382,74 @@ class DownloadManager {
             }
         });
     }
-    
+
+    /**
+     * Download a chunked file by downloading each chunk and reconstructing
+     * Supports both old format (chunkIndex lookup) and new format (chunk.url directly)
+     * @param {Object} file - File info with chunks array
+     * @param {string} baseUrl - Base URL for R2 bucket
+     * @param {Object} chunkIndex - Map of chunk hash to relative path (old format)
+     * @param {string} destinationPath - Where to write the reconstructed file
+     */
+    async downloadChunkedFile(file, baseUrl, chunkIndex, destinationPath) {
+        const destinationDir = path.dirname(destinationPath);
+        await fs.mkdir(destinationDir, { recursive: true });
+
+        const writeStream = fsSync.createWriteStream(destinationPath);
+        const filePath = file.path || file.filename;
+
+        try {
+            let bytesDownloadedForFile = 0;  // Track bytes for this file only
+            for (let i = 0; i < file.chunks.length; i++) {
+                const chunk = file.chunks[i];
+
+                // Support both new format (chunk.url) and old format (chunkIndex lookup)
+                let chunkUrl;
+                if (chunk.url) {
+                    // New format: chunk has URL directly (R2 key)
+                    chunkUrl = `${baseUrl}/${chunk.url}`;
+                } else if (chunkIndex && chunkIndex[chunk.hash]) {
+                    // Old format: lookup in chunkIndex
+                    chunkUrl = `${baseUrl}/${chunkIndex[chunk.hash]}`;
+                } else {
+                    throw new Error(`No URL found for chunk ${chunk.hash}`);
+                }
+
+                this.setState({
+                    currentFileName: `${path.basename(filePath)} (chunk ${i + 1}/${file.chunks.length})`
+                });
+
+                const response = await axios.get(chunkUrl, {
+                    responseType: 'arraybuffer',
+                    headers: browserHeaders,
+                    onDownloadProgress: (progressEvent) => {
+                        this.bytesSinceLastInterval += progressEvent.bytes || 0;
+                    }
+                });
+
+                writeStream.write(Buffer.from(response.data));
+                bytesDownloadedForFile += chunk.size;
+
+                // Update progress state for UI with local counter
+                this.setState({
+                    downloadedBytes: bytesDownloadedForFile
+                });
+            }
+
+            await new Promise((resolve, reject) => {
+                writeStream.end();
+                writeStream.on('finish', resolve);
+                writeStream.on('error', reject);
+            });
+
+            return true;
+        } catch (error) {
+            writeStream.destroy();
+            try { await fs.unlink(destinationPath); } catch (e) { /* ignore */ }
+            throw error;
+        }
+    }
+
     cleanUpRequestAndWriter() {
         this.request = null;
         this.writer = null;
@@ -376,9 +497,15 @@ class DownloadManager {
 
 ipcMain.on('handle-download-action', (event, action) => {
     if (!downloadManager) return;
-    switch(action.type) {
+    switch (action.type) {
         case 'START':
-            downloadManager.start(action.payload.gameId, action.payload.installPath, action.payload.files, action.payload.latestVersion);
+            downloadManager.start(
+                action.payload.gameId,
+                action.payload.installPath,
+                action.payload.files,
+                action.payload.latestVersion,
+                action.payload.manifest  // Pass manifest with baseUrl and chunkIndex
+            );
             break;
         case 'PAUSE':
             downloadManager.pause();
@@ -436,7 +563,7 @@ ipcMain.handle('select-install-dir', async (event) => {
     }
 
     let selectedPath = filePaths[0];
-    
+
     // Enforce installation in a "VRClassroom" folder
     if (path.basename(selectedPath).toLowerCase() !== 'vrclassroom') {
         selectedPath = path.join(selectedPath, 'VRClassroom');
@@ -446,7 +573,7 @@ ipcMain.handle('select-install-dir', async (event) => {
     return selectedPath;
 });
 
-ipcMain.handle('move-install-path', async (event, { currentPath, manifestUrl }) => {
+ipcMain.handle('move-install-path', async (event, currentPath) => {
     const win = BrowserWindow.fromWebContents(event.sender);
     const { canceled, filePaths } = await dialog.showOpenDialog(win, {
         properties: ['openDirectory', 'createDirectory'],
@@ -500,12 +627,66 @@ ipcMain.handle('move-install-path', async (event, { currentPath, manifestUrl }) 
     }
 });
 
-ipcMain.on('launch-game', (event, { installPath, executable }) => {
+// Track running games by gameId
+let runningGames = {};
+
+ipcMain.on('launch-game', (event, { installPath, executable, gameId }) => {
     if (!installPath || !executable) return;
+    
+    // Check if game is already running
+    if (runningGames[gameId]) {
+        console.log('Game is already running');
+        return;
+    }
+    
     const executablePath = path.join(installPath, executable);
     if (fsSync.existsSync(executablePath)) {
         const { spawn } = require('child_process');
-        spawn(executablePath, [], { detached: true, cwd: installPath });
+        const gameProcess = spawn(executablePath, [], { cwd: installPath, detached: false });
+        
+        const pid = gameProcess.pid;
+        runningGames[gameId] = pid;
+        
+        // Notify renderer that game has started
+        event.sender.send('game-state-changed', { gameId, running: true });
+        console.log(`Game launched: ${executable} (PID: ${pid})`);
+        
+        // Poll to check if process is still running (handles child processes)
+        const checkInterval = setInterval(() => {
+            try {
+                process.kill(pid, 0); // Signal 0 just checks if process exists
+            } catch (e) {
+                // Process no longer exists
+                console.log(`Game exited (PID: ${pid})`);
+                clearInterval(checkInterval);
+                delete runningGames[gameId];
+                if (!event.sender.isDestroyed()) {
+                    event.sender.send('game-state-changed', { gameId, running: false });
+                }
+            }
+        }, 2000); // Check every 2 seconds
+        
+        gameProcess.on('error', (err) => {
+            console.error('Game process error:', err);
+            clearInterval(checkInterval);
+            delete runningGames[gameId];
+            if (!event.sender.isDestroyed()) {
+                event.sender.send('game-state-changed', { gameId, running: false });
+            }
+        });
+        
+        // Also listen for normal exit
+        gameProcess.on('exit', (code) => {
+            console.log(`Game process exited with code: ${code}`);
+            clearInterval(checkInterval);
+            delete runningGames[gameId];
+            if (!event.sender.isDestroyed()) {
+                console.log('Sending game-state-changed with gameId:', gameId, 'running: false');
+                event.sender.send('game-state-changed', { gameId, running: false });
+            } else {
+                console.log('Cannot send event - sender is destroyed');
+            }
+        });
     } else {
         console.error(`Launch failed: Executable not found at: ${executablePath}`);
     }
@@ -513,6 +694,28 @@ ipcMain.on('launch-game', (event, { installPath, executable }) => {
 
 ipcMain.on('uninstall-game', async (event, installPath) => {
     const win = BrowserWindow.fromWebContents(event.sender);
+
+    // Check if the install path actually exists
+    const pathExists = fsSync.existsSync(installPath);
+
+    if (!pathExists) {
+        // Path doesn't exist - just confirm clearing the launcher data
+        const { response } = await dialog.showMessageBox(win, {
+            type: 'info',
+            buttons: ['Clear Data', 'Cancel'],
+            defaultId: 0,
+            title: 'Game Not Found',
+            message: 'The game installation was not found.',
+            detail: `The folder "${installPath}" no longer exists. Would you like to clear the launcher data so you can reinstall?`
+        });
+
+        if (response === 0) {
+            event.sender.send('uninstall-complete');
+        }
+        return;
+    }
+
+    // Path exists - confirm moving to trash
     const { response } = await dialog.showMessageBox(win, {
         type: 'warning',
         buttons: ['Yes, Uninstall', 'Cancel'],
@@ -580,16 +783,43 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
         const serverManifest = response.data;
         const serverVersion = serverManifest.version || 'N/A'; // Fallback for version
         const filesToUpdate = [];
-        
+
         console.log(`--- Starting Update Check for ${gameId} v${serverVersion} ---`);
+
+        // Extract baseUrl from manifest, or derive from manifestUrl
+        // For chunk downloads, we need the public R2 base URL
+        let baseUrl = serverManifest.baseUrl;
+        if (!baseUrl && manifestUrl) {
+            // Extract base URL from manifest URL (e.g., https://pub-xxx.r2.dev)
+            const urlObj = new URL(manifestUrl);
+            baseUrl = urlObj.origin;
+        }
+
+        // Get game info for URL construction
+        const gameName = serverManifest.gameName || gameId.toLowerCase();
+        const buildType = serverManifest.buildType || 'release';
+        const version = serverVersion;
+
+        // Helper function to get full URL for a file (supports both old and new format)
+        const getFileUrl = (fileInfo) => {
+            const filePath = fileInfo.path || fileInfo.filename;
+            if (baseUrl && filePath) {
+                // For non-chunked files, construct URL with game/version prefix
+                return `${baseUrl}/${gameName}/${buildType}/${version}/${filePath}`;
+            }
+            return fileInfo.url; // Fallback to direct URL for backward compatibility
+        };
 
         if (!installPath || !fsSync.existsSync(installPath)) {
             console.log('No install path provided or path does not exist. Flagging all files for fresh installation.');
+            // Add computed URLs to files
+            const filesWithUrls = serverManifest.files.map(f => ({ ...f, url: getFileUrl(f) }));
             return {
                 isUpdateAvailable: true,
-                filesToUpdate: serverManifest.files,
+                filesToUpdate: filesWithUrls,
                 latestVersion: serverVersion,
-                pathInvalid: true, // Signal that the path is bad
+                pathInvalid: true,
+                manifest: { baseUrl, chunkIndex: serverManifest.chunkIndex || {}, totalFiles: serverManifest.files.length }
             };
         }
 
@@ -597,56 +827,85 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
         const dirContents = await fs.readdir(installPath);
         if (dirContents.length === 0) {
             console.log('Installation directory is empty. Resetting state.');
+            const filesWithUrls = serverManifest.files.map(f => ({ ...f, url: getFileUrl(f) }));
             return {
-                isUpdateAvailable: true, // Technically true, all files are missing
-                filesToUpdate: serverManifest.files,
+                isUpdateAvailable: true,
+                filesToUpdate: filesWithUrls,
                 latestVersion: serverVersion,
-                pathInvalid: true, // Treat as invalid to reset UI
+                pathInvalid: true,
+                manifest: { baseUrl, chunkIndex: serverManifest.chunkIndex || {}, totalFiles: serverManifest.files.length }
             };
         }
 
         for (const fileInfo of serverManifest.files) {
+            // Support both old (path) and new (filename) manifest format
+            const filePath = fileInfo.path || fileInfo.filename;
+
             // --- Start of filtering logic ---
-            const fileName = path.basename(fileInfo.path);
-            const pathString = fileInfo.path.toLowerCase();
+            const fileName = path.basename(filePath);
+            const pathString = filePath.toLowerCase();
 
             // Filter out 'Saved' folders, which often contain user-specific, non-essential data.
             const isSavedFolder = pathString.startsWith('saved/') || pathString.startsWith('saved\\') || pathString.includes('/saved/') || pathString.includes('\\saved\\');
-            
+
             const isManifest = fileName.toLowerCase() === 'manifest_nonufsfiles_win64.txt';
             const isLauncher = fileName.toLowerCase() === 'vrclassroom launcher.exe';
             const isVrClassroomTxt = fileName.toLowerCase() === 'vrclassroom.txt';
 
             if (isSavedFolder || isManifest || isLauncher || isVrClassroomTxt) {
-                console.log(`Skipping non-essential file during check: ${fileInfo.path}`);
+                console.log(`Skipping non-essential file during check: ${filePath}`);
                 continue;
             }
             // --- End of filtering logic ---
 
-            if (path.basename(fileInfo.path) === 'version.json') continue;
+            if (path.basename(filePath) === 'version.json') continue;
 
-            const localFilePath = path.join(installPath, fileInfo.path);
+            const localFilePath = path.join(installPath, filePath);
             try {
                 await fs.access(localFilePath);
-                const localChecksum = await getFileChecksum(localFilePath);
-                const isMatch = localChecksum === fileInfo.checksum;
-                console.log(`Checking: ${fileInfo.path} -> Match: ${isMatch}`);
+                const stats = await fs.stat(localFilePath);
+                const localSize = stats.size;
+                const expectedSize = fileInfo.size || fileInfo.totalSize || 0;
+                
+                // For chunked files (no checksum field), compare by file size
+                // For files with checksum, compare the checksum
+                let isMatch;
+                if (fileInfo.checksum) {
+                    const localChecksum = await getFileChecksum(localFilePath);
+                    isMatch = localChecksum === fileInfo.checksum;
+                } else {
+                    // Chunked files - verify by size
+                    isMatch = localSize === expectedSize;
+                }
+                console.log(`Checking: ${filePath} -> Match: ${isMatch} (size: ${localSize}/${expectedSize})`);
                 if (!isMatch) {
-                    filesToUpdate.push(fileInfo);
+                    // Add computed URL and ensure path is set for old format compatibility
+                    filesToUpdate.push({
+                        ...fileInfo,
+                        path: filePath,
+                        url: getFileUrl(fileInfo),
+                        size: fileInfo.size || fileInfo.totalSize || 0
+                    });
                 }
             } catch (e) {
-                 console.log(`Checking: ${fileInfo.path} -> File not found locally. Adding to update list.`);
-                filesToUpdate.push(fileInfo);
+                console.log(`Checking: ${filePath} -> File not found locally. Adding to update list.`);
+                filesToUpdate.push({
+                    ...fileInfo,
+                    path: filePath,
+                    url: getFileUrl(fileInfo),
+                    size: fileInfo.size || fileInfo.totalSize || 0
+                });
             }
         }
-        
+
         console.log(`--- Update Check Complete. Found ${filesToUpdate.length} files to update. ---`);
 
         return {
             isUpdateAvailable: filesToUpdate.length > 0,
             filesToUpdate: filesToUpdate,
             latestVersion: serverVersion,
-            pathInvalid: false, // Explicitly state path is valid
+            pathInvalid: false,
+            manifest: { baseUrl, chunkIndex: serverManifest.chunkIndex || {}, totalFiles: serverManifest.files.length }
         };
     } catch (error) {
         let errorMessage = 'Update check failed.';

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRC Game Uploader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 6px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ccc;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #7b2ff7, #00d4ff);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #00d4ff;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #7b2ff7;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7b2ff7, #00d4ff);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .folder-input {
+            display: flex;
+            gap: 8px;
+        }
+
+        .folder-input input {
+            flex: 1;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7b2ff7, #00d4ff);
+            transition: width 0.3s;
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .stat {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .log {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .log-entry {
+            margin-bottom: 4px;
+        }
+
+        .log-entry.error {
+            color: #ef4444;
+        }
+
+        .log-entry.success {
+            color: #22c55e;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-idle {
+            background: rgba(100, 100, 100, 0.3);
+            color: #888;
+        }
+
+        .status-working {
+            background: rgba(123, 47, 247, 0.3);
+            color: #a78bfa;
+        }
+
+        .status-success {
+            background: rgba(34, 197, 94, 0.3);
+            color: #4ade80;
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 VRC Game Uploader</h1>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="build">1. Build</button>
+            <button class="tab" data-tab="upload">2. Upload</button>
+            <button class="tab" data-tab="settings">Settings</button>
+        </div>
+
+        <!-- BUILD TAB -->
+        <div id="build" class="tab-content active">
+            <div class="card">
+                <h2>📦 Generate Build</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Game Name</label>
+                        <input type="text" id="game-name" placeholder="vrclassroom" value="vrclassroom">
+                    </div>
+                    <div class="form-group">
+                        <label>Version</label>
+                        <input type="text" id="version" placeholder="1.0.0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Build Type</label>
+                        <select id="build-type">
+                            <option value="release">Release</option>
+                            <option value="beta">Beta</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Source Folder</label>
+                        <div class="folder-input">
+                            <input type="text" id="source-folder" placeholder="Select game folder..." readonly>
+                            <button class="btn btn-secondary" onclick="selectSourceFolder()">Browse</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Output Folder</label>
+                    <div class="folder-input">
+                        <input type="text" id="output-folder" placeholder="Select output folder..." readonly>
+                        <button class="btn btn-secondary" onclick="selectOutputFolder()">Browse</button>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-generate" onclick="generateBuild()">
+                        Generate Build
+                    </button>
+                </div>
+
+                <div class="progress-container" id="build-progress" style="display:none">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="build-progress-fill"></div>
+                    </div>
+                    <div class="progress-text" id="build-progress-text">Starting...</div>
+                </div>
+
+                <div id="build-stats" class="stats" style="display:none">
+                    <div class="stat">
+                        <div class="stat-value" id="stat-files">0</div>
+                        <div class="stat-label">Files</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-chunks">0</div>
+                        <div class="stat-label">Unique Chunks</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-dedup">0%</div>
+                        <div class="stat-label">Deduplication</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- UPLOAD TAB -->
+        <div id="upload" class="tab-content">
+            <div class="card">
+                <h2>☁️ Upload to R2</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Manifest File</label>
+                        <div class="folder-input">
+                            <input type="text" id="manifest-path" placeholder="Select manifest..." readonly>
+                            <button class="btn btn-secondary" onclick="selectManifest()">Browse</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Mode</label>
+                        <select id="upload-mode">
+                            <option value="full">Full Upload</option>
+                            <option value="delta">Delta Upload</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="delta-options" style="display:none">
+                    <div class="form-group">
+                        <label>Previous Manifest (for delta)</label>
+                        <div class="folder-input">
+                            <input type="text" id="old-manifest-path" placeholder="Select previous manifest..."
+                                readonly>
+                            <button class="btn btn-secondary" onclick="selectOldManifest()">Browse</button>
+                        </div>
+                    </div>
+                    <div id="delta-stats" class="card" style="display:none; background: rgba(123,47,247,0.1)">
+                        <p id="delta-info"></p>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="btn-upload" onclick="startUpload()">
+                        Start Upload
+                    </button>
+                    <button class="btn btn-warning" id="btn-pause" style="display:none" onclick="pauseUpload()">
+                        Pause
+                    </button>
+                    <button class="btn btn-danger" id="btn-cancel" style="display:none" onclick="cancelUpload()">
+                        Cancel
+                    </button>
+                </div>
+
+                <div class="progress-container" id="upload-progress" style="display:none">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="upload-progress-fill"></div>
+                    </div>
+                    <div class="progress-text" id="upload-progress-text">Starting...</div>
+                </div>
+
+                <div id="upload-stats" class="stats" style="display:none">
+                    <div class="stat">
+                        <div class="stat-value" id="stat-uploaded">0</div>
+                        <div class="stat-label">Uploaded</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-skipped">0</div>
+                        <div class="stat-label">Skipped (Exists)</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-failed">0</div>
+                        <div class="stat-label">Failed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div id="settings" class="tab-content">
+            <div class="card">
+                <h2>⚙️ R2 Configuration</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Account ID</label>
+                        <input type="text" id="r2-account-id" placeholder="Cloudflare Account ID">
+                    </div>
+                    <div class="form-group">
+                        <label>Bucket Name</label>
+                        <input type="text" id="r2-bucket" placeholder="vrcentre">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Access Key ID</label>
+                        <input type="text" id="r2-access-key" placeholder="Access Key ID">
+                    </div>
+                    <div class="form-group">
+                        <label>Secret Access Key</label>
+                        <input type="password" id="r2-secret-key" placeholder="Secret Access Key">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="testR2Connection()">Test Connection</button>
+                    <button class="btn btn-primary" onclick="saveR2Config()">Save Configuration</button>
+                </div>
+
+                <div id="connection-status" style="margin-top: 12px"></div>
+            </div>
+
+            <div class="card">
+                <h2>📐 Chunk Settings</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Min Chunk Size (MB)</label>
+                        <input type="number" id="chunk-min" value="5" min="1" max="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Average Chunk Size (MB)</label>
+                        <input type="number" id="chunk-avg" value="10" min="1" max="100">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Max Chunk Size (MB)</label>
+                    <input type="number" id="chunk-max" value="20" min="1" max="200">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="saveChunkSettings()">Save Chunk Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+
+</html>

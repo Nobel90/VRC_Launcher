@@ -28,5 +28,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     
     // --- Other Event Listeners ---
     onUninstallComplete: (callback) => ipcRenderer.on('uninstall-complete', () => callback()),
-    onMoveProgress: (callback) => ipcRenderer.on('move-progress', (event, value) => callback(value))
+    onMoveProgress: (callback) => ipcRenderer.on('move-progress', (event, value) => callback(value)),
+    onGameStateChanged: (callback) => ipcRenderer.on('game-state-changed', (event, state) => callback(state))
 });
