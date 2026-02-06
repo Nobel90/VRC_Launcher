@@ -193,7 +193,9 @@ function initLauncher() {
         closeSettingsButtonEl = document.getElementById('close-settings-button'),
         installPathDisplayEl = document.getElementById('install-path-display'),
         changePathButtonEl = document.getElementById('change-path-button'),
-        locateGameLinkEl = document.getElementById('locate-game-link');
+        locateGameLinkEl = document.getElementById('locate-game-link'),
+        prereqStatusContainerEl = document.getElementById('prereq-status-container'),
+        prereqStatusTextEl = document.getElementById('prereq-status-text');
 
     function formatBytes(bytes, decimals = 2) {
         if (!bytes || bytes === 0) return '0 Bytes';
@@ -244,6 +246,7 @@ function initLauncher() {
         checkUpdateButtonEl.classList.add('hidden');
         progressContainerEl.style.display = 'none';
         locateGameContainerEl.classList.add('hidden');
+        prereqStatusContainerEl.classList.add('hidden'); // Default hidden
 
         switch (game.status) {
             case 'installed':
@@ -253,6 +256,8 @@ function initLauncher() {
                 settingsButtonEl.classList.remove('hidden');
                 uninstallButtonEl.classList.remove('hidden');
                 checkUpdateButtonEl.classList.remove('hidden');
+                prereqStatusContainerEl.classList.remove('hidden'); // Show only when installed
+                resetPrereqStatusUI(); // Reset text to default
                 break;
             case 'needs_update':
                 actionButtonEl.innerText = 'UPDATE';
@@ -370,6 +375,33 @@ function initLauncher() {
                 });
                 break;
             case 'installed':
+                // Check prerequisites before launching
+                actionButtonEl.disabled = true;
+                actionButtonEl.innerText = 'CHECKING...';
+
+                const isPrereqInstalled = await window.electronAPI.checkPrereqsStatus();
+
+                if (!isPrereqInstalled) {
+                    // Prerequisites missing
+                    const prereqPath = `${game.installPath}\\Engine\\Extras\\Redist\\en-us\\UE4PrereqSetup_x64.exe`;
+
+                    // We could prompt here, but the installPrereqs main process function already shows a dialog.
+                    // So we just call it.
+                    const installSuccess = await window.electronAPI.installPrereqs(prereqPath);
+
+                    if (installSuccess) {
+                        // Install ran and finished (presumably successfully or user thinks so)
+                        // Re-check? installPrereqs already returns validity check.
+                        // Proceed to launch
+                    } else {
+                        // Install failed or was skipped. 
+                        // For now, we proceed to launch anyway to avoid blocking the user if the check is wrong,
+                        // but we might want to return here if we want to be strict.
+                        // Given user feedback "make the launcher run... if it's not installed", strict blocking might be annoying if false positive.
+                        // But if they skipped, they probably want to play.
+                    }
+                }
+
                 // Set running status before launching to prevent race condition
                 game.previousStatus = game.status;
                 game.status = 'running';
@@ -716,7 +748,7 @@ function initLauncher() {
             if (!game) {
                 return;
             }
-            
+
             if (state.running) {
                 // Only save previousStatus if not already running (prevents overwriting)
                 if (game.status !== 'running') {
@@ -727,7 +759,7 @@ function initLauncher() {
                 // Restore previous status when game stops
                 game.status = game.previousStatus || 'installed';
             }
-            
+
             if (state.gameId === currentGameId) {
                 renderGame(currentGameId);
             }
@@ -735,6 +767,53 @@ function initLauncher() {
 
         window.electronAPI.onMoveProgress((data) => {
             gameStatusTextEl.innerText = `Moving: ${data.file} (${data.progress.toFixed(0)}%)`;
+        });
+
+        // --- Prerequisite Check UI Logic ---
+        function resetPrereqStatusUI() {
+            prereqStatusTextEl.innerText = 'Check Prerequisites';
+            prereqStatusTextEl.className = 'text-xs text-gray-500 hover:text-white cursor-pointer transition-colors duration-200 underline';
+            // Remove any old event listeners is tricky with anonymous functions, 
+            // so we'll just handle state inside the click handler or rely on idempotency if we reset elements.
+            // A clearer way: just update the text/style, the click handler delegates info.
+        }
+
+        prereqStatusTextEl.addEventListener('click', async () => {
+            const game = gameLibrary[currentGameId];
+            if (!game.installPath) return;
+
+            const currentText = prereqStatusTextEl.innerText;
+
+            // If already installed, do nothing or re-check?
+            if (currentText.includes('Installed')) return;
+
+            // If it says "Missing... Click to Install", then run the installer
+            if (currentText.includes('Click to Install')) {
+                const prereqPath = `${game.installPath}\\Engine\\Extras\\Redist\\en-us\\UE4PrereqSetup_x64.exe`; // Simple manual path construction
+                const success = await window.electronAPI.installPrereqs(prereqPath);
+                if (success) {
+                    prereqStatusTextEl.innerText = 'Prerequisites Installed ✓';
+                    prereqStatusTextEl.className = 'text-xs text-green-500 font-bold';
+                }
+                return;
+            }
+
+            // Otherwise, perform the check
+            prereqStatusTextEl.innerText = 'Checking...';
+            prereqStatusTextEl.className = 'text-xs text-yellow-500 animate-pulse'; // Simple throbber effect with pulse
+
+            // Add a small artificial delay so the user sees the "Checking..." state
+            await new Promise(r => setTimeout(r, 800));
+
+            const isInstalled = await window.electronAPI.checkPrereqsStatus();
+
+            if (isInstalled) {
+                prereqStatusTextEl.innerText = 'Prerequisites Installed ✓';
+                prereqStatusTextEl.className = 'text-xs text-green-500 font-bold';
+            } else {
+                prereqStatusTextEl.innerText = 'Prerequisites Missing (Click to Install)';
+                prereqStatusTextEl.className = 'text-xs text-red-500 font-bold cursor-pointer hover:underline';
+            }
         });
 
         // Initial render

@@ -146,6 +146,72 @@ async function getLocalVersion(installPath) {
     }
 }
 
+async function checkPrereqsInstalled() {
+    return new Promise((resolve) => {
+        const { exec } = require('child_process');
+        // Check 64-bit and 32-bit registry keys
+        const cmd = 'reg query "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" /s /f "UE4 Prerequisites" & reg query "HKLM\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall" /s /f "UE4 Prerequisites"';
+
+        exec(cmd, (error, stdout, stderr) => {
+            if (error) {
+                // If checking specifically for "UE4 Prerequisites" fails or returns no results
+                // We might also check for "Unreal Engine Prerequisites" as a fallback if needed
+                // But usually error code 1 means not found
+                console.log('Prereqs check result (likely not installed):', error.message);
+                resolve(false);
+                return;
+            }
+            // If we get output, it means found
+            const found = stdout && (stdout.includes('UE4 Prerequisites') || stdout.includes('Unreal Engine Prerequisites'));
+            console.log(`Prereqs check stdout found: ${found}`);
+            resolve(!!found);
+        });
+    });
+}
+
+async function installPrereqs(win, installerPath) {
+    // Verify file exists first
+    if (!fsSync.existsSync(installerPath)) {
+        console.error('Prereq installer not found at:', installerPath);
+        return false;
+    }
+
+    const { response } = await dialog.showMessageBox(win, {
+        type: 'question',
+        buttons: ['Install Now', 'Skip'],
+        defaultId: 0,
+        title: 'Missing Prerequisites',
+        message: 'The game requires UE4 Prerequisites (C++ Redistributables) to run correctly.',
+        detail: 'Would you like to install them now? (Administrator access may be required)'
+    });
+
+    if (response === 0) {
+        return new Promise((resolve) => {
+            const { spawn } = require('child_process');
+            console.log('Spawning installer:', installerPath);
+
+            // Run the installer. /quiet or /passive could be used, but standard UI is safer for user awareness
+            const installer = spawn(installerPath, [], { detached: false });
+
+            installer.on('error', (err) => {
+                console.error('Failed to start installer:', err);
+                dialog.showErrorBox('Installation Error', 'Failed to start the prerequisite installer.');
+                resolve(false);
+            });
+
+            installer.on('close', async (code) => {
+                console.log('Installer exited with code:', code);
+                // Verify if it was actually supposed to be installed
+                // Don't just trust the code, check the registry again
+                const wasInstalled = await checkPrereqsInstalled();
+                resolve(wasInstalled);
+            });
+        });
+    }
+
+    return false; // User skipped
+}
+
 class DownloadManager {
     constructor(win) {
         this.win = win;
@@ -321,6 +387,25 @@ class DownloadManager {
         }
 
         if (this.state.status === 'downloading') {
+            // Check for prerequisites before finalizing
+            this.setState({ currentFileName: 'Checking prerequisites...' });
+
+            // Construct path to UE4PrereqSetup_x64.exe
+            // It is usually in Engine/Extras/Redist/en-us/UE4PrereqSetup_x64.exe relative to install path
+            const prereqPath = path.join(installPath, 'Engine', 'Extras', 'Redist', 'en-us', 'UE4PrereqSetup_x64.exe');
+
+            if (fsSync.existsSync(prereqPath)) {
+                const isInstalled = await checkPrereqsInstalled();
+                if (!isInstalled) {
+                    console.log('Prerequisites missing, prompting user...');
+                    await installPrereqs(this.win, prereqPath);
+                } else {
+                    console.log('Prerequisites already installed.');
+                }
+            } else {
+                console.log('Prerequisite installer not found at expected path:', prereqPath);
+            }
+
             const versionFilePath = path.join(installPath, 'version.json');
             await fs.writeFile(versionFilePath, JSON.stringify({ version: latestVersion }, null, 2));
             this.setState({ status: 'success', progress: 100, downloadSpeed: 0 });
@@ -632,25 +717,25 @@ let runningGames = {};
 
 ipcMain.on('launch-game', (event, { installPath, executable, gameId }) => {
     if (!installPath || !executable) return;
-    
+
     // Check if game is already running
     if (runningGames[gameId]) {
         console.log('Game is already running');
         return;
     }
-    
+
     const executablePath = path.join(installPath, executable);
     if (fsSync.existsSync(executablePath)) {
         const { spawn } = require('child_process');
         const gameProcess = spawn(executablePath, [], { cwd: installPath, detached: false });
-        
+
         const pid = gameProcess.pid;
         runningGames[gameId] = pid;
-        
+
         // Notify renderer that game has started
         event.sender.send('game-state-changed', { gameId, running: true });
         console.log(`Game launched: ${executable} (PID: ${pid})`);
-        
+
         // Poll to check if process is still running (handles child processes)
         const checkInterval = setInterval(() => {
             try {
@@ -665,7 +750,7 @@ ipcMain.on('launch-game', (event, { installPath, executable, gameId }) => {
                 }
             }
         }, 2000); // Check every 2 seconds
-        
+
         gameProcess.on('error', (err) => {
             console.error('Game process error:', err);
             clearInterval(checkInterval);
@@ -674,7 +759,7 @@ ipcMain.on('launch-game', (event, { installPath, executable, gameId }) => {
                 event.sender.send('game-state-changed', { gameId, running: false });
             }
         });
-        
+
         // Also listen for normal exit
         gameProcess.on('exit', (code) => {
             console.log(`Game process exited with code: ${code}`);
@@ -777,6 +862,15 @@ ipcMain.handle('check-for-version', async (event, { installPath, versionUrl }) =
     }
 });
 
+ipcMain.handle('check-prereqs-status', async () => {
+    return await checkPrereqsInstalled();
+});
+
+ipcMain.handle('install-prereqs', async (event, installerPath) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    return await installPrereqs(win, installerPath);
+});
+
 ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifestUrl }) => {
     try {
         const response = await axios.get(manifestUrl, { headers: browserHeaders });
@@ -866,7 +960,7 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
                 const stats = await fs.stat(localFilePath);
                 const localSize = stats.size;
                 const expectedSize = fileInfo.size || fileInfo.totalSize || 0;
-                
+
                 // For chunked files (no checksum field), compare by file size
                 // For files with checksum, compare the checksum
                 let isMatch;
