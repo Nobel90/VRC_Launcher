@@ -194,7 +194,7 @@ function initLauncher() {
         downloadControlsEl = document.getElementById('download-controls'),
         pauseResumeButtonEl = document.getElementById('pause-resume-button'),
         cancelButtonEl = document.getElementById('cancel-button'),
-        settingsButtonEl = document.getElementById('settings-button'),
+        openFolderButtonEl = document.getElementById('open-folder-button'),
         uninstallButtonEl = document.getElementById('uninstall-button'),
         checkUpdateButtonEl = document.getElementById('check-update-button'),
         progressContainerEl = document.getElementById('progress-container'),
@@ -300,8 +300,10 @@ function initLauncher() {
         actionButtonEl.className = 'px-12 py-4 text-xl font-bold rounded-lg transition-all duration-300 flex items-center justify-center min-w-[200px]';
         actionButtonEl.disabled = false;
         actionButtonEl.classList.remove('hidden');
+        actionButtonEl.classList.remove('hidden');
         downloadControlsEl.classList.add('hidden');
-        settingsButtonEl.classList.add('hidden');
+        // Hide folder button by default, show if installed
+        openFolderButtonEl.classList.add('hidden');
         uninstallButtonEl.classList.add('hidden');
         checkUpdateButtonEl.classList.add('hidden');
         progressContainerEl.style.display = 'none';
@@ -313,7 +315,9 @@ function initLauncher() {
                 actionButtonEl.innerText = 'LAUNCH';
                 actionButtonEl.classList.add('bg-green-500', 'hover:bg-green-600', 'btn-glow');
                 gameStatusTextEl.innerText = 'Ready to Launch!';
-                settingsButtonEl.classList.remove('hidden');
+
+                openFolderButtonEl.classList.remove('hidden');
+
                 uninstallButtonEl.classList.remove('hidden');
                 checkUpdateButtonEl.classList.remove('hidden');
                 prereqStatusContainerEl.classList.remove('hidden'); // Show only when installed
@@ -323,7 +327,9 @@ function initLauncher() {
                 actionButtonEl.innerText = 'UPDATE';
                 actionButtonEl.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
                 gameStatusTextEl.innerText = `Update available!`;
-                settingsButtonEl.classList.remove('hidden');
+
+                openFolderButtonEl.classList.remove('hidden');
+
                 uninstallButtonEl.classList.remove('hidden');
                 break;
             case 'uninstalled':
@@ -343,7 +349,7 @@ function initLauncher() {
                 actionButtonEl.innerText = 'MOVING...';
                 actionButtonEl.classList.add('bg-gray-500', 'cursor-not-allowed');
                 gameStatusTextEl.innerText = 'Moving game files to a new location...';
-                settingsButtonEl.classList.add('hidden');
+                openFolderButtonEl.classList.add('hidden');
                 uninstallButtonEl.classList.add('hidden');
                 checkUpdateButtonEl.classList.add('hidden');
                 break;
@@ -352,7 +358,7 @@ function initLauncher() {
                 actionButtonEl.innerText = 'Please wait...';
                 actionButtonEl.classList.add('bg-gray-500', 'cursor-not-allowed');
                 gameStatusTextEl.innerText = 'Checking for updates...';
-                settingsButtonEl.classList.remove('hidden');
+                openFolderButtonEl.classList.remove('hidden');
                 uninstallButtonEl.classList.remove('hidden');
                 break;
             case 'downloading':
@@ -374,7 +380,7 @@ function initLauncher() {
                 actionButtonEl.disabled = true;
                 actionButtonEl.classList.add('bg-gray-500', 'cursor-not-allowed');
                 gameStatusTextEl.innerText = 'Game is currently running';
-                settingsButtonEl.classList.add('hidden');
+                openFolderButtonEl.classList.remove('hidden');
                 uninstallButtonEl.classList.add('hidden');
                 checkUpdateButtonEl.classList.add('hidden');
                 break;
@@ -633,7 +639,20 @@ function initLauncher() {
         pauseResumeButtonEl.addEventListener('click', handlePauseResumeClick);
         cancelButtonEl.addEventListener('click', () => window.electronAPI.handleDownloadAction({ type: 'CANCEL' }));
 
-        settingsButtonEl.addEventListener('click', openSettingsModal);
+        // Global Settings Listener
+        const globalSettingsBtn = document.getElementById('global-settings-button');
+        if (globalSettingsBtn) {
+            globalSettingsBtn.addEventListener('click', openSettingsModal);
+        }
+
+        // Open Folder Button Listener
+        openFolderButtonEl.addEventListener('click', () => {
+            const game = gameLibrary[currentGameId];
+            if (game && game.installPath) {
+                window.electronAPI.openInstallFolder(game.installPath);
+            }
+        });
+
         closeSettingsButtonEl.addEventListener('click', closeSettingsModal);
 
         uninstallButtonEl.addEventListener('click', () => {
