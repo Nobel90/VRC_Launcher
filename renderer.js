@@ -110,6 +110,19 @@ myAccountLink.addEventListener('click', (e) => {
     window.electronAPI.openExternal('https://vrcentre.com.au/account/');
 });
 
+// --- Window Controls Logic ---
+document.getElementById('minimize-btn')?.addEventListener('click', () => {
+    window.electronAPI.minimizeWindow();
+});
+
+document.getElementById('maximize-btn')?.addEventListener('click', () => {
+    window.electronAPI.maximizeWindow();
+});
+
+document.getElementById('close-btn')?.addEventListener('click', () => {
+    window.electronAPI.closeWindow();
+});
+
 
 // --- VIEW MANAGEMENT ---
 let launcherInitialized = false;
@@ -195,7 +208,9 @@ function initLauncher() {
         changePathButtonEl = document.getElementById('change-path-button'),
         locateGameLinkEl = document.getElementById('locate-game-link'),
         prereqStatusContainerEl = document.getElementById('prereq-status-container'),
-        prereqStatusTextEl = document.getElementById('prereq-status-text');
+        prereqStatusTextEl = document.getElementById('prereq-status-text'),
+        scanButtonEl = document.getElementById('scan-button'),
+        scanResultsEl = document.getElementById('scan-results');
 
     function formatBytes(bytes, decimals = 2) {
         if (!bytes || bytes === 0) return '0 Bytes';
@@ -205,6 +220,51 @@ function initLauncher() {
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+
+    // --- Prerequisite Check UI Logic ---
+    function resetPrereqStatusUI() {
+        if (!prereqStatusTextEl) return;
+        prereqStatusTextEl.innerText = 'Check Prerequisites';
+        prereqStatusTextEl.className = 'text-xs text-gray-500 hover:text-white cursor-pointer transition-colors duration-200 underline';
+    }
+
+    prereqStatusTextEl.addEventListener('click', async () => {
+        const game = gameLibrary[currentGameId];
+        if (!game.installPath) return;
+
+        const currentText = prereqStatusTextEl.innerText;
+
+        // If already installed, do nothing or re-check?
+        if (currentText.includes('Installed')) return;
+
+        // If it says "Missing... Click to Install", then run the installer
+        if (currentText.includes('Click to Install')) {
+            const prereqPath = `${game.installPath}\\Engine\\Extras\\Redist\\en-us\\UE4PrereqSetup_x64.exe`; // Simple manual path construction
+            const success = await window.electronAPI.installPrereqs(prereqPath);
+            if (success) {
+                prereqStatusTextEl.innerText = 'Prerequisites Installed ✓';
+                prereqStatusTextEl.className = 'text-xs text-green-500 font-bold';
+            }
+            return;
+        }
+
+        // Otherwise, perform the check
+        prereqStatusTextEl.innerText = 'Checking...';
+        prereqStatusTextEl.className = 'text-xs text-yellow-500 animate-pulse'; // Simple throbber effect with pulse
+
+        // Add a small artificial delay so the user sees the "Checking..." state
+        await new Promise(r => setTimeout(r, 800));
+
+        const isInstalled = await window.electronAPI.checkPrereqsStatus();
+
+        if (isInstalled) {
+            prereqStatusTextEl.innerText = 'Prerequisites Installed ✓';
+            prereqStatusTextEl.className = 'text-xs text-green-500 font-bold';
+        } else {
+            prereqStatusTextEl.innerText = 'Prerequisites Missing (Click to Install)';
+            prereqStatusTextEl.className = 'text-xs text-red-500 font-bold cursor-pointer hover:underline';
+        }
+    });
 
     function renderGame(gameId) {
         const game = gameLibrary[gameId];
@@ -769,55 +829,104 @@ function initLauncher() {
             gameStatusTextEl.innerText = `Moving: ${data.file} (${data.progress.toFixed(0)}%)`;
         });
 
-        // --- Prerequisite Check UI Logic ---
-        function resetPrereqStatusUI() {
-            prereqStatusTextEl.innerText = 'Check Prerequisites';
-            prereqStatusTextEl.className = 'text-xs text-gray-500 hover:text-white cursor-pointer transition-colors duration-200 underline';
-            // Remove any old event listeners is tricky with anonymous functions, 
-            // so we'll just handle state inside the click handler or rely on idempotency if we reset elements.
-            // A clearer way: just update the text/style, the click handler delegates info.
-        }
-
-        prereqStatusTextEl.addEventListener('click', async () => {
-            const game = gameLibrary[currentGameId];
-            if (!game.installPath) return;
-
-            const currentText = prereqStatusTextEl.innerText;
-
-            // If already installed, do nothing or re-check?
-            if (currentText.includes('Installed')) return;
-
-            // If it says "Missing... Click to Install", then run the installer
-            if (currentText.includes('Click to Install')) {
-                const prereqPath = `${game.installPath}\\Engine\\Extras\\Redist\\en-us\\UE4PrereqSetup_x64.exe`; // Simple manual path construction
-                const success = await window.electronAPI.installPrereqs(prereqPath);
-                if (success) {
-                    prereqStatusTextEl.innerText = 'Prerequisites Installed ✓';
-                    prereqStatusTextEl.className = 'text-xs text-green-500 font-bold';
-                }
-                return;
-            }
-
-            // Otherwise, perform the check
-            prereqStatusTextEl.innerText = 'Checking...';
-            prereqStatusTextEl.className = 'text-xs text-yellow-500 animate-pulse'; // Simple throbber effect with pulse
-
-            // Add a small artificial delay so the user sees the "Checking..." state
-            await new Promise(r => setTimeout(r, 800));
-
-            const isInstalled = await window.electronAPI.checkPrereqsStatus();
-
-            if (isInstalled) {
-                prereqStatusTextEl.innerText = 'Prerequisites Installed ✓';
-                prereqStatusTextEl.className = 'text-xs text-green-500 font-bold';
-            } else {
-                prereqStatusTextEl.innerText = 'Prerequisites Missing (Click to Install)';
-                prereqStatusTextEl.className = 'text-xs text-red-500 font-bold cursor-pointer hover:underline';
-            }
-        });
+        // --- Prerequisite Check UI Logic removed from here ---
 
         // Initial render
         renderGame(currentGameId);
+
+        // --- Cleanup / Scan Logic ---
+        scanButtonEl.addEventListener('click', async () => {
+            console.log('Scan button clicked');
+            // Immediate feedback to verify click
+            scanButtonEl.innerText = 'Opening Folder Select...';
+
+            let rootPath;
+            try {
+                rootPath = await window.electronAPI.selectScanRoot();
+            } catch (err) {
+                console.error('Error selecting root:', err);
+                alert('Error opening folder selector: ' + err.message);
+                scanButtonEl.innerText = 'Scan for other versions...';
+                return;
+            }
+
+            if (!rootPath) {
+                // Cancelled
+                scanButtonEl.innerText = 'Scan for other versions...';
+                return;
+            }
+
+            scanButtonEl.disabled = true;
+            scanButtonEl.innerText = 'Scanning...';
+            scanResultsEl.classList.remove('hidden');
+            scanResultsEl.innerHTML = '<div class="text-center text-white">Searching for VRClassroom.exe...</div>';
+
+            try {
+                const results = await window.electronAPI.scanForInstallations(rootPath);
+
+                scanResultsEl.innerHTML = ''; // Clear loading
+
+                if (results.length === 0) {
+                    scanResultsEl.innerHTML = '<div class="text-center text-gray-400">No installations found in this location.</div>';
+                } else {
+                    const currentGame = gameLibrary[currentGameId];
+                    const currentInstallPath = currentGame.installPath ? currentGame.installPath.toLowerCase() : '';
+
+                    results.forEach(result => {
+                        // Normalize path separators to avoid mismatch issues on Windows
+                        const resPath = result.path.replace(/\//g, '\\').toLowerCase();
+                        const curPath = currentInstallPath.replace(/\//g, '\\');
+
+                        const isCurrent = curPath && resPath === curPath;
+
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'bg-gray-800 p-3 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-2';
+
+                        const infoDiv = document.createElement('div');
+                        infoDiv.className = 'text-sm';
+                        infoDiv.innerHTML = `
+                            <div class="font-bold text-white break-all">${result.path}</div>
+                            <div class="text-gray-400 text-xs">Version: ${result.version}</div>
+                            ${isCurrent ? '<span class="text-xs text-green-500 font-bold border border-green-500 px-2 py-0.5 rounded-lg ml-0 mt-1 inline-block">CURRENT ACTIVE</span>' : ''}
+                        `;
+
+                        itemEl.appendChild(infoDiv);
+
+                        if (!isCurrent) {
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.className = 'bg-red-900/50 hover:bg-red-800 text-red-200 text-xs px-3 py-1.5 rounded-lg border border-red-800 transition-colors shrink-0';
+                            deleteBtn.innerHTML = '🗑 Delete';
+                            deleteBtn.onclick = async () => {
+                                if (confirm(`Are you sure you want to delete this installation?\n\nPath: ${result.path}\n\nThis will move the folder to the trash.`)) {
+                                    deleteBtn.innerText = 'Deleting...';
+                                    deleteBtn.disabled = true;
+                                    const success = await window.electronAPI.deleteInstallation(result.path);
+                                    if (success) {
+                                        itemEl.remove();
+                                        if (scanResultsEl.children.length === 0) {
+                                            scanResultsEl.innerHTML = '<div class="text-center text-gray-400">No installations found.</div>';
+                                        }
+                                    } else {
+                                        alert('Failed to delete. Check permissions or if files are in use.');
+                                        deleteBtn.innerText = '🗑 Delete';
+                                        deleteBtn.disabled = false;
+                                    }
+                                }
+                            };
+                            itemEl.appendChild(deleteBtn);
+                        }
+
+                        scanResultsEl.appendChild(itemEl);
+                    });
+                }
+            } catch (error) {
+                console.error('Scan failed:', error);
+                scanResultsEl.innerHTML = `<div class="text-red-500 text-sm">Scan failed: ${error.message}</div>`;
+            } finally {
+                scanButtonEl.disabled = false;
+                scanButtonEl.innerText = 'Scan for other versions...';
+            }
+        });
     }
 
     // This is the initial call that starts the launcher logic

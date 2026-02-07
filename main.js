@@ -28,8 +28,12 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 1280,
         height: 720,
+        minWidth: 800,
+        minHeight: 600,
         resizable: true,
-        frame: true,
+        frame: false,
+        transparent: true, // Force removal of standard frame
+        backgroundColor: '#00000000', // Transparent hex
         title: 'VR Centre Apps Launcher',
         autoHideMenuBar: true,
         icon: path.join(__dirname, '/assets/icon-white.png'),
@@ -39,6 +43,7 @@ function createWindow() {
             nodeIntegration: false,
         }
     });
+    win.removeMenu(); // Explicitly remove menu to avoid potential artifacts
     win.loadFile('index.html');
     downloadManager = new DownloadManager(win);
 
@@ -211,6 +216,89 @@ async function installPrereqs(win, installerPath) {
 
     return false; // User skipped
 }
+
+async function scanForInstallations(rootPath) {
+    const results = [];
+    const executableName = 'VRClassroom.exe';
+
+    // Helper function for recursive scanning
+    async function scanDir(currentPath, depth = 0) {
+        if (depth > 4) return; // Limit depth to avoid scanning the entire world
+
+        try {
+            const dirents = await fs.readdir(currentPath, { withFileTypes: true });
+
+            // Check for executable in this directory
+            const hasExecutable = dirents.some(dirent => dirent.isFile() && dirent.name.toLowerCase() === executableName.toLowerCase());
+
+            if (hasExecutable) {
+                // Found an installation!
+                // Try to get version
+                let version = 'Unknown';
+                const versionPath = path.join(currentPath, 'version.json');
+                if (fsSync.existsSync(versionPath)) {
+                    try {
+                        const versionData = JSON.parse(await fs.readFile(versionPath, 'utf-8'));
+                        version = versionData.version || 'Unknown';
+                    } catch (e) { /* ignore */ }
+                }
+
+                results.push({
+                    path: currentPath,
+                    version: version,
+                    timestamp: (await fs.stat(path.join(currentPath, executableName))).mtime
+                });
+
+                // Don't scan subdirectories of a found game folder to save time
+                return;
+            }
+
+            // Recurse into subdirectories
+            for (const dirent of dirents) {
+                if (dirent.isDirectory()) {
+                    const name = dirent.name.toLowerCase();
+                    // Skip common heavy/irrelevant folders
+                    if (name === 'node_modules' || name === 'windows' || name === 'program files' || name === 'program files (x86)' || name.startsWith('.') || name.includes('$recycle.bin')) {
+                        continue;
+                    }
+
+                    await scanDir(path.join(currentPath, dirent.name), depth + 1);
+                }
+            }
+        } catch (error) {
+            // Permission denied or other error - ignore
+        }
+    }
+
+    await scanDir(rootPath);
+    return results;
+}
+
+ipcMain.handle('scan-for-installations', async (event, rootPath) => {
+    return await scanForInstallations(rootPath);
+});
+
+ipcMain.handle('delete-installation', async (event, installPath) => {
+    try {
+        if (!installPath) return false;
+
+        // Safety check: ensure it looks like a game folder 
+        // (e.g., contains VRClassroom.exe or at least we are sure user selected it from our scan list)
+        const exePath = path.join(installPath, 'VRClassroom.exe');
+        if (!fsSync.existsSync(exePath)) {
+            // Ask for confirmation if exe is missing? Or just fail?
+            // To be safe, if we can't find the exe, we might be deleting a wrong folder.
+            // But maybe the exe was deleted and user wants to clean up the rest.
+            // Let's rely on the trashItem which is recoverable.
+        }
+
+        await shell.trashItem(installPath);
+        return true;
+    } catch (error) {
+        console.error('Failed to delete installation:', error);
+        return false;
+    }
+});
 
 class DownloadManager {
     constructor(win) {
@@ -658,6 +746,19 @@ ipcMain.handle('select-install-dir', async (event) => {
     return selectedPath;
 });
 
+ipcMain.handle('select-scan-root', async (event) => {
+    const { canceled, filePaths } = await dialog.showOpenDialog(BrowserWindow.fromWebContents(event.sender), {
+        properties: ['openDirectory'],
+        title: 'Select Drive or Folder to Scan'
+    });
+
+    if (canceled || !filePaths || filePaths.length === 0) {
+        return null;
+    }
+
+    return filePaths[0];
+});
+
 ipcMain.handle('move-install-path', async (event, currentPath) => {
     const win = BrowserWindow.fromWebContents(event.sender);
     const { canceled, filePaths } = await dialog.showOpenDialog(win, {
@@ -869,6 +970,28 @@ ipcMain.handle('check-prereqs-status', async () => {
 ipcMain.handle('install-prereqs', async (event, installerPath) => {
     const win = BrowserWindow.fromWebContents(event.sender);
     return await installPrereqs(win, installerPath);
+});
+
+
+
+// --- Window Control Handlers ---
+ipcMain.on('window-minimize', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    win.minimize();
+});
+
+ipcMain.on('window-maximize', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (win.isMaximized()) {
+        win.unmaximize();
+    } else {
+        win.maximize();
+    }
+});
+
+ipcMain.on('window-close', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    win.close();
 });
 
 ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifestUrl }) => {

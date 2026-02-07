@@ -31,5 +31,19 @@ contextBridge.exposeInMainWorld('electronAPI', {
     // --- Other Event Listeners ---
     onUninstallComplete: (callback) => ipcRenderer.on('uninstall-complete', () => callback()),
     onMoveProgress: (callback) => ipcRenderer.on('move-progress', (event, value) => callback(value)),
-    onGameStateChanged: (callback) => ipcRenderer.on('game-state-changed', (event, state) => callback(state))
+    onUninstallComplete: (callback) => ipcRenderer.on('uninstall-complete', () => callback()),
+    onMoveProgress: (callback) => ipcRenderer.on('move-progress', (event, value) => callback(value)),
+    onGameStateChanged: (callback) => ipcRenderer.on('game-state-changed', (event, state) => callback(state)),
+
+    // --- Cleanup/Scan ---
+    scanForInstallations: (rootPath) => ipcRenderer.invoke('scan-for-installations', rootPath),
+    deleteInstallation: (path) => ipcRenderer.invoke('delete-installation', path),
+    scanForInstallations: (rootPath) => ipcRenderer.invoke('scan-for-installations', rootPath),
+    deleteInstallation: (path) => ipcRenderer.invoke('delete-installation', path),
+    selectScanRoot: () => ipcRenderer.invoke('select-scan-root'),
+
+    // --- Window Controls ---
+    minimizeWindow: () => ipcRenderer.send('window-minimize'),
+    maximizeWindow: () => ipcRenderer.send('window-maximize'),
+    closeWindow: () => ipcRenderer.send('window-close')
 });
