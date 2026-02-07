@@ -1,6 +1,6 @@
 {
   "name": "launcher",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "VRC Launcher",
   "main": "main.js",
   "scripts": {
@@ -35,7 +35,8 @@
       "installerIcon": "assets/icon-white_s.ico",
       "uninstallerIcon": "assets/icon-white_s.ico",
       "installerSidebar": "build/installerSidebar.bmp",
-      "installerHeader": "build/installerHeader.bmp"
+      "installerHeader": "build/installerHeader.bmp",
+      "include": "build/installer.nsh"
     },
     "directories": {
       "output": "dist"
