@@ -54,10 +54,31 @@ function createWindow() {
 
 autoUpdater.logger = log;
 
-app.whenReady().then(() => {
-    createWindow();
-    autoUpdater.checkForUpdates();
-});
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+    app.quit();
+} else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        // Someone tried to run a second instance, we should focus our window.
+        if (downloadManager && downloadManager.win) {
+            if (downloadManager.win.isMinimized()) downloadManager.win.restore();
+            downloadManager.win.focus();
+        } else {
+            // Fallback if downloadManager isn't ready
+            const wins = BrowserWindow.getAllWindows();
+            if (wins.length > 0) {
+                if (wins[0].isMinimized()) wins[0].restore();
+                wins[0].focus();
+            }
+        }
+    });
+
+    app.whenReady().then(() => {
+        createWindow();
+        autoUpdater.checkForUpdates();
+    });
+}
 
 autoUpdater.on('checking-for-update', () => {
     console.log('Checking for update...');
