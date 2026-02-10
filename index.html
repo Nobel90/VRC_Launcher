@@ -325,7 +325,17 @@
                 </main>
             </div>
         </div>
-        <div id="launcher-version" class="absolute bottom-2 right-4 text-xs text-gray-600"></div>
+        <div id="launcher-version" class="absolute bottom-2 left-28 text-xs text-gray-600"></div>
+
+        <!-- Auto Update Status -->
+        <div id="update-status-container"
+            class="hidden fixed bottom-4 right-4 bg-gray-900 border border-gray-700 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-3 z-40 transition-all duration-300">
+            <div id="update-spinner"
+                class="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent"></div>
+            <span id="update-status-text"
+                class="text-xs font-medium text-gray-300 cursor-pointer hover:text-white transition-colors"
+                title="Click to check for updates">Checking for updates...</span>
+        </div>
 
         <!-- Settings Modal -->
         <div id="settings-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center">

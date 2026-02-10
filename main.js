@@ -80,26 +80,53 @@ if (!gotTheLock) {
     });
 }
 
+// Helper to send events to the main window
+function sendToWindow(channel, data) {
+    if (downloadManager && downloadManager.win && !downloadManager.win.isDestroyed()) {
+        downloadManager.win.webContents.send(channel, data);
+    } else {
+        const wins = BrowserWindow.getAllWindows();
+        if (wins.length > 0 && !wins[0].isDestroyed()) {
+            wins[0].webContents.send(channel, data);
+        }
+    }
+}
+
 autoUpdater.on('checking-for-update', () => {
     console.log('Checking for update...');
+    sendToWindow('auto-updater-event', { type: 'checking-for-update' });
 });
 autoUpdater.on('update-available', (info) => {
     console.log('Update available.');
+    sendToWindow('auto-updater-event', { type: 'update-available', info });
 });
 autoUpdater.on('update-not-available', (info) => {
     console.log('Update not available.');
+    sendToWindow('auto-updater-event', { type: 'update-not-available', info });
 });
 autoUpdater.on('error', (err) => {
     console.log('Error in auto-updater. ' + err);
+    sendToWindow('auto-updater-event', { type: 'error', error: err.message });
 });
 autoUpdater.on('download-progress', (progressObj) => {
     let log_message = "Download speed: " + progressObj.bytesPerSecond;
     log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
     log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
     console.log(log_message);
+    sendToWindow('auto-updater-event', {
+        type: 'download-progress',
+        percent: progressObj.percent,
+        bytesPerSecond: progressObj.bytesPerSecond,
+        transferred: progressObj.transferred,
+        total: progressObj.total
+    });
 });
 autoUpdater.on('update-downloaded', (info) => {
     console.log('Update downloaded');
+    sendToWindow('auto-updater-event', { type: 'update-downloaded', info });
+
+    // Optional: We can still show the dialog, or handle it purely in UI.
+    // Keeping the dialog for now as a fallback/confirmation, but the UI will also show "Ready".
     dialog.showMessageBox({
         type: 'info',
         title: 'Update Ready',
@@ -1156,4 +1183,9 @@ ipcMain.handle('check-for-updates', async (event, { gameId, installPath, manifes
         }
         return { error: errorMessage };
     }
+});
+
+ipcMain.handle('check-for-launcher-updates', () => {
+    // Manually trigger update check
+    autoUpdater.checkForUpdates();
 });

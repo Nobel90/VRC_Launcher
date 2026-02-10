@@ -951,3 +951,49 @@ function initLauncher() {
     // This is the initial call that starts the launcher logic
     init();
 }
+// --- Auto-Updater Logic ---
+const updateStatusContainer = document.getElementById('update-status-container');
+const updateStatusText = document.getElementById('update-status-text');
+const updateSpinner = document.getElementById('update-spinner');
+
+window.electronAPI.onAutoUpdaterEvent((data) => {
+    console.log('Auto-Updater Event:', data);
+
+    if (data.type === 'checking-for-update') {
+        // Optional: Show checking status? usually happens silently on startup.
+        // updateStatusContainer.classList.remove('hidden');
+        // updateStatusText.innerText = 'Checking for updates...';
+    } else if (data.type === 'update-available') {
+        updateStatusContainer.classList.remove('hidden');
+        updateStatusText.innerText = 'Update available. Downloading...';
+        updateSpinner.classList.remove('hidden');
+    } else if (data.type === 'update-not-available') {
+        // updateStatusContainer.classList.add('hidden');
+    } else if (data.type === 'error') {
+        // updateStatusContainer.classList.remove('hidden');
+        // updateStatusText.innerText = 'Update error.';
+        // setTimeout(() => updateStatusContainer.classList.add('hidden'), 5000);
+    } else if (data.type === 'download-progress') {
+        updateStatusContainer.classList.remove('hidden');
+        const percent = Math.round(data.percent);
+        updateStatusText.innerText = `Downloading update: ${percent}%`;
+        updateSpinner.classList.remove('hidden');
+    } else if (data.type === 'update-downloaded') {
+        updateStatusContainer.classList.remove('hidden');
+        updateStatusText.innerText = 'Update ready. Restart required.';
+        updateSpinner.classList.add('hidden'); // Stop spinner
+
+        // Keep it visible so user knows.
+    }
+});
+
+// Click to check for updates manually
+updateStatusText.addEventListener('click', () => {
+    // Only allow check if not already downloading
+    if (!updateStatusContainer.classList.contains('downloading')) {
+        updateStatusContainer.classList.remove('hidden');
+        updateStatusText.innerText = 'Checking...';
+        updateSpinner.classList.remove('hidden');
+        window.electronAPI.checkForLauncherUpdates();
+    }
+});

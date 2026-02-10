@@ -42,6 +42,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     deleteInstallation: (path) => ipcRenderer.invoke('delete-installation', path),
     selectScanRoot: () => ipcRenderer.invoke('select-scan-root'),
 
+    // --- Auto-Updater ---
+    onAutoUpdaterEvent: (callback) => ipcRenderer.on('auto-updater-event', (event, data) => callback(data)),
+    checkForLauncherUpdates: () => ipcRenderer.invoke('check-for-launcher-updates'),
+
     // --- Window Controls ---
     minimizeWindow: () => ipcRenderer.send('window-minimize'),
     maximizeWindow: () => ipcRenderer.send('window-maximize'),
