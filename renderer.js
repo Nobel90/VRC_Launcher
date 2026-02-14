@@ -165,7 +165,7 @@ function initLauncher() {
     let gameLibrary = {
         'VRClassroom': {
             name: 'VR Classroom',
-            tagline: 'Brining the Worksite into the Classroom',
+            tagline: 'Bringing the Worksite into the Classroom',
             version: '1.1.0.8',
             localVersion: null,   // Version from local version.json
             serverVersion: null,  // Latest version from server

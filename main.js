@@ -876,7 +876,8 @@ ipcMain.on('launch-game', (event, { installPath, executable, gameId }) => {
     const executablePath = path.join(installPath, executable);
     if (fsSync.existsSync(executablePath)) {
         const { spawn } = require('child_process');
-        const gameProcess = spawn(executablePath, [], { cwd: installPath, detached: false });
+        const gameProcess = spawn(executablePath, [], { cwd: installPath, detached: true, stdio: 'ignore' });
+        gameProcess.unref(); // Allow the launcher to exit independently of the game
 
         const pid = gameProcess.pid;
         runningGames[gameId] = pid;
